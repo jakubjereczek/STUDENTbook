@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="STUDENTbookModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="PostAnswers">
+    <Key>
+      <PropertyRef Name="answerId" />
+    </Key>
+    <Property Name="answerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="postId" Type="Int32" Nullable="false" />
+    <Property Name="userId" Type="Int32" Nullable="false" />
+    <Property Name="content" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="createdAt" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="editedAt" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Posts" Relationship="Self.FK__PostAnswe__postI__2A4B4B5E" FromRole="PostAnswers" ToRole="Posts" />
+    <NavigationProperty Name="Users" Relationship="Self.FK__PostAnswe__userI__29572725" FromRole="PostAnswers" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="Posts">
+    <Key>
+      <PropertyRef Name="postId" />
+    </Key>
+    <Property Name="postId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="userId" Type="Int32" />
+    <Property Name="content" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="createdAt" Type="DateTime" Precision="3" />
+    <Property Name="editedAt" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="PostAnswers" Relationship="Self.FK__PostAnswe__postI__2A4B4B5E" FromRole="Posts" ToRole="PostAnswers" />
+    <NavigationProperty Name="Users" Relationship="Self.FK__Posts__editedAt__267ABA7A" FromRole="Posts" ToRole="Users" />
+    <Property Name="tag" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="userId" />
+    </Key>
+    <Property Name="userId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nick" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="firstName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="lastName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="email" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="password" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="createdAt" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="lastLogginIn" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="PostAnswers" Relationship="Self.FK__PostAnswe__userI__29572725" FromRole="Users" ToRole="PostAnswers" />
+    <NavigationProperty Name="Posts" Relationship="Self.FK__Posts__editedAt__267ABA7A" FromRole="Users" ToRole="Posts" />
+    <Property Name="universityId" Type="Int32" />
+    <NavigationProperty Name="University" Relationship="STUDENTbookModel.FK__Users__lastLoggi__34C8D9D1" FromRole="Users" ToRole="University" />
+  </EntityType>
+  <Association Name="FK__PostAnswe__postI__2A4B4B5E">
+    <End Role="Posts" Type="Self.Posts" Multiplicity="1" />
+    <End Role="PostAnswers" Type="Self.PostAnswers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Posts">
+        <PropertyRef Name="postId" />
+      </Principal>
+      <Dependent Role="PostAnswers">
+        <PropertyRef Name="postId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PostAnswe__userI__29572725">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="PostAnswers" Type="Self.PostAnswers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="PostAnswers">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Posts__editedAt__267ABA7A">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="Posts" Type="Self.Posts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="Posts">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="STUDENTbookEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="PostAnswers" EntityType="Self.PostAnswers" />
+    <EntitySet Name="Posts" EntityType="Self.Posts" />
+    <EntitySet Name="Users" EntityType="Self.Users" />
+    <AssociationSet Name="FK__PostAnswe__postI__2A4B4B5E" Association="Self.FK__PostAnswe__postI__2A4B4B5E">
+      <End Role="Posts" EntitySet="Posts" />
+      <End Role="PostAnswers" EntitySet="PostAnswers" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PostAnswe__userI__29572725" Association="Self.FK__PostAnswe__userI__29572725">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="PostAnswers" EntitySet="PostAnswers" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Posts__editedAt__267ABA7A" Association="Self.FK__Posts__editedAt__267ABA7A">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Posts" EntitySet="Posts" />
+    </AssociationSet>
+    <EntitySet Name="University" EntityType="STUDENTbookModel.University" />
+    <AssociationSet Name="FK__Users__lastLoggi__34C8D9D1" Association="STUDENTbookModel.FK__Users__lastLoggi__34C8D9D1">
+      <End Role="University" EntitySet="University" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="University">
+    <Key>
+      <PropertyRef Name="universityId" />
+    </Key>
+    <Property Name="universityId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+    <Property Name="city" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Users" Relationship="STUDENTbookModel.FK__Users__lastLoggi__34C8D9D1" FromRole="University" ToRole="Users" />
+  </EntityType>
+  <Association Name="FK__Users__lastLoggi__34C8D9D1">
+    <End Type="STUDENTbookModel.University" Role="University" Multiplicity="0..1" />
+    <End Type="STUDENTbookModel.Users" Role="Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="University">
+        <PropertyRef Name="universityId" />
+      </Principal>
+      <Dependent Role="Users">
+        <PropertyRef Name="universityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
