@@ -72,3 +72,5 @@ C:\Users\99jak\Desktop\STUDENTbook\Server\STUDENTbookServer\obj\Debug\STUDENTboo
 C:\Users\99jak\Desktop\STUDENTbook\Server\STUDENTbookServer\obj\Debug\STUDENTbookServer.csproj.CopyComplete
 C:\Users\99jak\Desktop\STUDENTbook\Server\STUDENTbookServer\obj\Debug\STUDENTbookServer.dll
 C:\Users\99jak\Desktop\STUDENTbook\Server\STUDENTbookServer\obj\Debug\STUDENTbookServer.pdb
+C:\Users\99jak\Desktop\STUDENTbook\Server\STUDENTbookServer\bin\Microsoft.AspNetCore.JsonPatch.dll
+C:\Users\99jak\Desktop\STUDENTbook\Server\STUDENTbookServer\bin\Microsoft.AspNetCore.JsonPatch.xml

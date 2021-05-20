@@ -14,17 +14,8 @@ namespace STUDENTbookServer.Models
     
     public partial class University
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public University()
-        {
-            this.Users = new HashSet<Users>();
-        }
-    
         public int universityId { get; set; }
         public string name { get; set; }
         public string city { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Users> Users { get; set; }
     }
 }

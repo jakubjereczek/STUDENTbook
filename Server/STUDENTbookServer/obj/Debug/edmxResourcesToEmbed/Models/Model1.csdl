@@ -24,7 +24,6 @@
     <Property Name="createdAt" Type="DateTime" Precision="3" />
     <Property Name="editedAt" Type="DateTime" Precision="3" />
     <NavigationProperty Name="PostAnswers" Relationship="Self.FK__PostAnswe__postI__3B75D760" FromRole="Posts" ToRole="PostAnswers" />
-    <NavigationProperty Name="Users" Relationship="Self.FK__Posts__editedAt__37A5467C" FromRole="Posts" ToRole="Users" />
   </EntityType>
   <EntityType Name="University">
     <Key>
@@ -33,7 +32,6 @@
     <Property Name="universityId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
     <Property Name="city" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="Users" Relationship="Self.FK__Users__lastLoggi__34C8D9D1" FromRole="University" ToRole="Users" />
   </EntityType>
   <EntityType Name="Users">
     <Key>
@@ -48,7 +46,6 @@
     <Property Name="password" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="createdAt" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="lastLogginIn" Type="DateTime" Precision="3" />
-    <NavigationProperty Name="PostAnswers" Relationship="Self.FK__PostAnswe__userI__3A81B327" FromRole="Users" ToRole="PostAnswers" />
     <NavigationProperty Name="Posts" Relationship="Self.FK__Posts__editedAt__37A5467C" FromRole="Users" ToRole="Posts" />
     <NavigationProperty Name="University" Relationship="Self.FK__Users__lastLoggi__34C8D9D1" FromRole="Users" ToRole="University" />
   </EntityType>
