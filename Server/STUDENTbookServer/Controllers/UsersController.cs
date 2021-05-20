@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Formatting;
+using System.Threading;
 using System.Web.Http;
 
 namespace STUDENTbookServer.Controllers
@@ -65,14 +67,17 @@ namespace STUDENTbookServer.Controllers
         }
 
         // PUT: api/Users/5
+        [BasicAuthorization]
         [HttpPut]
         public HttpResponseMessage Put(int id, [FromBody] Users user)
         {
+            string username = Thread.CurrentPrincipal.Identity.Name; // Uzytkownik który jest autoryzowany, moze edytować tylko siebie. 
+
             try
             {
-                if (id != user.userId)
+                if (id != user.userId || username != user.nick)
                 {
-                    var message = string.Format("Incorrect userId of {0} {1}", user.firstName, user.lastName);
+                    var message = string.Format("Incorrect userId of {0} {1} or you can not delete other user", user.firstName, user.lastName);
                     return Request.CreateErrorResponse(HttpStatusCode.BadRequest, message);
                 }
 
@@ -93,8 +98,11 @@ namespace STUDENTbookServer.Controllers
 
 
         // DELETE: api/Users/5
+        [BasicAuthorization]
+        [HttpDelete]
         public HttpResponseMessage Delete([FromUri] int id)
         {
+
             try
             {
                 var User = _db.Users.Find(id);
@@ -102,10 +110,18 @@ namespace STUDENTbookServer.Controllers
                 {
                     return Request.CreateErrorResponse(HttpStatusCode.NotFound, "User does not exist" );
                 }
+                string username = Thread.CurrentPrincipal.Identity.Name; // Uzytkownik który jest autoryzowany, moze usunąć tylko siebie. 
+                Console.WriteLine("username: " + username);
+                Console.WriteLine("User.nick: " + User.nick);
+
+                if (username != User.nick)
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest, string.Format("You can not delete other user"));
+                }
                 _db.Users.Remove(User);
                 _db.SaveChanges();
                 var message = string.Format("User has been deleted");
-                return Request.CreateResponse(HttpStatusCode.OK, message);
+                return Request.CreateResponse(HttpStatusCode.OK, message, JsonMediaTypeFormatter.DefaultMediaType);
             }
             catch (Exception ex)
             {

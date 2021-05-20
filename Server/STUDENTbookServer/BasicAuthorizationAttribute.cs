@@ -18,7 +18,7 @@ namespace STUDENTbookServer
         {
             if (actionContext.Request.Headers.Authorization == null)
             {
-                actionContext.Response = actionContext.Request.CreateResponse(System.Net.HttpStatusCode.Unauthorized);
+                actionContext.Response = actionContext.Request.CreateResponse(System.Net.HttpStatusCode.Unauthorized, "You are unauthorized");
             }
             else
             {
@@ -39,11 +39,11 @@ namespace STUDENTbookServer
                     }
                     else
                     {
-                        actionContext.Response = actionContext.Request.CreateResponse(System.Net.HttpStatusCode.Unauthorized);
+                        actionContext.Response = actionContext.Request.CreateResponse(System.Net.HttpStatusCode.Unauthorized, "You are unauthorized");
                     }
                 }catch(Exception ex)
                 {
-                    actionContext.Response = actionContext.Request.CreateResponse(System.Net.HttpStatusCode.Unauthorized);
+                    actionContext.Response = actionContext.Request.CreateResponse(System.Net.HttpStatusCode.Unauthorized, "You are unauthorized");
                 }
 
             }
