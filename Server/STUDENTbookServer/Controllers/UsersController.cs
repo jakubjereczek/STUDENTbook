@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.JsonPatch;
 using STUDENTbookServer.Models;
+using STUDENTbookServer.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,7 @@ namespace STUDENTbookServer.Controllers
         }
 
         // GET: api/Users/5
+        [BasicAuthorization]
         public HttpResponseMessage Get(int id)
         {
             var User = _db.Users.Find(id);
@@ -46,6 +48,8 @@ namespace STUDENTbookServer.Controllers
                         var message = string.Format("User {0} {1} already exists", user.firstName, user.lastName);
                         return Request.CreateErrorResponse(HttpStatusCode.BadRequest, message);
                     }
+
+                    user.password = UserService.HashPassword(user.password);
 
                     _db.Users.Add(user);
                     _db.SaveChanges();

@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using System.Configuration;
+using System.Text;
+using Microsoft.AspNetCore.Cors;
 
 namespace STUDENTbookServer
 {
@@ -22,6 +25,8 @@ namespace STUDENTbookServer
 
             var appXmlType = config.Formatters.XmlFormatter.SupportedMediaTypes.FirstOrDefault(t => t.MediaType == "application/xml");
             config.Formatters.XmlFormatter.SupportedMediaTypes.Remove(appXmlType);
+
+           // config.Filters.Add(new RequireHttpsAttribute());
         }
     }
 }
