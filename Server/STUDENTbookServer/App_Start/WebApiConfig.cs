@@ -24,9 +24,9 @@ namespace STUDENTbookServer
             );
 
             var appXmlType = config.Formatters.XmlFormatter.SupportedMediaTypes.FirstOrDefault(t => t.MediaType == "application/xml");
-            config.Formatters.XmlFormatter.SupportedMediaTypes.Remove(appXmlType);
+            config.Formatters.XmlFormatter.SupportedMediaTypes.Remove(appXmlType); // Odpowiedzi tylko JSON
 
-           // config.Filters.Add(new RequireHttpsAttribute());
+            config.MessageHandlers.Add(new LogRequestAndResponseHandler());
         }
     }
 }

@@ -1,12 +1,16 @@
 # STUDENTbook
 
-Model Content Entity Data -> EF Designer from database
-SQL:
+#### A fullstack project of a social media application for students
 
+> description: to do...
+
+## About project
+#### Database scheme
+``` sql
 create table Users (
 	userId int identity(1,1) primary key,
 	universityId int,
-	nick varchar(64) not null,
+	nick varchar(64) not null UNIQUE,
 	firstName varchar(64),
 	lastName varchar(64),
 	email varchar(128) not null,
@@ -14,7 +18,6 @@ create table Users (
 	createdAt datetime not null,
 	lastLogginIn datetime
 	foreign key (universityId) references University(universityId)
-
 )
 
 create table Posts (
@@ -43,3 +46,12 @@ create table University (
 	name varchar(128),
 	city varchar(64)
 )
+```
+
+
+## 🕹️ Technologies
+
+#### Server
+- ASP NET Web API (LogN, Basic Authorization, ADO.NET Entity Data Model)
+- SQL Server
+

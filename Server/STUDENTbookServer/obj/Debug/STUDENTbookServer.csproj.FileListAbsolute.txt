@@ -115,3 +115,6 @@ C:\Users\99jak\Desktop\STUDENTbook\Server\STUDENTbookServer\bin\System.Memory.xm
 C:\Users\99jak\Desktop\STUDENTbook\Server\STUDENTbookServer\bin\System.Numerics.Vectors.xml
 C:\Users\99jak\Desktop\STUDENTbook\Server\STUDENTbookServer\bin\System.Runtime.CompilerServices.Unsafe.xml
 C:\Users\99jak\Desktop\STUDENTbook\Server\STUDENTbookServer\bin\System.Text.Encodings.Web.xml
+C:\Users\99jak\Desktop\STUDENTbook\Server\STUDENTbookServer\bin\NLog.config
+C:\Users\99jak\Desktop\STUDENTbook\Server\STUDENTbookServer\bin\NLog.dll
+C:\Users\99jak\Desktop\STUDENTbook\Server\STUDENTbookServer\bin\NLog.xml

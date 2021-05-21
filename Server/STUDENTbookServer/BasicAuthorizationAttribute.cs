@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Security.Principal;
 using System.Text;
@@ -18,7 +19,7 @@ namespace STUDENTbookServer
         {
             if (actionContext.Request.Headers.Authorization == null)
             {
-                actionContext.Response = actionContext.Request.CreateResponse(System.Net.HttpStatusCode.Unauthorized, "You are unauthorized");
+                actionContext.Response = actionContext.Request.CreateErrorResponse(HttpStatusCode.Unauthorized, "You are not authorized");
             }
             else
             {
@@ -35,15 +36,17 @@ namespace STUDENTbookServer
 
                     if (UserService.Authenticate(username, password))
                     {
-                        Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(username), null);
+                        Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(username), null); // Pozwala na identyfikacje uzytkownika na ktorym uruchomiony jest proces. W metodach controllera potem to sprawdzam.
                     }
                     else
                     {
-                        actionContext.Response = actionContext.Request.CreateResponse(System.Net.HttpStatusCode.Unauthorized, "You are unauthorized");
+                        // Haslo sie nie zgadza (lub login)
+                        Thread.CurrentPrincipal = null;
+                        actionContext.Response = actionContext.Request.CreateErrorResponse(HttpStatusCode.Unauthorized, "You are not authorized");
                     }
                 }catch(Exception ex)
                 {
-                    actionContext.Response = actionContext.Request.CreateResponse(System.Net.HttpStatusCode.Unauthorized, "You are unauthorized");
+                    actionContext.Response = actionContext.Request.CreateErrorResponse(HttpStatusCode.Unauthorized, "You are not authorized");
                 }
 
             }

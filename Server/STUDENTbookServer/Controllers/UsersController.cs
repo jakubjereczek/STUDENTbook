@@ -1,4 +1,7 @@
 ﻿using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.Extensions.Logging;
+using NLog;
+using STUDENTbookServer.Helpers;
 using STUDENTbookServer.Models;
 using STUDENTbookServer.Services;
 using System;
@@ -17,11 +20,12 @@ namespace STUDENTbookServer.Controllers
         // Uchwyt do bazy danych
         private STUDENTbookEntities _db = new STUDENTbookEntities();
 
-
         // GET: api/Users
         public HttpResponseMessage Get()
         {
-            return Request.CreateResponse(HttpStatusCode.OK, _db.Users.ToList());
+            List<Users> usersList = _db.Users.ToList();
+            usersList.ForEach(user => user.password = null);
+            return Request.CreateResponse(HttpStatusCode.OK, usersList);
         }
 
         // GET: api/Users/5
@@ -29,10 +33,11 @@ namespace STUDENTbookServer.Controllers
         public HttpResponseMessage Get(int id)
         {
             var User = _db.Users.Find(id);
-            if (User == null) {
-                var message = string.Format("User with id = {0} not found", id);
-                return Request.CreateErrorResponse(HttpStatusCode.NotFound, message);
+            if (User == null)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound, string.Format("User with id = {0} not found", id));
             }
+            User.password = null;
             return Request.CreateResponse(HttpStatusCode.OK, User);
         }
 
@@ -42,26 +47,26 @@ namespace STUDENTbookServer.Controllers
         {
             try
             {
-                 if (ModelState.IsValid)
-                 {
+                if (ModelState.IsValid)
+                {
                     var UserExist = _db.Users.Find(user.userId);
                     if (UserExist != null)
-                    {                
-                        var message = string.Format("User {0} {1} already exists", user.firstName, user.lastName);
-                        return Request.CreateErrorResponse(HttpStatusCode.BadRequest, message);
+                    {
+                        return Request.CreateErrorResponse(HttpStatusCode.BadRequest, string.Format("User {0} {1} already exists", user.firstName, user.lastName));
                     }
 
                     user.password = UserService.HashPassword(user.password);
 
                     _db.Users.Add(user);
                     _db.SaveChanges();
+
                     return Request.CreateResponse(HttpStatusCode.OK, user);
-                 }
-                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
                 }
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+            }
             catch (Exception ex)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex.Message);
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, InnerExceptionFinder.getLastInnerException(ex).Message);
             }
 
         }
@@ -77,21 +82,23 @@ namespace STUDENTbookServer.Controllers
             {
                 if (id != user.userId || username != user.nick)
                 {
-                    var message = string.Format("Incorrect userId of {0} {1} or you can not delete other user", user.firstName, user.lastName);
-                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest, message);
+                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest, string.Format("Incorrect userId of {0} {1} or you can not modfify other user", user.firstName, user.lastName));
                 }
 
                 if (ModelState.IsValid)
                 {
                     _db.Entry(user).State = System.Data.Entity.EntityState.Modified;
+                    user.password = UserService.HashPassword(user.password); // Przekazanie hasla do shashowania przed zapisaniem.
                     _db.SaveChanges();
-                    var message = string.Format("User {0} {1} has been modified", user.firstName, user.lastName);
-                    return Request.CreateResponse(HttpStatusCode.OK, message);
+
+                    user.password = null; // Odpowiedz bez hasła.
+                    return Request.CreateResponse(HttpStatusCode.OK, user);
                 }
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex.Message);
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, InnerExceptionFinder.getLastInnerException(ex).Message);
             }
 
         }
@@ -102,32 +109,29 @@ namespace STUDENTbookServer.Controllers
         [HttpDelete]
         public HttpResponseMessage Delete([FromUri] int id)
         {
-
             try
             {
                 var User = _db.Users.Find(id);
                 if (User == null)
                 {
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "User does not exist" );
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "User does not exist");
                 }
                 string username = Thread.CurrentPrincipal.Identity.Name; // Uzytkownik który jest autoryzowany, moze usunąć tylko siebie. 
-                Console.WriteLine("username: " + username);
-                Console.WriteLine("User.nick: " + User.nick);
 
                 if (username != User.nick)
                 {
-                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest, string.Format("You can not delete other user"));
+                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "You can not delete other user");
                 }
                 _db.Users.Remove(User);
                 _db.SaveChanges();
-                var message = string.Format("User has been deleted");
-                return Request.CreateResponse(HttpStatusCode.OK, message, JsonMediaTypeFormatter.DefaultMediaType);
+                return Request.CreateResponse(HttpStatusCode.OK, "User has been deleted");
             }
             catch (Exception ex)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex.Message);
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, InnerExceptionFinder.getLastInnerException(ex).Message);
             }
 
         }
+
     }
 }
