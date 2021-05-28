@@ -11,11 +11,15 @@ namespace STUDENTbookServer.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class University
     {
         public int universityId { get; set; }
+        [Required]
+        [RegularExpression("[^#!$%^&*~]*")]
         public string name { get; set; }
+        [Required]
         public string city { get; set; }
     }
 }

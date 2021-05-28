@@ -179,6 +179,7 @@
     <Compile Include="BasicAuthorizationAttribute.cs" />
     <Compile Include="Controllers\PostAnswersController.cs" />
     <Compile Include="Controllers\PostsController.cs" />
+    <Compile Include="Controllers\UniversityController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

@@ -34,6 +34,7 @@ namespace STUDENTbookServer
                     string username = usernamePasswordArray[0];
                     string password = usernamePasswordArray[1];
 
+
                     if (UserService.Authenticate(username, password))
                     {
                         Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(username), null); // Pozwala na identyfikacje uzytkownika na ktorym uruchomiony jest proces. W metodach controllera potem to sprawdzam.

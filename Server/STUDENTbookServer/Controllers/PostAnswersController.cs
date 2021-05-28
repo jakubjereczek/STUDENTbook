@@ -110,8 +110,7 @@ namespace STUDENTbookServer.Controllers
                     if (User == null)
                         return Request.CreateErrorResponse(HttpStatusCode.NotFound, string.Format("User with id = {0} not found", postAnswer.userId));
 
-                    System.Diagnostics.Debug.WriteLine("{0} {1}", User.nick, username);
-                    Console.WriteLine("{0} {1}", User.nick, username);
+                    System.Diagnostics.Debug.WriteLine("Test {0} {1}", User.nick, username);
 
                     if (User.nick != username || id != postAnswer.answerId)
                         return Request.CreateErrorResponse(HttpStatusCode.BadRequest, string.Format("Incorrect postAnswer Id or you tried to change answer created by other user"));

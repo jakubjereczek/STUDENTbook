@@ -4,7 +4,7 @@
 
 > description: to do...
 
-## About project
+## About server
 #### Database scheme
 ``` sql
 create table Users (
@@ -47,11 +47,41 @@ create table University (
 	city varchar(64)
 )
 ```
+#### API methods
+##### Users
+- GET: /api/Users
+- GET: /api/Users/{userId}
+- POST: /api/Users/ + User model in body
+- PUT /api/Users/{userId} + User model in body
+- DELETE /api/Users/{userId}
 
+##### Posts 
+- GET: /api/Posts
+- GET: /api/Posts/{postId}
+- GET: /api/Posts/GetBy/username/{userName}
+- POST: /api/Posts/{userId} + Post model in body
+- PUT: /api/Posts/{postId} + Post model in body
+- DELETE: /api/Posts/{postId}
 
-## 🕹️ Technologies
+##### Post Answer 
+- GET: /api/PostAnswers/
+- GET: /api/PostAnswers/{postId}
+- GET: /api/PostAnswers/GetBy/username/{userName}
+- POST: /api/PostAnswers/{postAnswerId} + PostAnswer model in body
+- PUT: /api/PostAnswers/{postAnswerId} + PostAnwser model in body
+- DELETE: /api/PostAnswers/{postAnswerId} 
 
+##### University
+- GET: /api/PostAnswers/
+- GET: /api/PostAnswers/{universityId}
+- POST: /api/PostAnswers/{universityId} + University model in body, only for nick admin account
+- PUT: /api/PostAnswers/{universityId} + University model in body, only for nick admin account
+- DELETE: /api/PostAnswers/{postAnswerId} only for nick admin account
+
+## About client
+...
+
+## ??? Technologies
 #### Server
 - ASP NET Web API (LogN, Basic Authorization, ADO.NET Entity Data Model)
 - SQL Server
-

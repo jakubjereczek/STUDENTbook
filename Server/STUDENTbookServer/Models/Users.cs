@@ -11,7 +11,8 @@ namespace STUDENTbookServer.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Users
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -22,11 +23,18 @@ namespace STUDENTbookServer.Models
     
         public int userId { get; set; }
         public Nullable<int> universityId { get; set; }
+        [Required]
+        // W bazie danych ustatniono rowniez jako UNIQUE.
         public string nick { get; set; }
+        [Required]
         public string firstName { get; set; }
+        [Required]
         public string lastName { get; set; }
+        [Required]
         public string email { get; set; }
+        [Required]
         public string password { get; set; }
+        [Required]
         public System.DateTime createdAt { get; set; }
         public Nullable<System.DateTime> lastLogginIn { get; set; }
     
