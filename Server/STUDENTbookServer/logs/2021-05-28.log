@@ -1,0 +1,166 @@
+2021-05-28 10:08:25.9635 INFO *** POST https://localhost:44357/api/postAnswers/5
+2021-05-28 10:08:27.3174 INFO Request StatusCode: BadRequest - successful: False. Response: {"Message":"The conversion of a datetime2 data type to a datetime data type resulted in an out-of-range value.\r\nThe statement has been terminated."}
+2021-05-28 10:08:39.1893 INFO *** POST https://localhost:44357/api/postAnswers/5
+2021-05-28 10:08:39.2373 INFO Request StatusCode: BadRequest - successful: False. Response: {"Message":"The conversion of a datetime2 data type to a datetime data type resulted in an out-of-range value.\r\nThe statement has been terminated."}
+2021-05-28 10:08:44.2552 INFO *** POST https://localhost:44357/api/postAnswers/
+2021-05-28 10:08:44.2933 INFO Request StatusCode: MethodNotAllowed - successful: False. Response: {"Message":"¯¹dany zasób nie obs³uguje metody http „POST”."}
+2021-05-28 10:08:50.8675 INFO *** POST https://localhost:44357/api/postAnswers/6
+2021-05-28 10:08:50.9115 INFO Request StatusCode: BadRequest - successful: False. Response: {"Message":"The conversion of a datetime2 data type to a datetime data type resulted in an out-of-range value.\r\nThe statement has been terminated."}
+2021-05-28 10:08:52.2226 INFO *** POST https://localhost:44357/api/postAnswers/5
+2021-05-28 10:08:52.2636 INFO Request StatusCode: BadRequest - successful: False. Response: {"Message":"The conversion of a datetime2 data type to a datetime data type resulted in an out-of-range value.\r\nThe statement has been terminated."}
+2021-05-28 10:08:53.2964 INFO *** POST https://localhost:44357/api/postAnswers/4
+2021-05-28 10:08:53.3104 INFO Request StatusCode: NotFound - successful: False. Response: {"Message":"Post with id = 4 not found"}
+2021-05-28 10:08:55.0019 INFO *** POST https://localhost:44357/api/postAnswers/5
+2021-05-28 10:08:55.0409 INFO Request StatusCode: BadRequest - successful: False. Response: {"Message":"The conversion of a datetime2 data type to a datetime data type resulted in an out-of-range value.\r\nThe statement has been terminated."}
+2021-05-28 10:09:27.2923 INFO *** POST https://localhost:44357/api/postAnswers/5
+2021-05-28 10:09:27.3323 INFO Request StatusCode: OK - successful: True. Response: {"answerId":14,"postId":5,"userId":30,"content":"LALALALAL2","createdAt":"2021-05-27T20:50:02.467","editedAt":null}
+2021-05-28 10:09:31.3963 INFO *** POST https://localhost:44357/api/postAnswers/5
+2021-05-28 10:09:31.4093 INFO Request StatusCode: BadRequest - successful: False. Response: {"Message":"Incorrect userId of LALALA Jakub or you tried to add answer as other user"}
+2021-05-28 10:09:47.9552 INFO *** POST https://localhost:44357/api/postAnswers/5
+2021-05-28 10:09:47.9782 INFO Request StatusCode: OK - successful: True. Response: {"answerId":15,"postId":5,"userId":30,"content":"LALALALAL2","createdAt":"2021-05-27T20:50:02.467","editedAt":null}
+2021-05-28 10:10:08.5629 INFO *** PUT https://localhost:44357/api/postAnswers/15
+2021-05-28 10:10:08.5919 INFO Request StatusCode: OK - successful: True. Response: {"answerId":15,"postId":5,"userId":30,"content":"LALALALAL2","createdAt":"2021-05-27T20:50:02.467","editedAt":null}
+2021-05-28 10:10:09.9723 INFO *** PUT https://localhost:44357/api/postAnswers/15
+2021-05-28 10:10:09.9903 INFO Request StatusCode: OK - successful: True. Response: {"answerId":15,"postId":5,"userId":30,"content":"LALALALAL2","createdAt":"2021-05-27T20:50:02.467","editedAt":null}
+2021-05-28 10:10:17.1984 INFO *** PUT https://localhost:44357/api/postAnswers/15
+2021-05-28 10:10:17.2184 INFO Request StatusCode: OK - successful: True. Response: {"answerId":15,"postId":5,"userId":30,"content":"KOchaæ zycie","createdAt":"2021-05-27T20:50:02.467","editedAt":null}
+2021-05-28 10:10:47.8184 INFO *** PUT https://localhost:44357/api/postAnswers/15
+2021-05-28 10:10:47.8604 INFO Request StatusCode: BadRequest - successful: False. Response: {"Message":"Store update, insert, or delete statement affected an unexpected number of rows (0). Entities may have been modified or deleted since entities were loaded. See http://go.microsoft.com/fwlink/?LinkId=472540 for information on understanding and handling optimistic concurrency exceptions."}
+2021-05-28 10:11:01.2335 INFO *** PUT https://localhost:44357/api/postAnswers/15
+2021-05-28 10:11:01.2565 INFO Request StatusCode: OK - successful: True. Response: {"answerId":15,"postId":5,"userId":30,"content":"KOchaæ zycie","createdAt":"2021-05-27T20:50:02.467","editedAt":null}
+2021-05-28 10:11:03.2579 INFO *** PUT https://localhost:44357/api/postAnswers/154
+2021-05-28 10:11:03.2745 INFO Request StatusCode: OK - successful: True. Response: {"answerId":15,"postId":5,"userId":30,"content":"KOchaæ zycie","createdAt":"2021-05-27T20:50:02.467","editedAt":null}
+2021-05-28 10:11:09.5527 INFO *** PUT https://localhost:44357/api/postAnswers/154
+2021-05-28 10:11:09.5737 INFO Request StatusCode: OK - successful: True. Response: {"answerId":15,"postId":5,"userId":30,"content":"KOchaæ zyciee","createdAt":"2021-05-27T20:50:02.467","editedAt":null}
+2021-05-28 10:12:28.4026 INFO *** PUT https://localhost:44357/api/postAnswers/154
+2021-05-28 10:12:29.1408 INFO Request StatusCode: BadRequest - successful: False. Response: {"Message":"Incorrect userId of LALALA Jakub or you tried to change answer of other user"}
+2021-05-28 10:12:33.7066 INFO *** PUT https://localhost:44357/api/postAnswers/15
+2021-05-28 10:12:33.7066 INFO Request StatusCode: BadRequest - successful: False. Response: {"Message":"Incorrect userId of LALALA Jakub or you tried to change answer of other user"}
+2021-05-28 10:12:35.3446 INFO *** PUT https://localhost:44357/api/postAnswers/15
+2021-05-28 10:12:35.3506 INFO Request StatusCode: BadRequest - successful: False. Response: {"Message":"Incorrect userId of LALALA Jakub or you tried to change answer of other user"}
+2021-05-28 10:12:59.8302 INFO *** PUT https://localhost:44357/api/postAnswers/156
+2021-05-28 10:13:00.4793 INFO Request StatusCode: BadRequest - successful: False. Response: {"Message":"Incorrect userId of LALALA Jakub or you tried to change answer of other user"}
+2021-05-28 10:14:02.9917 INFO *** PUT https://localhost:44357/api/postAnswers/15
+2021-05-28 10:14:03.6722 INFO Request StatusCode: BadRequest - successful: False. Response: {"Message":"Incorrect postAnswer Id or you tried to change answer created by other user"}
+2021-05-28 10:14:31.9891 INFO *** PUT https://localhost:44357/api/postAnswers/15
+2021-05-28 10:14:32.6533 INFO Request StatusCode: OK - successful: True. Response: {"answerId":15,"postId":5,"userId":30,"content":"KOchaæ zyciee","createdAt":"2021-05-27T20:50:02.467","editedAt":null}
+2021-05-28 10:14:34.8737 INFO *** PUT https://localhost:44357/api/postAnswers/156
+2021-05-28 10:14:34.8917 INFO Request StatusCode: BadRequest - successful: False. Response: {"Message":"Incorrect postAnswer Id or you tried to change answer created by other user"}
+2021-05-28 10:14:39.3057 INFO *** PUT https://localhost:44357/api/postAnswers/15
+2021-05-28 10:14:39.3197 INFO Request StatusCode: BadRequest - successful: False. Response: {"Message":"Incorrect postAnswer Id or you tried to change answer created by other user"}
+2021-05-28 10:14:53.4318 INFO *** PUT https://localhost:44357/api/postAnswers/8
+2021-05-28 10:14:53.4538 INFO Request StatusCode: OK - successful: True. Response: {"answerId":8,"postId":5,"userId":30,"content":"KOchaæ zyciee","createdAt":"2021-05-27T20:50:02.467","editedAt":null}
+2021-05-28 10:15:30.7078 INFO *** PUT https://localhost:44357/api/postAnswers/8
+2021-05-28 10:15:30.7078 INFO Request StatusCode: NotFound - successful: False. Response: {"Message":"User with id = 8 not found"}
+2021-05-28 10:15:51.9015 INFO *** PUT https://localhost:44357/api/postAnswers/8
+2021-05-28 10:15:51.9145 INFO Request StatusCode: BadRequest - successful: False. Response: {"Message":"Incorrect postAnswer Id or you tried to change answer created by other user"}
+2021-05-28 10:18:15.1140 INFO *** PUT https://localhost:44357/api/postAnswers/8
+2021-05-28 10:18:15.7181 INFO Request StatusCode: BadRequest - successful: False. Response: {"Message":"Incorrect postAnswer Id or you tried to change answer created by other user"}
+2021-05-28 10:18:20.3790 INFO *** PUT https://localhost:44357/api/postAnswers/17
+2021-05-28 10:18:20.3790 INFO Request StatusCode: BadRequest - successful: False. Response: {"Message":"Incorrect postAnswer Id or you tried to change answer created by other user"}
+2021-05-28 10:18:22.3921 INFO *** PUT https://localhost:44357/api/postAnswers/17
+2021-05-28 10:18:22.4011 INFO Request StatusCode: BadRequest - successful: False. Response: {"Message":"Incorrect postAnswer Id or you tried to change answer created by other user"}
+2021-05-28 10:18:22.9317 INFO *** PUT https://localhost:44357/api/postAnswers/17
+2021-05-28 10:18:22.9437 INFO Request StatusCode: BadRequest - successful: False. Response: {"Message":"Incorrect postAnswer Id or you tried to change answer created by other user"}
+2021-05-28 10:18:23.1897 INFO *** PUT https://localhost:44357/api/postAnswers/17
+2021-05-28 10:18:23.1897 INFO Request StatusCode: BadRequest - successful: False. Response: {"Message":"Incorrect postAnswer Id or you tried to change answer created by other user"}
+2021-05-28 10:18:23.5421 INFO *** PUT https://localhost:44357/api/postAnswers/17
+2021-05-28 10:18:23.5521 INFO Request StatusCode: BadRequest - successful: False. Response: {"Message":"Incorrect postAnswer Id or you tried to change answer created by other user"}
+2021-05-28 10:18:23.9802 INFO *** PUT https://localhost:44357/api/postAnswers/17
+2021-05-28 10:18:23.9912 INFO Request StatusCode: BadRequest - successful: False. Response: {"Message":"Incorrect postAnswer Id or you tried to change answer created by other user"}
+2021-05-28 10:18:29.6220 INFO *** PUT https://localhost:44357/api/postAnswers/17
+2021-05-28 10:18:29.6310 INFO Request StatusCode: BadRequest - successful: False. Response: {"Message":"Incorrect postAnswer Id or you tried to change answer created by other user"}
+2021-05-28 10:18:37.3724 INFO *** PUT https://localhost:44357/api/postAnswers/17
+2021-05-28 10:18:37.4230 INFO Request StatusCode: OK - successful: True. Response: {"answerId":17,"postId":1,"userId":30,"content":"KOchaæ zycieeXXXXXXXXXXXXXXX","createdAt":"2021-05-27T20:50:02.467","editedAt":null}
+2021-05-28 10:20:52.1390 INFO *** PUT https://localhost:44357/api/postAnswers/16
+2021-05-28 10:20:52.7484 INFO Request StatusCode: BadRequest - successful: False. Response: {"Message":"Incorrect postAnswer Id or you tried to change answer created by other user"}
+2021-05-28 10:20:53.9280 INFO *** PUT https://localhost:44357/api/postAnswers/16
+2021-05-28 10:20:53.9420 INFO Request StatusCode: BadRequest - successful: False. Response: {"Message":"Incorrect postAnswer Id or you tried to change answer created by other user"}
+2021-05-28 10:20:54.4902 INFO *** PUT https://localhost:44357/api/postAnswers/16
+2021-05-28 10:20:54.5082 INFO Request StatusCode: BadRequest - successful: False. Response: {"Message":"Incorrect postAnswer Id or you tried to change answer created by other user"}
+2021-05-28 10:20:54.9823 INFO *** PUT https://localhost:44357/api/postAnswers/16
+2021-05-28 10:20:54.9973 INFO Request StatusCode: BadRequest - successful: False. Response: {"Message":"Incorrect postAnswer Id or you tried to change answer created by other user"}
+2021-05-28 10:20:55.4542 INFO *** PUT https://localhost:44357/api/postAnswers/16
+2021-05-28 10:20:55.4682 INFO Request StatusCode: BadRequest - successful: False. Response: {"Message":"Incorrect postAnswer Id or you tried to change answer created by other user"}
+2021-05-28 10:21:02.5172 INFO *** PUT https://localhost:44357/api/postAnswers/15
+2021-05-28 10:21:02.6132 INFO Request StatusCode: BadRequest - successful: False. Response: {"Message":"Attaching an entity of type 'STUDENTbookServer.Models.PostAnswers' failed because another entity of the same type already has the same primary key value. This can happen when using the 'Attach' method or setting the state of an entity to 'Unchanged' or 'Modified' if any entities in the graph have conflicting key values. This may be because some entities are new and have not yet received database-generated key values. In this case use the 'Add' method or the 'Added' entity state to track the graph and then set the state of non-new entities to 'Unchanged' or 'Modified' as appropriate."}
+2021-05-28 10:22:43.8251 INFO *** PUT https://localhost:44357/api/postAnswers/15
+2021-05-28 10:22:43.8671 INFO Request StatusCode: BadRequest - successful: False. Response: {"Message":"Attaching an entity of type 'STUDENTbookServer.Models.PostAnswers' failed because another entity of the same type already has the same primary key value. This can happen when using the 'Attach' method or setting the state of an entity to 'Unchanged' or 'Modified' if any entities in the graph have conflicting key values. This may be because some entities are new and have not yet received database-generated key values. In this case use the 'Add' method or the 'Added' entity state to track the graph and then set the state of non-new entities to 'Unchanged' or 'Modified' as appropriate."}
+2021-05-28 10:22:44.9964 INFO *** PUT https://localhost:44357/api/postAnswers/15
+2021-05-28 10:22:45.0294 INFO Request StatusCode: BadRequest - successful: False. Response: {"Message":"Attaching an entity of type 'STUDENTbookServer.Models.PostAnswers' failed because another entity of the same type already has the same primary key value. This can happen when using the 'Attach' method or setting the state of an entity to 'Unchanged' or 'Modified' if any entities in the graph have conflicting key values. This may be because some entities are new and have not yet received database-generated key values. In this case use the 'Add' method or the 'Added' entity state to track the graph and then set the state of non-new entities to 'Unchanged' or 'Modified' as appropriate."}
+2021-05-28 10:25:10.4275 INFO *** PUT https://localhost:44357/api/postAnswers/15
+2021-05-28 10:25:11.0643 INFO Request StatusCode: OK - successful: True. Response: {"answerId":15,"postId":1,"userId":30,"content":"KOchaæ zycieeXXXXXXXXXXXXXXX","createdAt":"2021-05-27T20:50:02.467","editedAt":"2021-05-27T20:50:02.467"}
+2021-05-28 10:25:35.9383 INFO *** PUT https://localhost:44357/api/postAnswers/15
+2021-05-28 10:25:35.9543 INFO Request StatusCode: BadRequest - successful: False. Response: {"Message":"Incorrect postAnswer Id or you tried to change answer created by other user"}
+2021-05-28 10:25:39.8636 INFO *** PUT https://localhost:44357/api/postAnswers/20
+2021-05-28 10:25:39.8836 INFO Request StatusCode: OK - successful: True. Response: {"answerId":20,"postId":1,"userId":30,"content":"KOchaæ zycieeXXXXXXXXXXXXXXX","createdAt":"2021-05-27T20:50:02.467","editedAt":"2021-05-27T20:50:02.467"}
+2021-05-28 10:28:16.7648 INFO *** PUT https://localhost:44357/api/postAnswers/20
+2021-05-28 10:28:16.7888 INFO Request StatusCode: OK - successful: True. Response: {"answerId":20,"postId":1,"userId":30,"content":"KOchaæ zycieeXXXXXXXXXXXXXXX","createdAt":"2021-05-27T20:50:02.467","editedAt":"2021-05-27T20:50:02.467"}
+2021-05-28 10:28:17.7801 INFO *** PUT https://localhost:44357/api/postAnswers/20
+2021-05-28 10:28:17.7971 INFO Request StatusCode: OK - successful: True. Response: {"answerId":20,"postId":1,"userId":30,"content":"KOchaæ zycieeXXXXXXXXXXXXXXX","createdAt":"2021-05-27T20:50:02.467","editedAt":"2021-05-27T20:50:02.467"}
+2021-05-28 10:28:28.7618 INFO *** PUT https://localhost:44357/api/postAnswers/19
+2021-05-28 10:28:28.7748 INFO Request StatusCode: BadRequest - successful: False. Response: {"Message":"Incorrect postAnswer Id or you tried to change answer created by other user"}
+2021-05-28 10:28:33.5528 INFO *** PUT https://localhost:44357/api/postAnswers/19
+2021-05-28 10:28:33.5758 INFO Request StatusCode: OK - successful: True. Response: {"answerId":19,"postId":1,"userId":30,"content":"KOchaæ zycieeXXXXXXXXXXXXXXX","createdAt":"2021-05-27T20:50:02.467","editedAt":"2021-05-27T20:50:02.467"}
+2021-05-28 10:32:40.2797 INFO *** PUT https://localhost:44357/api/postAnswers/19
+2021-05-28 10:32:41.0249 INFO Request StatusCode: OK - successful: True. Response: {"answerId":19,"postId":1,"userId":30,"content":"KOchaæ zycieeXXXXXXXXXXXXXXX","createdAt":"2021-05-27T20:50:02.467","editedAt":"2021-05-27T20:50:02.467"}
+2021-05-28 10:33:46.4473 INFO *** PUT https://localhost:44357/api/postAnswers/19
+2021-05-28 10:33:47.1704 INFO Request StatusCode: OK - successful: True. Response: {"answerId":19,"postId":1,"userId":30,"content":"KOchaæ zycieeXXXXXXXXXXXXXXX","createdAt":"2021-05-27T20:50:02.467","editedAt":"2021-05-27T20:50:02.467"}
+2021-05-28 10:34:05.8122 INFO *** PUT https://localhost:44357/api/postAnswers/19
+2021-05-28 10:34:05.8328 INFO Request StatusCode: OK - successful: True. Response: {"answerId":19,"postId":1,"userId":31,"content":"KOchaæ zycieeXXXXXXXXXXXXXXX","createdAt":"2021-05-27T20:50:02.467","editedAt":"2021-05-27T20:50:02.467"}
+2021-05-28 10:35:10.8653 INFO *** PUT https://localhost:44357/api/postAnswers/19
+2021-05-28 10:35:11.5635 INFO Request StatusCode: BadRequest - successful: False. Response: {"Message":"Incorrect postAnswer Id or you tried to change answer created by other user"}
+2021-05-28 10:35:47.4341 INFO *** PUT https://localhost:44357/api/postAnswers/19
+2021-05-28 10:35:47.4821 INFO Request StatusCode: OK - successful: True. Response: {"answerId":19,"postId":1,"userId":30,"content":"KOchaæ zycieeXXXXXXXXXXXXXXX","createdAt":"2021-05-27T20:50:02.467","editedAt":"2021-05-27T20:50:02.467"}
+2021-05-28 12:19:28.6231 INFO *** PUT https://localhost:44357/api/postAnswers/21
+2021-05-28 12:19:28.7771 INFO Request StatusCode: OK - successful: True. Response: {"answerId":21,"postId":1,"userId":30,"content":"KOchaæ zycieeXXXXXXXXXXXXXXX","createdAt":"2021-05-27T20:50:02.467","editedAt":"2021-05-27T20:50:02.467"}
+2021-05-28 12:21:20.4872 INFO *** PUT https://localhost:44357/api/postAnswers/21
+2021-05-28 12:21:21.5024 INFO Request StatusCode: BadRequest - successful: False. Response: {"Message":"Attaching an entity of type 'STUDENTbookServer.Models.PostAnswers' failed because another entity of the same type already has the same primary key value. This can happen when using the 'Attach' method or setting the state of an entity to 'Unchanged' or 'Modified' if any entities in the graph have conflicting key values. This may be because some entities are new and have not yet received database-generated key values. In this case use the 'Add' method or the 'Added' entity state to track the graph and then set the state of non-new entities to 'Unchanged' or 'Modified' as appropriate."}
+2021-05-28 12:21:23.2029 INFO *** PUT https://localhost:44357/api/postAnswers/21
+2021-05-28 12:21:23.2434 INFO Request StatusCode: BadRequest - successful: False. Response: {"Message":"Attaching an entity of type 'STUDENTbookServer.Models.PostAnswers' failed because another entity of the same type already has the same primary key value. This can happen when using the 'Attach' method or setting the state of an entity to 'Unchanged' or 'Modified' if any entities in the graph have conflicting key values. This may be because some entities are new and have not yet received database-generated key values. In this case use the 'Add' method or the 'Added' entity state to track the graph and then set the state of non-new entities to 'Unchanged' or 'Modified' as appropriate."}
+2021-05-28 12:21:25.0116 INFO *** PUT https://localhost:44357/api/postAnswers/21
+2021-05-28 12:21:25.0503 INFO Request StatusCode: BadRequest - successful: False. Response: {"Message":"Attaching an entity of type 'STUDENTbookServer.Models.PostAnswers' failed because another entity of the same type already has the same primary key value. This can happen when using the 'Attach' method or setting the state of an entity to 'Unchanged' or 'Modified' if any entities in the graph have conflicting key values. This may be because some entities are new and have not yet received database-generated key values. In this case use the 'Add' method or the 'Added' entity state to track the graph and then set the state of non-new entities to 'Unchanged' or 'Modified' as appropriate."}
+2021-05-28 12:23:17.6784 INFO *** PUT https://localhost:44357/api/postAnswers/21
+2021-05-28 12:23:18.8125 INFO Request StatusCode: OK - successful: True. Response: {"answerId":21,"postId":1,"userId":30,"content":"KOchaæ zycieeXXXXXXXXXXXXXXX","createdAt":"2021-05-27T20:50:02.467","editedAt":"2021-05-27T20:50:02.467"}
+2021-05-28 12:23:20.5937 INFO *** PUT https://localhost:44357/api/postAnswers/21
+2021-05-28 12:23:20.6307 INFO Request StatusCode: OK - successful: True. Response: {"answerId":21,"postId":1,"userId":30,"content":"KOchaæ zycieeXXXXXXXXXXXXXXX","createdAt":"2021-05-27T20:50:02.467","editedAt":"2021-05-27T20:50:02.467"}
+2021-05-28 12:23:21.4550 INFO *** PUT https://localhost:44357/api/postAnswers/21
+2021-05-28 12:23:21.4770 INFO Request StatusCode: OK - successful: True. Response: {"answerId":21,"postId":1,"userId":30,"content":"KOchaæ zycieeXXXXXXXXXXXXXXX","createdAt":"2021-05-27T20:50:02.467","editedAt":"2021-05-27T20:50:02.467"}
+2021-05-28 12:23:26.5385 INFO *** PUT https://localhost:44357/api/postAnswers/21
+2021-05-28 12:23:26.5725 INFO Request StatusCode: OK - successful: True. Response: {"answerId":21,"postId":1,"userId":30,"content":"KOchaæ zycieeXXXXXsadsadsaXXXXXXXXXX","createdAt":"2021-05-27T20:50:02.467","editedAt":"2021-05-27T20:50:02.467"}
+2021-05-28 12:23:37.6079 INFO *** PUT https://localhost:44357/api/postAnswers/21
+2021-05-28 12:23:37.6379 INFO Request StatusCode: OK - successful: True. Response: {"answerId":21,"postId":1,"userId":31,"content":"KOchaæ zycieeXXXXXsadsadsaXXXXXXXXXX","createdAt":"2021-05-27T20:50:02.467","editedAt":"2021-05-27T20:50:02.467"}
+2021-05-28 12:24:15.1584 INFO *** PUT https://localhost:44357/api/postAnswers/21
+2021-05-28 12:24:15.1844 INFO Request StatusCode: OK - successful: True. Response: {"answerId":21,"postId":1,"userId":32,"content":"KOchaæ zycieeXXXXXsadsadsaXXXXXXXXXX","createdAt":"2021-05-27T20:50:02.467","editedAt":"2021-05-27T20:50:02.467"}
+2021-05-28 12:27:06.0054 INFO *** PUT https://localhost:44357/api/postAnswers/21
+2021-05-28 12:27:06.8068 INFO Request StatusCode: OK - successful: True. Response: {"answerId":21,"postId":1,"userId":30,"content":"KOchaæ zycieeXXXXXsadsadsaXXXXXXXXXX","createdAt":"2021-05-27T20:50:02.467","editedAt":"2021-05-27T20:50:02.467"}
+2021-05-28 12:28:14.0595 INFO *** PUT https://localhost:44357/api/postAnswers/22
+2021-05-28 12:28:14.0865 INFO Request StatusCode: BadRequest - successful: False. Response: {"Message":"Incorrect postAnswer Id or you tried to change answer created by other user"}
+2021-05-28 12:28:15.9250 INFO *** PUT https://localhost:44357/api/postAnswers/22
+2021-05-28 12:28:15.9250 INFO Request StatusCode: BadRequest - successful: False. Response: {"Message":"Incorrect postAnswer Id or you tried to change answer created by other user"}
+2021-05-28 12:28:21.8730 INFO *** PUT https://localhost:44357/api/postAnswers/22
+2021-05-28 12:28:21.8910 INFO Request StatusCode: BadRequest - successful: False. Response: {"Message":"Incorrect postAnswer Id or you tried to change answer created by other user"}
+2021-05-28 12:28:22.9197 INFO *** PUT https://localhost:44357/api/postAnswers/22
+2021-05-28 12:28:22.9387 INFO Request StatusCode: BadRequest - successful: False. Response: {"Message":"Incorrect postAnswer Id or you tried to change answer created by other user"}
+2021-05-28 12:28:23.5842 INFO *** PUT https://localhost:44357/api/postAnswers/22
+2021-05-28 12:28:23.5992 INFO Request StatusCode: BadRequest - successful: False. Response: {"Message":"Incorrect postAnswer Id or you tried to change answer created by other user"}
+2021-05-28 12:28:24.2012 INFO *** PUT https://localhost:44357/api/postAnswers/22
+2021-05-28 12:28:24.2252 INFO Request StatusCode: BadRequest - successful: False. Response: {"Message":"Incorrect postAnswer Id or you tried to change answer created by other user"}
+2021-05-28 12:28:25.0754 INFO *** PUT https://localhost:44357/api/postAnswers/22
+2021-05-28 12:28:25.0914 INFO Request StatusCode: BadRequest - successful: False. Response: {"Message":"Incorrect postAnswer Id or you tried to change answer created by other user"}
+2021-05-28 12:28:34.0472 INFO *** PUT https://localhost:44357/api/postAnswers/21
+2021-05-28 12:28:34.0622 INFO Request StatusCode: OK - successful: True. Response: {"answerId":21,"postId":1,"userId":30,"content":"KOchaæ zycieeXXXXXsadsadsaXXXXXXXXXX","createdAt":"2021-05-27T20:50:02.467","editedAt":"2021-05-27T20:50:02.467"}
+2021-05-28 12:28:39.1688 INFO *** PUT https://localhost:44357/api/postAnswers/21
+2021-05-28 12:28:39.1888 INFO Request StatusCode: OK - successful: True. Response: {"answerId":21,"postId":1,"userId":30,"content":"KOchaæ zycieeXXXXXsadsadsaXXXXXXXXXX","createdAt":"2021-05-27T20:50:02.467","editedAt":"2021-05-27T20:50:02.467"}
+2021-05-28 12:28:43.5825 INFO *** PUT https://localhost:44357/api/postAnswers/21
+2021-05-28 12:28:43.6035 INFO Request StatusCode: OK - successful: True. Response: {"answerId":21,"postId":1,"userId":30,"content":"KOchaæ zycieeXXXXXsadsadsaXXXXXXXXXX","createdAt":"2021-05-27T20:50:02.467","editedAt":"2021-05-27T20:50:02.467"}
+2021-05-28 12:28:44.6331 INFO *** PUT https://localhost:44357/api/postAnswers/21
+2021-05-28 12:28:44.6531 INFO Request StatusCode: OK - successful: True. Response: {"answerId":21,"postId":1,"userId":30,"content":"KOchaæ zycieeXXXXXsadsadsaXXXXXXXXXX","createdAt":"2021-05-27T20:50:02.467","editedAt":"2021-05-27T20:50:02.467"}
+2021-05-28 12:28:45.5017 INFO *** PUT https://localhost:44357/api/postAnswers/21
+2021-05-28 12:28:45.5167 INFO Request StatusCode: OK - successful: True. Response: {"answerId":21,"postId":1,"userId":30,"content":"KOchaæ zycieeXXXXXsadsadsaXXXXXXXXXX","createdAt":"2021-05-27T20:50:02.467","editedAt":"2021-05-27T20:50:02.467"}
+2021-05-28 12:28:45.9779 INFO *** PUT https://localhost:44357/api/postAnswers/21
+2021-05-28 12:28:45.9959 INFO Request StatusCode: OK - successful: True. Response: {"answerId":21,"postId":1,"userId":30,"content":"KOchaæ zycieeXXXXXsadsadsaXXXXXXXXXX","createdAt":"2021-05-27T20:50:02.467","editedAt":"2021-05-27T20:50:02.467"}
+2021-05-28 12:29:05.7295 INFO *** DELETE https://localhost:44357/api/postAnswers/21
+2021-05-28 12:29:05.7605 INFO Request StatusCode: OK - successful: True. Response: "Post has been deleted"
+2021-05-28 12:29:09.2565 INFO *** DELETE https://localhost:44357/api/postAnswers/22
+2021-05-28 12:29:09.2715 INFO Request StatusCode: BadRequest - successful: False. Response: {"Message":"You can not delete post answer created by other user"}

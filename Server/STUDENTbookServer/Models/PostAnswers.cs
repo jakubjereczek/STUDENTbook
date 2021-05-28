@@ -20,8 +20,5 @@ namespace STUDENTbookServer.Models
         public string content { get; set; }
         public System.DateTime createdAt { get; set; }
         public Nullable<System.DateTime> editedAt { get; set; }
-    
-        public virtual Posts Posts { get; set; }
-        public virtual Users Users { get; set; }
     }
 }

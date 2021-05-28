@@ -114,7 +114,7 @@ namespace STUDENTbookServer.Controllers
                 var User = _db.Users.Find(id);
                 if (User == null)
                 {
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "User does not exist");
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "User do not exist");
                 }
                 string username = Thread.CurrentPrincipal.Identity.Name; // Uzytkownik który jest autoryzowany, moze usunąć tylko siebie. 
 

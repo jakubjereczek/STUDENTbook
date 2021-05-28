@@ -133,8 +133,6 @@
           <Property Name="content" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="createdAt" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="editedAt" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Posts" Relationship="Self.FK__PostAnswe__postI__3B75D760" FromRole="PostAnswers" ToRole="Posts" />
-          <NavigationProperty Name="Users" Relationship="Self.FK__PostAnswe__userI__3A81B327" FromRole="PostAnswers" ToRole="Users" />
         </EntityType>
         <EntityType Name="Posts">
           <Key>

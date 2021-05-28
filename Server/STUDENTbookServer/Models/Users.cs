@@ -11,9 +11,7 @@ namespace STUDENTbookServer.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-
+    
     public partial class Users
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,14 +19,13 @@ namespace STUDENTbookServer.Models
         {
             this.Posts = new HashSet<Posts>();
         }
-
+    
         public int userId { get; set; }
         public Nullable<int> universityId { get; set; }
         public string nick { get; set; }
         public string firstName { get; set; }
         public string lastName { get; set; }
         public string email { get; set; }
-        [NotMapped]
         public string password { get; set; }
         public System.DateTime createdAt { get; set; }
         public Nullable<System.DateTime> lastLogginIn { get; set; }

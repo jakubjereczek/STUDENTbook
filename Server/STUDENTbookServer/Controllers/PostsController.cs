@@ -37,10 +37,10 @@ namespace STUDENTbookServer.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, Post);
         }
 
-        // GET: api/Posts/GetUserPosts/username/{name}
+        // GET: api/Posts/GetBy/username/{name}
         [BasicAuthorization]
         [HttpGet]
-        public HttpResponseMessage GetByUserName(string name)
+        public HttpResponseMessage GetBy(string name)
         {
             var User = _db.Users.FirstOrDefault(u => u.nick == name);
             if (User == null)
@@ -68,7 +68,7 @@ namespace STUDENTbookServer.Controllers
                     return Request.CreateErrorResponse(HttpStatusCode.NotFound, string.Format("User with id = {0} not found", id));
 
                 if (id != User.userId || username != User.nick)
-                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest, string.Format("Incorrect userId of {0} {1} or you can not modify post made by other user", User.firstName, User.lastName));            
+                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest, string.Format("Incorrect userId of {0} {1}", User.firstName, User.lastName));            
 
                 if (ModelState.IsValid)
                 {
@@ -130,7 +130,7 @@ namespace STUDENTbookServer.Controllers
                
                 var Post = _db.Posts.Find(id);
                 if (Post == null)
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Post does not exist");
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Post do not exist");
 
                 var User = _db.Users.FirstOrDefault(u => u.nick == username);
                 if (Post.userId != User.userId)
