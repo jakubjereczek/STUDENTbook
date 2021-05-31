@@ -7,6 +7,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace STUDENTbookServer.Controllers
 {
@@ -14,6 +15,7 @@ namespace STUDENTbookServer.Controllers
     // Aktulanie nie ma żadnych rol weryfikujacych kto jest administratorem.
     // I na sztywno istnieje konto admin, ktore ma dostep do usuwania.
 
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class UniversityController : ApiController
     {
         // TODO: Rola Admina

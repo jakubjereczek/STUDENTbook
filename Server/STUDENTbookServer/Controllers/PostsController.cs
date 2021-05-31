@@ -7,9 +7,11 @@ using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace STUDENTbookServer.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class PostsController : ApiController
     {
         // TO DO: Rola admina umozliwiajaca to co uzytkownik zautoryzowany.

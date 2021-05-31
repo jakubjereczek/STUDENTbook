@@ -25,9 +25,12 @@ namespace STUDENTbookServer
 
             // response
             var result = await base.SendAsync(request, cancellationToken);
-            var responseBody = await result.Content.ReadAsStringAsync();
-            logger.Info("Request StatusCode: {0} - successful: {1}. Response: {2}", result.StatusCode, result.IsSuccessStatusCode, responseBody);
 
+            if (result.Content != null)
+            { // TO DO: Logowanie nie działa jesli request idzie z aplikacji.
+                var responseBody = await result.Content.ReadAsStringAsync();
+                logger.Info("Request StatusCode: {0} - successful: {1}. Response: {2}", result.StatusCode, result.IsSuccessStatusCode, responseBody);
+            }
             return result;
         }
     }

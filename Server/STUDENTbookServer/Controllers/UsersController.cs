@@ -12,9 +12,11 @@ using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Threading;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace STUDENTbookServer.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class UsersController : ApiController
     {
         // Uchwyt do bazy danych
@@ -38,6 +40,20 @@ namespace STUDENTbookServer.Controllers
                 return Request.CreateErrorResponse(HttpStatusCode.NotFound, string.Format("User with id = {0} not found", id));
             }
             User.password = null;
+            return Request.CreateResponse(HttpStatusCode.OK, User);
+        }
+
+        // GET: api/Users/GetBy/username/{name}
+        [BasicAuthorization]
+        [HttpGet]
+        public HttpResponseMessage GetBy(string name)
+        {
+            var User = _db.Users.FirstOrDefault(u => u.nick == name);
+            User.password = null;
+            if (User == null)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound, string.Format("User {0} not found", name));
+            }
             return Request.CreateResponse(HttpStatusCode.OK, User);
         }
 
@@ -68,7 +84,6 @@ namespace STUDENTbookServer.Controllers
             {
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, InnerExceptionFinder.getLastInnerException(ex).Message);
             }
-
         }
 
         // PUT: api/Users/5

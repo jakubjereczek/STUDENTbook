@@ -4,9 +4,10 @@ using System.Linq;
 using System.Web.Http;
 using System.Configuration;
 using System.Text;
-using Microsoft.AspNetCore.Cors;
 using System.Web.Http.Routing;
 using System.Net.Http;
+using System.Web.Http.Cors;
+
 
 namespace STUDENTbookServer
 {
@@ -19,6 +20,8 @@ namespace STUDENTbookServer
             // Trasy składnika Web API
             config.MapHttpAttributeRoutes();
 
+            config.EnableCors();
+
             config.Routes.MapHttpRoute(
                 name: "DefaultApiWithId",
                 routeTemplate: "api/{controller}/{id}",
@@ -30,7 +33,6 @@ namespace STUDENTbookServer
                 routeTemplate: "api/{controller}/{id}/{id2}",
                 defaults: new { id = RouteParameter.Optional, id2 = RouteParameter.Optional }
             );
-
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
