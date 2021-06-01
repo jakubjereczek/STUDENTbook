@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { useAuth } from './services/AuthorizationService';
-import { getAllUsers, getUserById } from './services/UserService';
+import { getAllUsers, getUserById, postUser } from './services/UserService';
+import User from './models/User';
 
 // Testy
 function AuthorizationValidation() {
@@ -29,6 +30,13 @@ function AuthorizationValidation() {
         getUserById(19);
     }
 
+    const postUserAPI = () => {
+        const user = new User(1, "Kubs1999", "Jakub", "Jereczek", new Date(), "123456", "99jakubjereczek@gmail.com");
+
+        const userObj = user.getObject()
+        postUser(userObj);
+    }
+
     return (
         <React.Fragment>
             {isUserAuthorizated ? (
@@ -50,6 +58,7 @@ function AuthorizationValidation() {
             </div>
             <button onClick={getAllUsersAPI}>getAllUsersAPI</button>
             <button onClick={getUserByIdAPI}>getUserByIdAPI(19) AUTORYZACJA</button>
+            <button onClick={postUserAPI}>postUser()</button>
         </React.Fragment>
 
     )

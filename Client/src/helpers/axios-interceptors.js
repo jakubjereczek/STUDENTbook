@@ -13,9 +13,12 @@ export default () => {
 
     axiosInstance.interceptors.response.use(
         response => {
+            console.log(response)
             return response;
         },
         err => {
+            console.log(err)
+
             if (err.response.status === 401) {
                 console.log("UNAUTHORIZED")
                 localStorage.removeItem('token')
