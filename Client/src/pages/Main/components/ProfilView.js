@@ -12,7 +12,7 @@ function NotFound() {
     return (
         <ContainerInside>
             <MyContainer>
-                <UserIcon />
+                {/* <UserIcon /> */}
                 <UserAbout>
                     <p>Witaj, {firstName} {lastName} </p>
                     <p>{University.name}, {University.city}</p>

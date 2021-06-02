@@ -42,3 +42,10 @@ export const MenuInside = styled(ContainerInside)`
     justify-content: space-between;
 `
 
+export const Button = styled.span`
+    transition: 0.3s;
+    margin: 0px 5px;
+    &:hover {
+        color: ${props => props.theme.main};
+    }
+`
