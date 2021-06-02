@@ -11,10 +11,10 @@ export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState();
     const [loading, setLoading] = useState(true);
 
-
     // Logowanie zmienia tylko localStorage, ktory potem przy kazdym requescie jest wysylany do przeglądarki i w przypadku 
     const login = (name, password) => {
 
+        setLoading(true);
         // 1. Ustawiam w localStorage w formiecie base64 login:haslo użytkownika.
         const token = Buffer.from(`${name}:${password}`, 'utf8').toString('base64');
         localStorage.setItem('token', token);
@@ -25,14 +25,18 @@ export const AuthProvider = ({ children }) => {
         getUserByName(name)
             .then(response => {
                 // 3. Dane użytkownika ładuje do user.
-                setUser(response.data);
                 localStorage.setItem('user', JSON.stringify(response.data));
+                return response;
+            }).then(response => {
+                setUser(response.data);
             }).catch((err) => {
                 console.log('Blad: ' + err);
                 if (user != null) {
                     setUser(null);
                     localStorage.setItem('user', null)
                 }
+            }).finally(() => {
+                setLoading(false);
             })
     }
 
@@ -45,7 +49,7 @@ export const AuthProvider = ({ children }) => {
     const isUserAuthorizated = () => {
         console.log(user)
 
-        if (user == null) {
+        if (user == null || user == "") {
             return false;
         }
         return true;
@@ -68,7 +72,7 @@ export const AuthProvider = ({ children }) => {
 
     return (
         <AuthContext.Provider value={values}>
-            {!loading && children}
+            {loading ? "Ładowanie..." : children}
         </AuthContext.Provider>
     )
 

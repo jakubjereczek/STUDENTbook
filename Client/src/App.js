@@ -1,15 +1,18 @@
 import './App.css';
-import AuthorizationValidation from './AuthorizationValidation';
+import RoutingTable from './RoutingTable';
 import { AuthProvider } from './services/AuthorizationService';
+import { ThemeProvider } from 'styled-components';
+import colors from './helpers/colors'
+import GlobalStyles from './helpers/global-styles';
 
 function App() {
 
   return (
     <AuthProvider>
-      <div className="App">
-        <AuthorizationValidation />
-        <h2>Hello world</h2>
-      </div>
+      <ThemeProvider theme={colors}>
+        <GlobalStyles />
+        <RoutingTable />
+      </ThemeProvider>
     </AuthProvider>
 
   );

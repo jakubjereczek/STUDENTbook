@@ -18,12 +18,12 @@ export default () => {
         },
         err => {
             console.log(err)
-
             if (err.response.status === 401) {
                 console.log("UNAUTHORIZED")
                 localStorage.removeItem('token')
                 localStorage.removeItem('user');
-                window.location.reload();
+                // TODO: odswiezanie w inny spsoob.
+                //window.location.reload();
             }
             return Promise.reject(err);
         });

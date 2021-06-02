@@ -1,0 +1,106 @@
+2021-06-01 23:01:38.1289 INFO *** OPTIONS https://localhost:44357/api/users/GetBy/username/
+2021-06-01 23:01:38.1289 INFO *** OPTIONS https://localhost:44357/api/users/GetBy/username/admin
+2021-06-01 23:01:38.3890 INFO *** GET https://localhost:44357/api/users/GetBy/username/
+2021-06-01 23:01:38.9930 INFO Request StatusCode: Unauthorized - successful: False. Response: {"Message":"You are not authorized"}
+2021-06-01 23:02:16.6372 INFO *** OPTIONS https://localhost:44357/api/users/GetBy/username/admin
+2021-06-01 23:02:16.6792 INFO *** GET https://localhost:44357/api/users/GetBy/username/admin
+2021-06-01 23:02:16.9392 INFO Request StatusCode: OK - successful: True. Response: {"Posts":[],"University":{"universityId":1,"name":"Uniwersytet Warszawski","city":"Warszawa"},"userId":34,"universityId":1,"nick":"admin","firstName":"Jakub","lastName":"Jereczek","email":"99jakubjereczek@gmail.com","password":null,"createdAt":"2018-03-29T13:34:00","lastLogginIn":null}
+2021-06-01 23:20:57.0910 INFO *** OPTIONS https://localhost:44357/api/users/GetBy/username/kuba
+2021-06-01 23:20:57.1463 INFO *** GET https://localhost:44357/api/users/GetBy/username/kuba
+2021-06-01 23:20:57.2743 INFO Request StatusCode: Unauthorized - successful: False. Response: {"Message":"You are not authorized"}
+2021-06-01 23:21:02.4175 INFO *** OPTIONS https://localhost:44357/api/users/GetBy/username/has
+2021-06-01 23:21:02.4305 INFO *** GET https://localhost:44357/api/users/GetBy/username/has
+2021-06-01 23:21:02.4375 INFO Request StatusCode: Unauthorized - successful: False. Response: {"Message":"You are not authorized"}
+2021-06-01 23:21:03.6115 INFO *** OPTIONS https://localhost:44357/api/users/GetBy/username/
+2021-06-01 23:21:03.6235 INFO *** GET https://localhost:44357/api/users/GetBy/username/
+2021-06-01 23:21:03.6235 INFO Request StatusCode: Unauthorized - successful: False. Response: {"Message":"You are not authorized"}
+2021-06-01 23:21:04.6828 INFO *** GET https://localhost:44357/api/users/GetBy/username/
+2021-06-01 23:21:04.6938 INFO Request StatusCode: Unauthorized - successful: False. Response: {"Message":"You are not authorized"}
+2021-06-01 23:21:05.6055 INFO *** GET https://localhost:44357/api/users/GetBy/username/
+2021-06-01 23:21:05.6185 INFO Request StatusCode: Unauthorized - successful: False. Response: {"Message":"You are not authorized"}
+2021-06-01 23:21:06.6426 INFO *** GET https://localhost:44357/api/users/GetBy/username/
+2021-06-01 23:21:06.6426 INFO Request StatusCode: Unauthorized - successful: False. Response: {"Message":"You are not authorized"}
+2021-06-01 23:21:07.8133 INFO *** GET https://localhost:44357/api/users/GetBy/username/
+2021-06-01 23:21:07.8133 INFO Request StatusCode: Unauthorized - successful: False. Response: {"Message":"You are not authorized"}
+2021-06-01 23:21:08.8900 INFO *** OPTIONS https://localhost:44357/api/users/GetBy/username/
+2021-06-01 23:21:08.8900 INFO *** GET https://localhost:44357/api/users/GetBy/username/
+2021-06-01 23:21:08.9100 INFO Request StatusCode: Unauthorized - successful: False. Response: {"Message":"You are not authorized"}
+2021-06-01 23:21:09.9596 INFO *** GET https://localhost:44357/api/users/GetBy/username/
+2021-06-01 23:21:09.9596 INFO Request StatusCode: Unauthorized - successful: False. Response: {"Message":"You are not authorized"}
+2021-06-01 23:21:10.8717 INFO *** GET https://localhost:44357/api/users/GetBy/username/
+2021-06-01 23:21:10.8778 INFO Request StatusCode: Unauthorized - successful: False. Response: {"Message":"You are not authorized"}
+2021-06-01 23:21:11.8061 INFO *** GET https://localhost:44357/api/users/GetBy/username/
+2021-06-01 23:21:11.8111 INFO Request StatusCode: Unauthorized - successful: False. Response: {"Message":"You are not authorized"}
+2021-06-01 23:21:12.8424 INFO *** GET https://localhost:44357/api/users/GetBy/username/
+2021-06-01 23:21:12.8424 INFO Request StatusCode: Unauthorized - successful: False. Response: {"Message":"You are not authorized"}
+2021-06-01 23:21:25.6510 INFO *** OPTIONS https://localhost:44357/api/users/GetBy/username/admin
+2021-06-01 23:21:25.6610 INFO *** GET https://localhost:44357/api/users/GetBy/username/admin
+2021-06-01 23:21:25.6950 INFO Request StatusCode: OK - successful: True. Response: {"Posts":[],"University":{"universityId":1,"name":"Uniwersytet Warszawski","city":"Warszawa"},"userId":34,"universityId":1,"nick":"admin","firstName":"Jakub","lastName":"Jereczek","email":"99jakubjereczek@gmail.com","password":null,"createdAt":"2018-03-29T13:34:00","lastLogginIn":null}
+2021-06-01 23:23:58.0895 INFO *** OPTIONS https://localhost:44357/api/users/GetBy/username/
+2021-06-01 23:23:58.1091 INFO *** GET https://localhost:44357/api/users/GetBy/username/
+2021-06-01 23:23:58.1091 INFO Request StatusCode: Unauthorized - successful: False. Response: {"Message":"You are not authorized"}
+2021-06-01 23:23:59.7112 INFO *** GET https://localhost:44357/api/users/GetBy/username/
+2021-06-01 23:23:59.7112 INFO Request StatusCode: Unauthorized - successful: False. Response: {"Message":"You are not authorized"}
+2021-06-01 23:24:00.8289 INFO *** GET https://localhost:44357/api/users/GetBy/username/
+2021-06-01 23:24:00.8289 INFO Request StatusCode: Unauthorized - successful: False. Response: {"Message":"You are not authorized"}
+2021-06-01 23:24:18.2151 INFO *** OPTIONS https://localhost:44357/api/users/GetBy/username/
+2021-06-01 23:24:18.2271 INFO *** GET https://localhost:44357/api/users/GetBy/username/
+2021-06-01 23:24:18.2361 INFO Request StatusCode: Unauthorized - successful: False. Response: {"Message":"You are not authorized"}
+2021-06-01 23:24:19.6991 INFO *** GET https://localhost:44357/api/users/GetBy/username/
+2021-06-01 23:24:19.7051 INFO Request StatusCode: Unauthorized - successful: False. Response: {"Message":"You are not authorized"}
+2021-06-01 23:24:21.5678 INFO *** GET https://localhost:44357/api/users/GetBy/username/
+2021-06-01 23:24:21.5798 INFO Request StatusCode: Unauthorized - successful: False. Response: {"Message":"You are not authorized"}
+2021-06-01 23:24:22.9232 INFO *** GET https://localhost:44357/api/users/GetBy/username/
+2021-06-01 23:24:22.9425 INFO Request StatusCode: Unauthorized - successful: False. Response: {"Message":"You are not authorized"}
+2021-06-01 23:24:24.4876 INFO *** OPTIONS https://localhost:44357/api/users/GetBy/username/
+2021-06-01 23:24:24.4876 INFO *** GET https://localhost:44357/api/users/GetBy/username/
+2021-06-01 23:24:24.5056 INFO Request StatusCode: Unauthorized - successful: False. Response: {"Message":"You are not authorized"}
+2021-06-01 23:24:32.5856 INFO *** OPTIONS https://localhost:44357/api/users/GetBy/username/
+2021-06-01 23:24:32.5946 INFO *** GET https://localhost:44357/api/users/GetBy/username/
+2021-06-01 23:24:32.5946 INFO Request StatusCode: Unauthorized - successful: False. Response: {"Message":"You are not authorized"}
+2021-06-01 23:24:33.9491 INFO *** GET https://localhost:44357/api/users/GetBy/username/
+2021-06-01 23:24:33.9541 INFO Request StatusCode: Unauthorized - successful: False. Response: {"Message":"You are not authorized"}
+2021-06-01 23:24:35.3516 INFO *** GET https://localhost:44357/api/users/GetBy/username/
+2021-06-01 23:24:35.3636 INFO Request StatusCode: Unauthorized - successful: False. Response: {"Message":"You are not authorized"}
+2021-06-01 23:24:36.6722 INFO *** GET https://localhost:44357/api/users/GetBy/username/
+2021-06-01 23:24:36.6882 INFO Request StatusCode: Unauthorized - successful: False. Response: {"Message":"You are not authorized"}
+2021-06-01 23:24:37.9511 INFO *** OPTIONS https://localhost:44357/api/users/GetBy/username/
+2021-06-01 23:24:37.9681 INFO *** GET https://localhost:44357/api/users/GetBy/username/
+2021-06-01 23:24:37.9681 INFO Request StatusCode: Unauthorized - successful: False. Response: {"Message":"You are not authorized"}
+2021-06-01 23:24:39.1263 INFO *** GET https://localhost:44357/api/users/GetBy/username/
+2021-06-01 23:24:39.1823 INFO Request StatusCode: Unauthorized - successful: False. Response: {"Message":"You are not authorized"}
+2021-06-01 23:24:40.5225 INFO *** GET https://localhost:44357/api/users/GetBy/username/
+2021-06-01 23:24:40.5345 INFO Request StatusCode: Unauthorized - successful: False. Response: {"Message":"You are not authorized"}
+2021-06-01 23:24:41.9560 INFO *** GET https://localhost:44357/api/users/GetBy/username/
+2021-06-01 23:24:41.9560 INFO Request StatusCode: Unauthorized - successful: False. Response: {"Message":"You are not authorized"}
+2021-06-01 23:25:28.9209 INFO *** OPTIONS https://localhost:44357/api/users/GetBy/username/
+2021-06-01 23:25:28.9209 INFO *** GET https://localhost:44357/api/users/GetBy/username/
+2021-06-01 23:25:28.9489 INFO Request StatusCode: Unauthorized - successful: False. Response: {"Message":"You are not authorized"}
+2021-06-01 23:25:30.4755 INFO *** GET https://localhost:44357/api/users/GetBy/username/
+2021-06-01 23:25:30.4865 INFO Request StatusCode: Unauthorized - successful: False. Response: {"Message":"You are not authorized"}
+2021-06-01 23:25:31.8151 INFO *** GET https://localhost:44357/api/users/GetBy/username/
+2021-06-01 23:25:31.8281 INFO Request StatusCode: Unauthorized - successful: False. Response: {"Message":"You are not authorized"}
+2021-06-01 23:25:33.3533 INFO *** GET https://localhost:44357/api/users/GetBy/username/
+2021-06-01 23:25:33.3604 INFO Request StatusCode: Unauthorized - successful: False. Response: {"Message":"You are not authorized"}
+2021-06-01 23:25:34.6575 INFO *** OPTIONS https://localhost:44357/api/users/GetBy/username/
+2021-06-01 23:25:34.6575 INFO *** GET https://localhost:44357/api/users/GetBy/username/
+2021-06-01 23:25:34.6735 INFO Request StatusCode: Unauthorized - successful: False. Response: {"Message":"You are not authorized"}
+2021-06-01 23:25:36.0733 INFO *** GET https://localhost:44357/api/users/GetBy/username/
+2021-06-01 23:25:36.0803 INFO Request StatusCode: Unauthorized - successful: False. Response: {"Message":"You are not authorized"}
+2021-06-01 23:26:27.0405 INFO *** OPTIONS https://localhost:44357/api/users/GetBy/username/
+2021-06-01 23:26:27.0509 INFO *** GET https://localhost:44357/api/users/GetBy/username/
+2021-06-01 23:26:27.0639 INFO Request StatusCode: Unauthorized - successful: False. Response: {"Message":"You are not authorized"}
+2021-06-01 23:26:33.0179 INFO *** OPTIONS https://localhost:44357/api/users/GetBy/username/
+2021-06-01 23:26:33.0179 INFO *** GET https://localhost:44357/api/users/GetBy/username/
+2021-06-01 23:26:33.0409 INFO Request StatusCode: Unauthorized - successful: False. Response: {"Message":"You are not authorized"}
+2021-06-01 23:26:57.9411 INFO *** OPTIONS https://localhost:44357/api/users/GetBy/username/admin
+2021-06-01 23:26:57.9521 INFO *** GET https://localhost:44357/api/users/GetBy/username/admin
+2021-06-01 23:26:57.9521 INFO Request StatusCode: Unauthorized - successful: False. Response: {"Message":"You are not authorized"}
+2021-06-01 23:27:02.6349 INFO *** GET https://localhost:44357/api/users/GetBy/username/admin
+2021-06-01 23:27:02.6549 INFO Request StatusCode: OK - successful: True. Response: {"Posts":[],"University":{"universityId":1,"name":"Uniwersytet Warszawski","city":"Warszawa"},"userId":34,"universityId":1,"nick":"admin","firstName":"Jakub","lastName":"Jereczek","email":"99jakubjereczek@gmail.com","password":null,"createdAt":"2018-03-29T13:34:00","lastLogginIn":null}
+2021-06-01 23:27:14.0704 INFO *** OPTIONS https://localhost:44357/api/users/GetBy/username/admin
+2021-06-01 23:27:14.0784 INFO *** GET https://localhost:44357/api/users/GetBy/username/admin
+2021-06-01 23:27:14.0924 INFO Request StatusCode: OK - successful: True. Response: {"Posts":[],"University":{"universityId":1,"name":"Uniwersytet Warszawski","city":"Warszawa"},"userId":34,"universityId":1,"nick":"admin","firstName":"Jakub","lastName":"Jereczek","email":"99jakubjereczek@gmail.com","password":null,"createdAt":"2018-03-29T13:34:00","lastLogginIn":null}
+2021-06-01 23:27:22.1364 INFO *** OPTIONS https://localhost:44357/api/users/GetBy/username/admin
+2021-06-01 23:27:22.1446 INFO *** GET https://localhost:44357/api/users/GetBy/username/admin
+2021-06-01 23:27:22.1446 INFO Request StatusCode: OK - successful: True. Response: {"Posts":[],"University":{"universityId":1,"name":"Uniwersytet Warszawski","city":"Warszawa"},"userId":34,"universityId":1,"nick":"admin","firstName":"Jakub","lastName":"Jereczek","email":"99jakubjereczek@gmail.com","password":null,"createdAt":"2018-03-29T13:34:00","lastLogginIn":null}
