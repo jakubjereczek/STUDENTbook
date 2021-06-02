@@ -4,10 +4,11 @@ export const ContainerWrapper = styled.div`
     background-color: ${props => props.theme.secodary};
     min-width: 300px;
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
+    height: 100%;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
+    /* overflow: hidden; */
 `
 
 export const Menu = styled.div`

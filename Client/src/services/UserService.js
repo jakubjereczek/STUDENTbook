@@ -1,5 +1,6 @@
 import axios from '../helpers/axios-interceptors';
 import { URL } from '../constants'
+
 const URL_USERS = `${URL}/users`;
 
 // Autoryzacja
@@ -10,9 +11,8 @@ const getAllUsers = async () => await axios()
     .get(URL_USERS)
 
 // Autoryzacja
-const getUserById = async (id) =>
-    await axios()
-        .get(`${URL_USERS}/${id}`)
+const getUserById = async (id) => await axios()
+    .get(`${URL_USERS}/${id}`)
 
 // User = User class model
 const postUser = async (user) => await axios()

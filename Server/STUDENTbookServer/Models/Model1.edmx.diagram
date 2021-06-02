@@ -5,10 +5,10 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="d692739e5f064b2db7db3c9f1498d776" Name="Diagram1">
-        <EntityTypeShape EntityType="STUDENTbookModel.PostAnswers" Width="1.5" PointX="12.125" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="STUDENTbookModel.PostAnswers" Width="1.5" PointX="7.5" PointY="4.375" IsExpanded="true" />
         <EntityTypeShape EntityType="STUDENTbookModel.Posts" Width="1.5" PointX="5.25" PointY="6.125" IsExpanded="true" />
         <EntityTypeShape EntityType="STUDENTbookModel.University" Width="1.5" PointX="0.75" PointY="3.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="STUDENTbookModel.Users" Width="1.5" PointX="3.875" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="STUDENTbookModel.Users" Width="1.5" PointX="3" PointY="2.375" IsExpanded="true" />
         <AssociationConnector Association="STUDENTbookModel.FK__PostAnswe__postI__3B75D760" ManuallyRouted="false" />
         <AssociationConnector Association="STUDENTbookModel.FK__PostAnswe__userI__3A81B327" ManuallyRouted="false" />
         <AssociationConnector Association="STUDENTbookModel.FK__Posts__editedAt__37A5467C" ManuallyRouted="false" />

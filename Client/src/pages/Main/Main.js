@@ -1,9 +1,14 @@
 import React from 'react'
+import PostsList from './components/PostsList'
+import ProfilView from './components/ProfilView'
 
 function Main() {
 
     return (
-        <h2>Main site</h2>
+        <React.Fragment>
+            <ProfilView />
+            <PostsList />
+        </React.Fragment>
     )
 }
 

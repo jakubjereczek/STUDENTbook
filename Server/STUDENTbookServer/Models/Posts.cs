@@ -11,8 +11,7 @@ namespace STUDENTbookServer.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class Posts
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -22,17 +21,14 @@ namespace STUDENTbookServer.Models
         }
     
         public int postId { get; set; }
-        [Required]
         public Nullable<int> userId { get; set; }
         public string tag { get; set; }
-        [Required]
-        [RegularExpression("[^#!$%^&*~]*")]
         public string content { get; set; }
-        [Required]
         public Nullable<System.DateTime> createdAt { get; set; }
         public Nullable<System.DateTime> editedAt { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PostAnswers> PostAnswers { get; set; }
+        public virtual Users Users { get; set; }
     }
 }

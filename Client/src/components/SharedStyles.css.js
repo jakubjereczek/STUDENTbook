@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import User from '../assets/images/user.png';
 
 export const Title = styled.div`
     font-weight: 400;
@@ -22,3 +23,22 @@ export const Logo = styled.h2`
         font-weight: 400;
     }
 `
+
+export const ContainerInside = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+    border: 1px solid ${props => props.theme.others};
+    background-color: ${props => props.theme.primary};
+    padding: 10px;
+    margin: 5px 0;
+`
+
+export const UserIcon = styled.div`
+    width: 32px;
+    height: 32px;
+    background-size: 100%;
+    background-image: url(${User});
+`
+

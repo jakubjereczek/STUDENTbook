@@ -11,18 +11,13 @@ namespace STUDENTbookServer.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class PostAnswers
     {
         public int answerId { get; set; }
-        [Required]
         public int postId { get; set; }
         public int userId { get; set; }
-        [RegularExpression("[^#!$%^&*~]*")]
-        [Required]
         public string content { get; set; }
-        [Required]
         public System.DateTime createdAt { get; set; }
         public Nullable<System.DateTime> editedAt { get; set; }
     }

@@ -22,6 +22,7 @@
     <Property Name="createdAt" Type="DateTime" Precision="3" />
     <Property Name="editedAt" Type="DateTime" Precision="3" />
     <NavigationProperty Name="PostAnswers" Relationship="Self.FK__PostAnswe__postI__3B75D760" FromRole="Posts" ToRole="PostAnswers" />
+    <NavigationProperty Name="Users" Relationship="STUDENTbookModel.FK__Posts__editedAt__37A5467C" FromRole="Posts" ToRole="Users" />
   </EntityType>
   <EntityType Name="University">
     <Key>

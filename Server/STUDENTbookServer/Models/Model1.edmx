@@ -4,25 +4,25 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="STUDENTbookModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl" Alias="Self" Namespace="STUDENTbookModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012">
         <EntityType Name="PostAnswers">
           <Key>
             <PropertyRef Name="answerId" />
           </Key>
-          <Property Name="answerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="postId" Type="int" Nullable="false" />
-          <Property Name="userId" Type="int" Nullable="false" />
-          <Property Name="content" Type="text" Nullable="false" />
-          <Property Name="createdAt" Type="datetime" Nullable="false" />
+          <Property Name="answerId" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+          <Property Name="postId" Nullable="false" Type="int" />
+          <Property Name="userId" Nullable="false" Type="int" />
+          <Property Name="content" Nullable="false" Type="text" />
+          <Property Name="createdAt" Nullable="false" Type="datetime" />
           <Property Name="editedAt" Type="datetime" />
         </EntityType>
         <EntityType Name="Posts">
           <Key>
             <PropertyRef Name="postId" />
           </Key>
-          <Property Name="postId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="postId" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
           <Property Name="userId" Type="int" />
-          <Property Name="tag" Type="varchar" MaxLength="64" />
+          <Property Name="tag" MaxLength="64" Type="varchar" />
           <Property Name="content" Type="text" />
           <Property Name="createdAt" Type="datetime" />
           <Property Name="editedAt" Type="datetime" />
@@ -31,27 +31,27 @@
           <Key>
             <PropertyRef Name="universityId" />
           </Key>
-          <Property Name="universityId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="name" Type="varchar" MaxLength="128" />
-          <Property Name="city" Type="varchar" MaxLength="64" />
+          <Property Name="universityId" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+          <Property Name="name" MaxLength="128" Type="varchar" />
+          <Property Name="city" MaxLength="64" Type="varchar" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
             <PropertyRef Name="userId" />
           </Key>
-          <Property Name="userId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userId" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
           <Property Name="universityId" Type="int" />
-          <Property Name="nick" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="firstName" Type="varchar" MaxLength="64" />
-          <Property Name="lastName" Type="varchar" MaxLength="64" />
-          <Property Name="email" Type="varchar" MaxLength="128" Nullable="false" />
-          <Property Name="password" Type="varchar" MaxLength="128" Nullable="false" />
-          <Property Name="createdAt" Type="datetime" Nullable="false" />
+          <Property Name="nick" Nullable="false" MaxLength="64" Type="varchar" />
+          <Property Name="firstName" MaxLength="64" Type="varchar" />
+          <Property Name="lastName" MaxLength="64" Type="varchar" />
+          <Property Name="email" Nullable="false" MaxLength="128" Type="varchar" />
+          <Property Name="password" Nullable="false" MaxLength="128" Type="varchar" />
+          <Property Name="createdAt" Nullable="false" Type="datetime" />
           <Property Name="lastLogginIn" Type="datetime" />
         </EntityType>
         <Association Name="FK__PostAnswe__postI__3B75D760">
-          <End Role="Posts" Type="Self.Posts" Multiplicity="1" />
-          <End Role="PostAnswers" Type="Self.PostAnswers" Multiplicity="*" />
+          <End Type="Self.Posts" Multiplicity="1" Role="Posts" />
+          <End Type="Self.PostAnswers" Multiplicity="*" Role="PostAnswers" />
           <ReferentialConstraint>
             <Principal Role="Posts">
               <PropertyRef Name="postId" />
@@ -62,8 +62,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__PostAnswe__userI__3A81B327">
-          <End Role="Users" Type="Self.Users" Multiplicity="1" />
-          <End Role="PostAnswers" Type="Self.PostAnswers" Multiplicity="*" />
+          <End Type="Self.Users" Multiplicity="1" Role="Users" />
+          <End Type="Self.PostAnswers" Multiplicity="*" Role="PostAnswers" />
           <ReferentialConstraint>
             <Principal Role="Users">
               <PropertyRef Name="userId" />
@@ -74,8 +74,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Posts__editedAt__37A5467C">
-          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
-          <End Role="Posts" Type="Self.Posts" Multiplicity="*" />
+          <End Type="Self.Users" Multiplicity="0..1" Role="Users" />
+          <End Type="Self.Posts" Multiplicity="*" Role="Posts" />
           <ReferentialConstraint>
             <Principal Role="Users">
               <PropertyRef Name="userId" />
@@ -86,8 +86,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Users__lastLoggi__34C8D9D1">
-          <End Role="University" Type="Self.University" Multiplicity="0..1" />
-          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <End Type="Self.University" Multiplicity="0..1" Role="University" />
+          <End Type="Self.Users" Multiplicity="*" Role="Users" />
           <ReferentialConstraint>
             <Principal Role="University">
               <PropertyRef Name="universityId" />
@@ -103,20 +103,20 @@
           <EntitySet Name="University" EntityType="Self.University" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__PostAnswe__postI__3B75D760" Association="Self.FK__PostAnswe__postI__3B75D760">
-            <End Role="Posts" EntitySet="Posts" />
-            <End Role="PostAnswers" EntitySet="PostAnswers" />
+            <End EntitySet="Posts" Role="Posts" />
+            <End EntitySet="PostAnswers" Role="PostAnswers" />
           </AssociationSet>
           <AssociationSet Name="FK__PostAnswe__userI__3A81B327" Association="Self.FK__PostAnswe__userI__3A81B327">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="PostAnswers" EntitySet="PostAnswers" />
+            <End EntitySet="Users" Role="Users" />
+            <End EntitySet="PostAnswers" Role="PostAnswers" />
           </AssociationSet>
           <AssociationSet Name="FK__Posts__editedAt__37A5467C" Association="Self.FK__Posts__editedAt__37A5467C">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="Posts" EntitySet="Posts" />
+            <End EntitySet="Users" Role="Users" />
+            <End EntitySet="Posts" Role="Posts" />
           </AssociationSet>
           <AssociationSet Name="FK__Users__lastLoggi__34C8D9D1" Association="Self.FK__Users__lastLoggi__34C8D9D1">
-            <End Role="University" EntitySet="University" />
-            <End Role="Users" EntitySet="Users" />
+            <End EntitySet="University" Role="University" />
+            <End EntitySet="Users" Role="Users" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -145,6 +145,7 @@
           <Property Name="createdAt" Type="DateTime" Precision="3" />
           <Property Name="editedAt" Type="DateTime" Precision="3" />
           <NavigationProperty Name="PostAnswers" Relationship="Self.FK__PostAnswe__postI__3B75D760" FromRole="Posts" ToRole="PostAnswers" />
+          <NavigationProperty Name="Users" Relationship="STUDENTbookModel.FK__Posts__editedAt__37A5467C" FromRole="Posts" ToRole="Users" />
         </EntityType>
         <EntityType Name="University">
           <Key>

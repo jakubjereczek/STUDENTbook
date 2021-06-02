@@ -18,7 +18,6 @@ export const AuthProvider = ({ children }) => {
         // 1. Ustawiam w localStorage w formiecie base64 login:haslo użytkownika.
         const token = Buffer.from(`${name}:${password}`, 'utf8').toString('base64');
         localStorage.setItem('token', token);
-        setUser(name);
 
         // 2. Pobieram z bazy z autoryzowanej metody - dzięki temu wiem, że uzytkownik podał poprawne dane. 
         // Authorization Header wysyła się przy kazdym requeascie.
@@ -67,7 +66,8 @@ export const AuthProvider = ({ children }) => {
     const values = {
         login,
         logout,
-        isUserAuthorizated
+        isUserAuthorizated,
+        user
     }
 
     return (
