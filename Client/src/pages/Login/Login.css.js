@@ -22,23 +22,3 @@ export const Form = styled.form`
     padding: 10px;
 
 ;`
-
-export const Input = styled.input`
-    padding: 10px;
-    margin: 5px 0;
-    border: 1px solid ${props => props.theme.others};
-
-`
-
-export const Button = styled.button`
-    padding: 10px;
-    color: ${props => props.theme.details};
-    background-color: ${props => props.theme.secondary};
-    border: 0;
-    transition: 0.3s;
-
-    &:hover {
-        background-color: ${props => props.theme.main};
-        color: ${props => props.theme.primary};
-    }
-`

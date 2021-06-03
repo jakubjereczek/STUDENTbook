@@ -42,3 +42,32 @@ export const UserIcon = styled.div`
     background-image: url(${User});
 `
 
+export const Input = styled.input`
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid ${props => props.theme.others};
+
+`
+
+export const TextArea = styled.textarea`
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid ${props => props.theme.others};
+    resize: none;
+    min-height: 100px;
+`
+
+export const Button = styled.button`
+    padding: 10px;
+    color: ${props => props.theme.details};
+    background-color: ${props => props.theme.secondary};
+    border: 0;
+    transition: 0.3s;
+    cursor: pointer;
+
+    &:hover {
+        background-color: ${props => props.theme.main};
+        color: ${props => props.theme.primary};
+    }
+`
+

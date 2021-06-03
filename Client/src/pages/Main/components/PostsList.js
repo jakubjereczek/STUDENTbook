@@ -35,7 +35,6 @@ function PostsList() {
         setHoverActive(false)
     }
 
-
     const postsList = posts.map((post) => {
         const user = post.Users;
         const university = post.Users.University;
@@ -51,7 +50,6 @@ function PostsList() {
                 </AboutUser>
                 <PostContent>
                     {post.content}
-
                 </PostContent>
             </ContainerInside >
         )

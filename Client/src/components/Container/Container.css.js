@@ -48,4 +48,5 @@ export const Button = styled.span`
     &:hover {
         color: ${props => props.theme.main};
     }
+    cursor: pointer;
 `

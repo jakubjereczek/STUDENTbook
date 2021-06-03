@@ -1,6 +1,7 @@
 import React, { useRef } from 'react'
 import { Title, Subtitle } from '../../components/SharedStyles.css'
-import { Container, FormContainer, Form, Input, Button } from './Login.css';
+import { Container, FormContainer, Form } from './Login.css';
+import { Input, Button } from '../../components/SharedStyles.css'
 import { Logo } from '../../components/SharedStyles.css'
 import { useAuth } from '../../services/AuthorizationService';
 import { useHistory, useLocation, Redirect } from "react-router-dom";
