@@ -40,6 +40,12 @@ export const UserIcon = styled.div`
     height: 32px;
     background-size: 100%;
     background-image: url(${User});
+    background-repeat: no-repeat;
+`
+
+export const UserIconLarge = styled(UserIcon)`
+    width: 128px;
+    height: 128px;
 `
 
 export const Input = styled.input`

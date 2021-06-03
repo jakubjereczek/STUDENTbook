@@ -6,7 +6,7 @@ function Hover({ active, user, style }) {
 
     const { firstName, lastName, lastLogin, Posts, University, createdAt, nick } = user;
 
-    console.log(user)
+    console.log(Posts.length, Posts)
 
     return active && (
         <FixedContainer style={style}>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react'
+import { Link } from 'react-router-dom';
 import { ContainerInside, UserIcon } from '../../../components/SharedStyles.css'
 import { AboutUser, Author, DateString, PostContent } from './PostsList.css'
 
@@ -44,9 +45,11 @@ function PostsList() {
                 <AboutUser>
                     <UserIcon />
                     <p>
-                        <Author onMouseEnter={(event) => onMouseEnter(event, user)} onMouseLeave={onMouseLeave}>{user.firstName} {user.lastName}</Author>
+                        <Link to={`/profile/${post.userId}`}>
+                            <Author onMouseEnter={(event) => onMouseEnter(event, user)} onMouseLeave={onMouseLeave}>{user.firstName} {user.lastName}</Author></Link>
                         <DateString>{new Date(post.createdAt).toLocaleString()}</DateString>
                     </p>
+
                 </AboutUser>
                 <PostContent>
                     {post.content}

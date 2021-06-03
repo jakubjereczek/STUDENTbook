@@ -12,8 +12,8 @@ export const ContainerWrapper = styled.div`
 `
 
 export const Menu = styled.div`
-    height: 40px;
-    line-height: 40px;
+    height: 60px;
+    line-height: 60px;
     width: 100%;
     background-color: ${props => props.theme.primary};
     border: 1px solid ${props => props.theme.others};

@@ -19,7 +19,6 @@ function Login() {
         // TODO: Obsługa try/catch, komunikaty itd.
         try {
             userStatus.login(loginInput.current.value, passwordInput.current.value);
-            console.log("CZY KOD NIZEJ JUZ SIE NIE WYKONA?");
             <Redirect push to="/" />
         } catch {
             //history.goBack()

@@ -12,6 +12,10 @@ const GlobalStyle = createGlobalStyle`
   html {
       font-size: 16px;
   }
+
+  a {
+    text-decoration: none;
+  }
 `;
 
 export default GlobalStyle;

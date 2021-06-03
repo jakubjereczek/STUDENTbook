@@ -1,5 +1,5 @@
 import React from 'react'
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 
 import { ContainerWrapper, Menu, MenuInside, Content, ContainerInside, Button } from './Container.css'
 import { Logo } from '../SharedStyles.css'
@@ -22,7 +22,8 @@ function Container({ children }) {
         <ContainerWrapper>
             <Menu>
                 <MenuInside>
-                    <Logo>student<span>book</span></Logo>
+                    <Link to="/">                    <Logo>student<span>book</span></Logo>
+                    </Link>
                     <span>
                         {isUserAuthorizated && <Button><FaUserAlt onClick={moveToProfile} /></Button>}
                         {isUserAuthorizated && <Button><FaPowerOff onClick={logoutAction} /></Button>}
