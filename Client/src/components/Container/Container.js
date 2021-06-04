@@ -1,11 +1,13 @@
 import React from 'react'
 import { useHistory, Link } from "react-router-dom";
 
-import { ContainerWrapper, Menu, MenuInside, Content, ContainerInside } from './Container.css'
-import { Logo, ButtonIcon } from '../SharedStyles.css'
-import { FaUserAlt, FaPowerOff } from "react-icons/fa";
+import { ContainerWrapper, Menu, MenuInside, Content, ContainerInside, Footer } from './Container.css'
+import { Logo, ButtonIcon, Text } from '../SharedStyles.css'
+import { FaUserAlt, FaPowerOff, FaLightbulb } from "react-icons/fa";
 
 import { useAuth } from '../../services/AuthorizationService';
+import { useChangerTheme } from '../../services/ThemeContext';
+
 
 function Container({ children }) {
 
@@ -17,6 +19,8 @@ function Container({ children }) {
     const logoutAction = () => userStatus.logout();
     const moveToProfile = () => history.push('/profile');
 
+    const changerTheme = useChangerTheme();
+    const { toggleColor } = changerTheme;
 
     return (
         <ContainerWrapper>
@@ -26,6 +30,8 @@ function Container({ children }) {
                     <span>
                         {isUserAuthorizated && <ButtonIcon><FaUserAlt onClick={moveToProfile} /></ButtonIcon>}
                         {isUserAuthorizated && <ButtonIcon><FaPowerOff onClick={logoutAction} /></ButtonIcon>}
+
+                        <ButtonIcon onClick={toggleColor}><FaLightbulb /></ButtonIcon>
                     </span>
                 </MenuInside >
             </Menu>
@@ -34,6 +40,9 @@ function Container({ children }) {
                     {children}
                 </ContainerInside>
             </Content>
+            <Footer>
+                <Text>studentBOOK &copy; 2021</Text>
+            </Footer>
         </ContainerWrapper>
     )
 

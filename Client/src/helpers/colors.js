@@ -1,11 +1,16 @@
-export default {
+export const lightTheme = {
     primary: '#ffffff',
     secodary: '#fafafa',
     color: '#000000',
-    error: '#b00020',
-    positive: '#03dac6',
-    details: '#000000',
-    others: '#ddd',
+    others: '#dddddd',
+
+    main: 'tomato'
+}
+export const darkTheme = {
+    primary: '#222',
+    secodary: '#121212',
+    color: '#ffffff',
+    others: '#000000',
 
     main: 'tomato'
 }

@@ -8,7 +8,7 @@ import { deletePost } from '../../services/PostService'
 
 
 import { AboutUserContainer, AboutUserData, DetailsUserContainer, DetailsUserBar, ResultsList, PostContent, PostAuthor, PostDate, PostButtons,TextInline } from './Profile.css';
-import { UserIconLarge, Author, ButtonIcon } from '../../components/SharedStyles.css'
+import { UserIconLarge, Text, ButtonIcon } from '../../components/SharedStyles.css'
 
 import { FaRegTimesCircle } from "react-icons/fa";
 
@@ -135,10 +135,10 @@ function Profile() {
                     </DetailsUserBar>
                     <ResultsList>
                         {menuActiveElement === POSTS 
-                        && posts && (posts.length > 0 ? posts : "Postów brak.")}
+                        && posts && (posts.length > 0 ? posts : <Text>Brak postów</Text>)}
 
                         {menuActiveElement === POST_ANSWERS 
-                        && postsAnswers && (postsAnswers.length > 0 ? postsAnswers : "Brak odpowiedzi na posty.") }
+                        && postsAnswers && (postsAnswers.length > 0 ? postsAnswers : <Text>Brak odpowiedzi na posty</Text>) }
                     </ResultsList>
                 </DetailsUserContainer>
             </React.Fragment>

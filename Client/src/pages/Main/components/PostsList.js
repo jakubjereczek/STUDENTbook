@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import { Link } from 'react-router-dom';
-import { ContainerInside, UserIcon, Author, ButtonIcon } from '../../../components/SharedStyles.css'
+import { ContainerInside, UserIcon, Author, ButtonIcon, Text } from '../../../components/SharedStyles.css'
 import { AboutUser, DateString, PostContent, PostButtons } from './PostsList.css'
 
 import { FaRegTimesCircle } from "react-icons/fa";
@@ -78,7 +78,7 @@ function PostsList() {
                         </p>
                     </AboutUser>
                     <PostContent>
-                        {post.content}
+                        <Text>{post.content}</Text>
                         <PostButtons>
                             {post.userId === currentUser.userId && (<ButtonIcon onClick={() => deletePostAction(post)}>
                                 {/* Delete */}

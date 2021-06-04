@@ -1,5 +1,5 @@
 import React from 'react'
-import { ContainerInside, UserIcon } from '../../../components/SharedStyles.css'
+import { ContainerInside, UserIcon, Text } from '../../../components/SharedStyles.css'
 import { UserAbout, MyContainer } from './ProfilView.css'
 import { useAuth } from '../../../services/AuthorizationService';
 
@@ -14,8 +14,8 @@ function NotFound() {
             <MyContainer>
                 {/* <UserIcon /> */}
                 <UserAbout>
-                    <p>Witaj, {firstName} {lastName} </p>
-                    <p>{University.name}, {University.city}</p>
+                    <Text>Witaj, {firstName} {lastName} </Text>
+                    <Text>{University.name}, {University.city}</Text>
                 </UserAbout>
             </MyContainer>
 

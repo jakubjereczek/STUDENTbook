@@ -16,7 +16,7 @@ export const Menu = styled.div`
     line-height: 60px;
     width: 100%;
     background-color: ${props => props.theme.primary};
-    border: 1px solid ${props => props.theme.others};
+    border-bottom: 1px solid ${props => props.theme.others};
     display: flex;
     justify-content: center;
     padding: 0 5px;
@@ -24,7 +24,8 @@ export const Menu = styled.div`
 
 export const Content = styled.div`
     width: 100%;
-    height: calc(100% - 60px);
+    /* height: calc(100% - 120px); */
+    min-height: calc(100vh - 120px);
     display: flex;
     justify-content: center;
     padding: 5px;
@@ -40,4 +41,11 @@ export const ContainerInside = styled.div`
 export const MenuInside = styled(ContainerInside)`
     flex-direction: row;
     justify-content: space-between;
+`
+export const Footer = styled.footer`
+    background-color: ${props => props.theme.primary};
+    border-top: 1px solid ${props => props.theme.others};
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
 `

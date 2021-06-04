@@ -1,21 +1,24 @@
-import './App.css';
 import RoutingTable from './RoutingTable';
 import { AuthProvider } from './services/AuthorizationService';
-import { ThemeProvider } from 'styled-components';
-import colors from './helpers/colors'
+import { ThemeChangerProvider } from './services/ThemeContext'
+
 import GlobalStyles from './helpers/global-styles';
 import { Toaster } from 'react-hot-toast';
+
+import ColorsOptions from './ColorsOptions';
 
 function App() {
 
   return (
     <AuthProvider>
-      <ThemeProvider theme={colors}>
-        <GlobalStyles />
-        <RoutingTable />
-        <Toaster />
-      </ThemeProvider>
-    </AuthProvider>
+      <ThemeChangerProvider>
+        <ColorsOptions>
+          <GlobalStyles />
+          <RoutingTable />
+          <Toaster />
+        </ColorsOptions>
+      </ThemeChangerProvider>
+    </AuthProvider >
 
   );
 }

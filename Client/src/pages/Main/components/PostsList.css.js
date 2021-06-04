@@ -10,6 +10,8 @@ export const AboutUser = styled.div`
 
 export const DateString = styled.p`
     padding: 0 5px;
+    color: ${props => props.theme.color};
+
 `
 export const PostContent = styled.p`
     margin-top: 10px;

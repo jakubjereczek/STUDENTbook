@@ -9,6 +9,8 @@ export const AboutUserData = styled.div`
     display: flex;
     flex-direction: column;
     margin-left: 50px;
+    color: ${props => props.theme.color};
+
 `
 
 export const DetailsUserContainer = styled.div`
@@ -20,6 +22,8 @@ export const DetailsUserBar = styled.div`
     display: flex;
     border-top: 1px solid ${props => props.theme.others};
     margin-top: 10px;
+    color: ${props => props.theme.color};
+
 
     & > a {
         width: 50%;
@@ -45,7 +49,7 @@ export const PostContent = styled.div`
     padding: 10px;
     border-radius: 10px;
     border: 1px solid ${props => props.theme.others};
-
+    color: ${props => props.theme.color};
 `
 
 export const PostAuthor = styled.p`

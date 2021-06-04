@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import { ContainerInside, Input, Button, TextArea } from '../../../components/SharedStyles.css'
+import { ContainerInside, Input, Button, TextArea, Label } from '../../../components/SharedStyles.css'
 import Post from '../../../models/Post'
 import { useAuth } from '../../../services/AuthorizationService';
 import { postPost } from '../../../services/PostService'
@@ -35,9 +35,9 @@ function AddPost({ setLoading, setPosts, posts }) {
 
     return (
         <ContainerInside>
-            <label htmlFor="tag">Treść posta: </label>
+            <Label htmlFor="tag">Treść posta: </Label>
             <TextArea type="text" id="tag" ref={contentTextArea} />
-            <label htmlFor="tag">Tag: </label>
+            <Label htmlFor="tag">Tag: </Label>
             <Input type="text" id="tag" ref={tagInput} />
 
             <Button onClick={addPostAction}>Dodaj post</Button>

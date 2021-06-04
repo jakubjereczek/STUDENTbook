@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import AsyncSelect from 'react-select/async';
 
 import { AuthorizationTemplete } from '../../components';
-import { Subtitle, Input, Button, Select } from '../../components/SharedStyles.css'
+import { Subtitle, Input, Button, Select, Label } from '../../components/SharedStyles.css'
 import { getAllUniversities } from '../../services/UniversityService'
 import { postUser } from '../../services/UserService'
 
@@ -57,22 +57,22 @@ function Signup() {
 
     const content = (
         <React.Fragment>
-            <label htmlFor="nick"> nick: </label>
+            <Label htmlFor="nick"> nick: </Label>
             <Input type="text" id="nick" ref={nickInput} />
 
-            <label htmlFor="firstName"> imię: </label>
+            <Label htmlFor="firstName"> imię: </Label>
             <Input type="text" id="firstName" ref={firstNameInput} />
 
-            <label htmlFor="lastName"> imię: </label>
+            <Label htmlFor="lastName"> imię: </Label>
             <Input type="text" id="lastName" ref={lastNameInput} />
 
-            <label htmlFor="password"> haslo: </label>
+            <Label htmlFor="password"> haslo: </Label>
             <Input type="password" id="password" ref={passwordInput} />
 
-            <label htmlFor="password"> email: </label>
+            <Label htmlFor="password"> email: </Label>
             <Input type="email" id="email" ref={emailInput} />
 
-            <label htmlFor="university"> uczelnia: </label>
+            <Label htmlFor="university"> uczelnia: </Label>
             <AsyncSelect cacheOptions defaultOptions loadOptions={promiseOptions}
                 getOptionValue={(option) => option.universityId}
                 getOptionLabel={(option) => option.name}

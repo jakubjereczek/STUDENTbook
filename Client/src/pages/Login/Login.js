@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 import { Link } from 'react-router-dom';
 
-import { Subtitle, Input, Button } from '../../components/SharedStyles.css'
+import { Subtitle, Input, Button, Label } from '../../components/SharedStyles.css'
 
 import { useAuth } from '../../services/AuthorizationService';
 import { Redirect } from "react-router-dom";
@@ -27,9 +27,9 @@ function Login() {
 
     const content = (
         <React.Fragment>
-            <label htmlFor="login"> login: </label>
+            <Label htmlFor="login"> login: </Label>
             <Input type="text" id="login" ref={loginInput} />
-            <label htmlFor="password"> hasło: </label>
+            <Label htmlFor="password"> hasło: </Label>
             <Input type="password" id="password" ref={passwordInput} />
             <Button onClick={loginAction}>Zaloguj się</Button>
         </React.Fragment>
