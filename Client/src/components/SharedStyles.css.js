@@ -52,7 +52,12 @@ export const Input = styled.input`
     padding: 10px;
     margin: 5px 0;
     border: 1px solid ${props => props.theme.others};
+`
 
+export const Select = styled.select`
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid ${props => props.theme.others};
 `
 
 export const TextArea = styled.textarea`
@@ -75,5 +80,20 @@ export const Button = styled.button`
         background-color: ${props => props.theme.main};
         color: ${props => props.theme.primary};
     }
+`
+export const Author = styled.p`
+    padding: 0 5px;
+    color: ${props => props.theme.main};
+    font-weight: 400;
+    line-height: 16px;
+    cursor: pointer;
+`
+export const ButtonIcon = styled.span`
+    transition: 0.3s;
+    margin: 0px 5px;
+    &:hover {
+        color: ${props => props.theme.main};
+    }
+    cursor: pointer;
 `
 

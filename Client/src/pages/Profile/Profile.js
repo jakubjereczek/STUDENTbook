@@ -1,14 +1,19 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useMemo } from 'react'
 import {
     useParams
 } from "react-router-dom";
 import { useAuth } from '../../services/AuthorizationService';
 import { getUserById } from '../../services/UserService';
+import { deletePost } from '../../services/PostService'
 
-import { AboutUserContainer, AboutUserData, DetailsUserContainer, DetailsUserBar, ResultsList } from './Profile.css';
-import { UserIconLarge } from '../../components/SharedStyles.css'
 
-import { getPostAnswersByUserName } from '../../services/PostAnswersService'
+import { AboutUserContainer, AboutUserData, DetailsUserContainer, DetailsUserBar, ResultsList, PostContent, PostAuthor, PostDate, PostButtons,TextInline } from './Profile.css';
+import { UserIconLarge, Author, ButtonIcon } from '../../components/SharedStyles.css'
+
+import { FaRegTimesCircle } from "react-icons/fa";
+
+import { getPostAnswersByUserName, deletePostAnswer } from '../../services/PostAnswersService'
+import toast from 'react-hot-toast';
 
 function Profile() {
 
@@ -22,13 +27,12 @@ function Profile() {
     const [menuActiveElement, setMenuActiveElement] = useState(POSTS);
     const userStatus = useAuth();
 
-    const { id } = useParams();
+    let { id } = useParams();
 
     useEffect(() => {
-        if (id == undefined) { // Pobieramy dla aktualnego użytkownika
-            setUser(userStatus.user)
-            setLoading(false);
-        } else { // Pobieramy dla wybranego uzytkownika
+            if (id == undefined) {
+                id = userStatus.user.userId;
+            }
             getUserById(id).then((response) => {
                 setUser(response.data);
                 fetchPostsAnswers(response.data.nick);
@@ -37,24 +41,8 @@ function Profile() {
             }).finally(() => {
                 setLoading(false);
             })
-        }
+        
     }, [id, userStatus.user]);
-
-    const posts = user && user.Posts.map((post, index) => {
-        return (
-            <div key={post.postId}>
-                #{index + 1} {post.content}
-            </div>
-        )
-    });
-
-    const postsAnswers = postAnswers && postAnswers.map((postA, index) => {
-        return (
-            <div key={postA.postAnswerId}>
-                #{index + 1} {postA.content}
-            </div>
-        )
-    });
 
     const fetchPostsAnswers = async (nick) => {
         getPostAnswersByUserName(nick)
@@ -63,8 +51,71 @@ function Profile() {
             }).catch((err) => {
                 console.log(err);
             })
-
     }
+
+    const deletePostAction = (post) => {
+        const postsUpdated = user.Posts.filter(p => p != post);
+        setUser({...user, Posts: postsUpdated});
+        deletePost(post.postId)
+        .then(() => {
+            toast.success('Post został usunięty.')
+        }).catch(() => {
+            toast.error('Wystąpił błąd podczas usuwania posta.')
+        })
+    }
+
+
+    
+    const deletePostAnswerAction = (postA) => {
+        const postsAnswers = postAnswers.filter(p => p != postA);
+        setPostAnswers(postsAnswers);
+        deletePostAnswer(postA.postAnswerId)
+        .then(() => {
+            toast.success('Odpowiedz na post została usunięta.')
+        }).catch(() => {
+            toast.error('Wystąpił błąd podczas usuwania odpowiedzi na posta.')
+        })
+    } 
+
+    const posts = useMemo(() => user && user.Posts.map((post, index) => {
+        return (
+            <PostContent key={post.postId}>
+                <TextInline>
+                    <PostAuthor>{user.firstName} {user.lastName}</PostAuthor>   
+                    <PostDate> {new Date(post.createdAt).toLocaleString()}</PostDate>
+                </TextInline>
+                {post.content}   
+
+                <PostButtons>
+                    {post.userId === userStatus.user.userId && (<ButtonIcon onClick={() => deletePostAction(post)}>
+                        <FaRegTimesCircle />
+                    </ButtonIcon>)}
+                </PostButtons>
+            </PostContent>
+        )
+    }), [deletePostAction, user, userStatus.user.userId]);
+
+    const postsAnswers = postAnswers && postAnswers.map((postA, index) => {
+        return (
+            <PostContent key={postA.postAnswerId}>
+                (...)
+                
+                <TextInline>
+                    <PostAuthor>{user.firstName} {user.lastName}</PostAuthor>   
+                    <PostDate> {new Date(postA.createdAt).toLocaleString()}</PostDate>
+                </TextInline>
+                {postA.content}   
+
+                <PostButtons>
+                    {postA.userId === userStatus.user.userId && (<ButtonIcon onClick={() => deletePostAnswerAction(postA)}>
+                        <FaRegTimesCircle />
+                    </ButtonIcon>)}
+                </PostButtons>
+
+            </PostContent>
+        )
+    });
+
 
     return loading ? "Ładowanie.." : (
         user ? (
@@ -83,13 +134,14 @@ function Profile() {
                         <a className={`${menuActiveElement === POST_ANSWERS ? "active" : ""}`} onClick={() => setMenuActiveElement(POST_ANSWERS)}>ODPOWIEDZI NA POSTY</a>
                     </DetailsUserBar>
                     <ResultsList>
-                        {menuActiveElement === POSTS && posts}
-                        {menuActiveElement === POST_ANSWERS && postsAnswers}
+                        {menuActiveElement === POSTS 
+                        && posts && (posts.length > 0 ? posts : "Postów brak.")}
+
+                        {menuActiveElement === POST_ANSWERS 
+                        && postsAnswers && (postsAnswers.length > 0 ? postsAnswers : "Brak odpowiedzi na posty.") }
                     </ResultsList>
                 </DetailsUserContainer>
             </React.Fragment>
-
-
         ) : "Użytkownik nie istnieje.")
 
 }

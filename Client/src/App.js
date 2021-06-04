@@ -4,6 +4,7 @@ import { AuthProvider } from './services/AuthorizationService';
 import { ThemeProvider } from 'styled-components';
 import colors from './helpers/colors'
 import GlobalStyles from './helpers/global-styles';
+import { Toaster } from 'react-hot-toast';
 
 function App() {
 
@@ -12,6 +13,7 @@ function App() {
       <ThemeProvider theme={colors}>
         <GlobalStyles />
         <RoutingTable />
+        <Toaster />
       </ThemeProvider>
     </AuthProvider>
 

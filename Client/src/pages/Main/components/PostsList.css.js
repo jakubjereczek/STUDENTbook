@@ -7,17 +7,15 @@ export const AboutUser = styled.div`
     
     display: flex;
 `
-export const Author = styled.p`
-    padding: 0 5px;
-    color: ${props => props.theme.main};
-    font-weight: 400;
-    line-height: 16px;
-    cursor: pointer;
-`
 
 export const DateString = styled.p`
     padding: 0 5px;
 `
 export const PostContent = styled.p`
     margin-top: 10px;
+`
+
+export const PostButtons = styled.div`
+    display: flex;
+    justify-content: flex-end;
 `

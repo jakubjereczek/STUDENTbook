@@ -3,8 +3,10 @@ import { ContainerInside, Input, Button, TextArea } from '../../../components/Sh
 import Post from '../../../models/Post'
 import { useAuth } from '../../../services/AuthorizationService';
 import { postPost } from '../../../services/PostService'
+import PostsList from './PostsList';
+import toast from 'react-hot-toast';
 
-function AddPost() {
+function AddPost({ setLoading, setPosts, posts }) {
 
     const userStatus = useAuth();
     const user = userStatus.user;
@@ -13,16 +15,28 @@ function AddPost() {
     const contentTextArea = useRef(null);
 
     const addPostAction = () => {
+        if (contentTextArea.current.value.length < 30)
+            return toast.error('Treść posta musi mieć powyżej 30 znaków!')
+        setLoading(true);
         const post = new Post(user.userId, tagInput.current.value, contentTextArea.current.value, new Date(), null)
         const postObj = post.getObject()
-        postPost(user.userId, postObj);
+        postPost(user.userId, postObj).then((res => {
+            const postsAll = [...posts, res.data]
+            setPosts(postsAll);
+            setLoading(false);
+            contentTextArea.current.value = "";
+            tagInput.current.value = "";
+            toast.success('Post został dodany.')
+        })).catch(() => {
+            toast.error('Wystąpił bląd podczas dodawania postu!')
+        })
+
     }
 
     return (
         <ContainerInside>
             <label htmlFor="tag">Treść posta: </label>
             <TextArea type="text" id="tag" ref={contentTextArea} />
-
             <label htmlFor="tag">Tag: </label>
             <Input type="text" id="tag" ref={tagInput} />
 

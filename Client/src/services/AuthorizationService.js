@@ -21,22 +21,29 @@ export const AuthProvider = ({ children }) => {
 
         // 2. Pobieram z bazy z autoryzowanej metody - dzięki temu wiem, że uzytkownik podał poprawne dane. 
         // Authorization Header wysyła się przy kazdym requeascie.
-        getUserByName(name)
-            .then(response => {
-                // 3. Dane użytkownika ładuje do user.
-                localStorage.setItem('user', JSON.stringify(response.data));
-                return response;
-            }).then(response => {
-                setUser(response.data);
-            }).catch((err) => {
-                console.log('Blad: ' + err);
-                if (user != null) {
-                    setUser(null);
-                    localStorage.setItem('user', null)
-                }
-            }).finally(() => {
-                setLoading(false);
-            })
+        return new Promise((resolve, reject) => {
+            getUserByName(name)
+                .then(response => {
+                    // 3. Dane użytkownika ładuje do user.
+                    localStorage.setItem('user', JSON.stringify(response.data));
+                    return response;
+                }).then(response => {
+                    setUser(response.data);
+                    resolve(response.data)
+                }).catch((err) => {
+                    console.log('Blad: ' + err);
+                    if (user != null) {
+                        setUser(null);
+                        localStorage.setItem('user', null)
+                    }
+                    reject(new Error("Error authorization"))
+                }).finally(() => {
+                    setLoading(false);
+                })
+
+
+        })
+
     }
 
     const logout = () => {
@@ -72,7 +79,8 @@ export const AuthProvider = ({ children }) => {
 
     return (
         <AuthContext.Provider value={values}>
-            {loading ? "Ładowanie..." : children}
+            {/* {loading ? "Ładowanie..." : children} */}
+            {children}
         </AuthContext.Provider>
     )
 

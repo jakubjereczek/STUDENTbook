@@ -1,8 +1,8 @@
 import React from 'react'
 import { useHistory, Link } from "react-router-dom";
 
-import { ContainerWrapper, Menu, MenuInside, Content, ContainerInside, Button } from './Container.css'
-import { Logo } from '../SharedStyles.css'
+import { ContainerWrapper, Menu, MenuInside, Content, ContainerInside } from './Container.css'
+import { Logo, ButtonIcon } from '../SharedStyles.css'
 import { FaUserAlt, FaPowerOff } from "react-icons/fa";
 
 import { useAuth } from '../../services/AuthorizationService';
@@ -22,11 +22,10 @@ function Container({ children }) {
         <ContainerWrapper>
             <Menu>
                 <MenuInside>
-                    <Link to="/">                    <Logo>student<span>book</span></Logo>
-                    </Link>
+                    <Link to="/"><Logo>student<span>book</span></Logo></Link>
                     <span>
-                        {isUserAuthorizated && <Button><FaUserAlt onClick={moveToProfile} /></Button>}
-                        {isUserAuthorizated && <Button><FaPowerOff onClick={logoutAction} /></Button>}
+                        {isUserAuthorizated && <ButtonIcon><FaUserAlt onClick={moveToProfile} /></ButtonIcon>}
+                        {isUserAuthorizated && <ButtonIcon><FaPowerOff onClick={logoutAction} /></ButtonIcon>}
                     </span>
                 </MenuInside >
             </Menu>

@@ -1,9 +1,10 @@
 import React from 'react'
+import { TextHeader } from './NotFound.css'
 
 function NotFound() {
 
     return (
-        <h2>Not found page byku</h2>
+        <TextHeader>page not found</TextHeader>
     )
 }
 

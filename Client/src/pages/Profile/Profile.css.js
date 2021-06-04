@@ -38,3 +38,30 @@ export const ResultsList = styled.div`
     margin-top: 10px;
 
 `
+
+export const PostContent = styled.div`
+    background-color: ${props => props.theme.primary};
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid ${props => props.theme.others};
+
+`
+
+export const PostAuthor = styled.p`
+    color: ${props => props.theme.main};
+`
+
+export const PostDate = styled.p`
+    text-align: right;
+`
+
+export const PostButtons = styled.div`
+    display: flex;
+    justify-content: flex-end;
+`
+
+export const TextInline = styled.p`
+    display: flex;
+    justify-content: space-between;
+`
