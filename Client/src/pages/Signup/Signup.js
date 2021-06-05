@@ -8,9 +8,11 @@ import { getAllUniversities } from '../../services/UniversityService'
 import { postUser } from '../../services/UserService'
 
 import { useAuth } from '../../services/AuthorizationService';
+import { useChangerTheme } from '../../services/ThemeContext';
 
 import toast from 'react-hot-toast';
 import User from '../../models/User'
+
 
 function Signup() {
 
@@ -22,6 +24,9 @@ function Signup() {
     const [universityId, setUniversityId] = useState(0);
 
     const userStatus = useAuth();
+    const changerTheme = useChangerTheme();
+    const { isLight } = changerTheme;
+
 
     const signupAction = (event) => {
         event.preventDefault();
@@ -34,7 +39,6 @@ function Signup() {
                 userStatus.login(nickInput.current.value, passwordInput.current.value);
             })
             .catch((err) => {
-                console.log(err)
                 toast.error("Wystąpił bląd podczas dodawania konta użytkownika. Dane sa nieprawidłowe bądz login/email juz istnieje.")
             })
 

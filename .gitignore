@@ -20,3 +20,31 @@ Client/.env.production.local
 Client/npm-debug.log*
 Client/yarn-debug.log*
 Client/yarn-error.log*
+
+# dependencies
+Mobile/node_modules
+Mobile/.pnp
+Mobile/.pnp.js
+
+# testing
+Mobile//coverage
+
+# production
+Mobile//build
+
+# misc
+Mobile/.DS_Store
+Mobile/.env.local
+Mobile/.env.development.local
+Mobile/.env.test.local
+Mobile/.env.production.local
+Mobile/.vscode
+Mobile/.idea
+
+npm-debug.log*
+Mobile/yarn-debug.log*
+Mobile/yarn-error.log*
+
+# Optional eslint cache
+Mobile/.eslintcache
+

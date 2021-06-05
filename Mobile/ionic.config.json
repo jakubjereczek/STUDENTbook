@@ -1,0 +1,7 @@
+{
+  "name": "studentBOOKmobile",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
