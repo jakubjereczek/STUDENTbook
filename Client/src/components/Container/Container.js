@@ -6,6 +6,7 @@ import { Logo, ButtonIcon, Text } from '../SharedStyles.css'
 import { FaUserAlt, FaPowerOff, FaLightbulb } from "react-icons/fa";
 
 import { useAuth } from '../../services/AuthorizationService';
+import { useChangerTheme } from '../../services/ThemeContext';
 
 function Container({ children }) {
 
@@ -17,6 +18,9 @@ function Container({ children }) {
     const logoutAction = () => userStatus.logout();
     const moveToProfile = () => history.push('/profile');
 
+    const changerTheme = useChangerTheme();
+    const { toggleColor } = changerTheme;
+
     return (
         <ContainerWrapper>
             <Menu>
@@ -26,7 +30,7 @@ function Container({ children }) {
                         {isUserAuthorizated && <ButtonIcon><FaUserAlt onClick={moveToProfile} /></ButtonIcon>}
                         {isUserAuthorizated && <ButtonIcon><FaPowerOff onClick={logoutAction} /></ButtonIcon>}
 
-                        <ButtonIcon></ButtonIcon>
+                        <ButtonIcon onClick={toggleColor}><FaLightbulb /></ButtonIcon>
                     </span>
                 </MenuInside >
             </Menu>
