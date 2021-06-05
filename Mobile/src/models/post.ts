@@ -1,5 +1,5 @@
 interface Post {
-    postId: number,
+    postId?: number,
     userId: number,
     tag: string,
     content: string,

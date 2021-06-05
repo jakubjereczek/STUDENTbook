@@ -92,7 +92,6 @@ const Profile: React.FC = () => {
               </IonRow>
               <IonRow>
                 <h4>Odpowiedzi na posty</h4>
-
                 {postAnswersList && postAnswersList.length > 0 ? postsAnswersList : "Brak odpowiedzi na posty."}
               </IonRow>
             </IonGrid>)}

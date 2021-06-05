@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { IonIcon, IonHeader, IonPage, IonTitle, IonToolbar, IonItem, IonInput, IonToggle, IonRadio, IonCheckbox, IonItemSliding, IonItemOption, IonItemOptions, IonCardContent, IonButton, IonContent, IonLabel, IonList, IonListHeader, IonThumbnail, IonAvatar, IonRefresher, IonRefresherContent, IonRouterLink } from '@ionic/react';
+import React, { useState, useEffect, useRef, ChangeEvent } from 'react';
+import { IonIcon, IonHeader, IonPage, IonTitle, IonToolbar, IonItem, IonInput, IonToggle, IonRadio, IonCheckbox, IonItemSliding, IonItemOption, IonItemOptions, IonCardContent, IonButton, IonContent, IonLabel, IonList, IonListHeader, IonThumbnail, IonAvatar, IonRefresher, IonRefresherContent, IonRouterLink, IonTextarea, IonAlert } from '@ionic/react';
 import { RefresherEventDetail } from '@ionic/core';
 import { chevronDownCircleOutline } from 'ionicons/icons';
 
@@ -11,8 +11,9 @@ import MainContainer from '../components/MainContainer';
 import Post from '../models/post';
 import profileImage from '../assets/user.png'
 import { Link } from 'react-router-dom';
-
-
+import { useAuth } from '../services/AuthorizationService';
+import { postPost } from '../services/PostService'
+import User from '../models/user';
 
 
 const Posts: React.FC = () => {
@@ -20,6 +21,17 @@ const Posts: React.FC = () => {
 
   const [posts, setPosts] = useState<Array<Post>>([]);
   const [loading, setLoading] = useState(true);
+
+  const userService = useAuth();
+  const user = userService.user;
+
+  const [iserror, setIserror] = useState<boolean>(false);
+  const [message, setMessage] = useState<string>("");
+
+
+  const [content, setContent] = useState<string>("");
+  const [tag, setTag] = useState<string>("");
+
 
   useEffect(() => {
     async function init() {
@@ -59,6 +71,38 @@ const Posts: React.FC = () => {
     )
   })
 
+  const handleAddPost = () => {
+    console.log(content)
+    if (content.length < 30) {
+      setMessage("Post musi być dłuzszy niż 30 znaków!");
+      setIserror(true);
+      return;
+    }
+
+    if (!user)
+      return;
+
+    const post: Post = {
+      userId: user.userId,
+      content,
+      tag,
+      createdAt: new Date(),
+      editedAt: null
+    }
+    postPost(user.userId, post)
+      .then((response: Response | any) => {
+        const postsAll = [...posts, response.data];
+        setPosts(postsAll);
+        setContent("")
+        setTag("")
+      })
+      .catch(() => {
+        setMessage("Wystąpił bład podczas dodawania posta!");
+        setIserror(true);
+      })
+
+  }
+
   return (
     <IonPage>
       <IonHeader>
@@ -73,6 +117,32 @@ const Posts: React.FC = () => {
           </IonToolbar>
         </IonHeader>
         <MainContainer name={name}>
+          <IonAlert
+            isOpen={iserror}
+            onDidDismiss={() => setIserror(false)}
+            header={"Bląd!"}
+            message={message}
+            buttons={["OK"]}
+          />
+          <div>
+            <form className="ion-padding">
+              <IonItem>
+                <IonLabel position="floating">Treść posta</IonLabel>
+                <IonTextarea
+                  value={content}
+                  onInput={(event) => setContent((event.target as HTMLInputElement).value)} />
+              </IonItem>
+              <IonItem>
+                <IonLabel position="floating">Tag</IonLabel>
+                <IonInput
+                  value={tag}
+                  onInput={(event) => setTag((event.target as HTMLInputElement).value)}
+                  type="text" />
+              </IonItem>
+              <IonButton expand="block" color="primary" onClick={handleAddPost}>Dodaj post</IonButton>
+            </form>
+
+          </div>
           <IonList>
             <IonRefresher slot="fixed" onIonRefresh={doRefresh}>
               <IonRefresherContent
