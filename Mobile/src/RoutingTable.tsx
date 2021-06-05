@@ -13,7 +13,7 @@ import { chatboxEllipses, peopleCircle, person } from 'ionicons/icons';
 
 import Posts from './pages/Posts';
 import Tab2 from './pages/Tab2';
-import Tab3 from './pages/Tab3';
+import Profil from './pages/Profile';
 
 import Login from './pages/Login'
 
@@ -35,8 +35,8 @@ const RoutingTable: React.FC = () => {
                         <Route exact path="/tab2">
                             <Tab2 />
                         </Route>
-                        <Route path="/tab3">
-                            <Tab3 />
+                        <Route path="/profile/:id?">
+                            <Profil />
                         </Route>
                         <Route exact path="/">
                             {/* Domyślna ścieżka */}
@@ -52,7 +52,7 @@ const RoutingTable: React.FC = () => {
                             <IonIcon icon={peopleCircle} />
                             <IonLabel>Użytkownicy</IonLabel>
                         </IonTabButton>
-                        <IonTabButton tab="tab3" href="/tab3">
+                        <IonTabButton tab="profile" href="/profile">
                             <IonIcon icon={person} />
                             <IonLabel>Profil</IonLabel>
                         </IonTabButton>
