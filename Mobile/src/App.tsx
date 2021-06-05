@@ -1,24 +1,10 @@
 import React, { useEffect } from 'react';
-import { Redirect, Route } from 'react-router-dom';
 import {
   IonApp,
-  IonIcon,
-  IonLabel,
-  IonRouterOutlet,
-  IonTabBar,
-  IonTabButton,
-  IonTabs,
 } from '@ionic/react';
-import { IonReactRouter } from '@ionic/react-router';
-import { ellipse, square, triangle } from 'ionicons/icons';
 
 import { AuthProvider } from './services/AuthorizationService';
 import RoutingTable from './RoutingTable';
-
-import Tab1 from './pages/Tab1';
-import Tab2 from './pages/Tab2';
-import Tab3 from './pages/Tab3';
-import Login from './pages/Login'
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';

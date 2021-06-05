@@ -1,5 +1,6 @@
 import axios from './axios';
-import { URL } from '../constants'
+import { URL } from '../constants';
+import User from '../models/user';
 
 const URL_USERS = `${URL}/users`;
 
@@ -30,16 +31,6 @@ const putUser = async (id: number, user: User) => await axios()
 // Autoryzacja
 const deleteUser = async (id: number) => await axios()
     .delete(`${URL_USERS}/${id}`)
-
-export interface User {
-    universityId: number,
-    nick: string,
-    firstName: string,
-    lastName: string,
-    createdAt: Date,
-    password: string,
-    email: string
-}
 
 export {
     getUserByName,

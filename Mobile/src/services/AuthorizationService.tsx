@@ -1,7 +1,8 @@
 import React, { ReactElement, useContext, useEffect, useState } from 'react';
 import { get, set } from './ionicStorage';
 
-import { getUserByName, User } from './UserService';
+import { getUserByName } from './UserService';
+import User from '../models/user';
 
 interface IProps {
     login: (name: string, password: string) => any,
@@ -35,7 +36,7 @@ export const AuthProvider = (props: any) => {
                 .then(async (response: Response | any) => {
 
                     const userString = JSON.stringify(response.data);
-                    await set('token', userString);
+                    await set('user', userString);
 
                     return response;
                 }).then((response: Response | any) => {

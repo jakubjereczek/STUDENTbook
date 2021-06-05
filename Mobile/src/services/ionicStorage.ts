@@ -20,7 +20,6 @@ const get = async (key: string) => {
         const value = await storage.get(key);
         return value;
     }
-    console.log("Storage == null")
     return null;
 }
 

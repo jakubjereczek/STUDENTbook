@@ -1,0 +1,12 @@
+span {
+    color: var(--ion-color-primary);
+    display: block;
+    padding-top: 5px;
+}
+
+span:nth-of-type(2) {
+    color: black;
+    display: block;
+    padding-top: 5px;
+    text-align: right;
+}

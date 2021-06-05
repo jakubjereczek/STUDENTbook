@@ -8,8 +8,7 @@ const axiosInstance = axios.create({});
 export default () => {
     axiosInstance.interceptors.request.use(async function (config: any) {
         const token = await get('token');
-        config.headers.Authorization = `Basic ${token}`
-
+        config.headers.Authorization = `Basic ${token}`;
         return config;
     });
 
@@ -19,7 +18,7 @@ export default () => {
         },
         (err: Error | any) => {
             console.log(err)
-            if (err.response.status === 401) {
+            if (err.response && err.response.status === 401) {
                 console.log("UNAUTHORIZED")
                 set('token', null);
                 set('user', null);

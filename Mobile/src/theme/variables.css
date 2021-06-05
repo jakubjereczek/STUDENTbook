@@ -3,13 +3,13 @@ http://ionicframework.com/docs/theming/ */
 
 /** Ionic CSS Variables **/
 :root {
-  /** primary **/
-  --ion-color-primary: #3880ff;
-  --ion-color-primary-rgb: 56, 128, 255;
+  /** primary - changed **/
+  --ion-color-primary: #ff6347 ; 
+  --ion-color-primary-rgb: 255, 99, 71;
   --ion-color-primary-contrast: #ffffff;
   --ion-color-primary-contrast-rgb: 255, 255, 255;
-  --ion-color-primary-shade: #3171e0;
-  --ion-color-primary-tint: #4c8dff;
+  --ion-color-primary-shade: #d0513a;
+  --ion-color-primary-tint: #ff8d79;
 
   /** secondary **/
   --ion-color-secondary: #3dc2ff;
