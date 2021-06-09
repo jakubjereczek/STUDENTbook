@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export const UserAbout = styled.div`
-    /* line-height: 32px; */
     padding: 0 5px;
 `
 

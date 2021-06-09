@@ -48,3 +48,6 @@ Mobile/yarn-error.log*
 # Optional eslint cache
 Mobile/.eslintcache
 
+Mobile/build
+Mobile/android
+

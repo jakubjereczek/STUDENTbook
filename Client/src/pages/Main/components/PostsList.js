@@ -3,9 +3,7 @@ import { Link } from 'react-router-dom';
 import { ContainerInside, UserIcon, Author, ButtonIcon, Text } from '../../../components/SharedStyles.css'
 import { AboutUser, DateString, PostContent, PostButtons } from './PostsList.css'
 
-import { FaRegTimesCircle } from "react-icons/fa";
-
-import { useAuth } from '../../../services/AuthorizationService';
+import { FaRegTimesCircle, FaRegEdit } from "react-icons/fa";
 
 import { deletePost, getAllPosts } from '../../../services/PostService'
 import { getUserById } from '../../../services/UserService'
@@ -15,14 +13,16 @@ import AddPost from '../components/AddPost'
 import Hover from './Hover';
 
 import toast from 'react-hot-toast';
+import EditPostPopup from './EditPostPopup';
 
-function PostsList() {
+function PostsList({ currentUser }) {
     const [posts, setPosts] = useState([]);
 
-    const userStatus = useAuth();
-    const currentUser = userStatus.user;
 
     const [hoverActive, setHoverActive] = useState(false);
+    const [popupActive, setPopupActive] = useState(false);
+    const [activePost, setActivePost] = useState(null);
+
     const [hoverUser, setHoverUser] = useState(null);
     const [hoverCords, setHoverCords] = useState({
         top: 0,
@@ -32,10 +32,13 @@ function PostsList() {
     const [loading, setLoading] = useState(true);
 
     useEffect(async () => {
-        const posts = await getAllPosts();
-        setPosts(posts.data);
-        setLoading(false);
-    }, [])
+        if (!popupActive) {  // Startowo jest false - czyli wykona się na starcie + przy wyjściu z edycji, edytowaniu.
+            const posts = await getAllPosts();
+            setPosts(posts.data);
+            setLoading(false);
+        }
+    }, [popupActive]) // W przypadku gdy zmienimy wartość popupu. 
+
 
     const onMouseEnter = (event, user) => {
         console.log(event)
@@ -62,6 +65,11 @@ function PostsList() {
             })
     }
 
+    const editPostAction = (post) => {
+        setPopupActive(true)
+        setActivePost(post);
+    }
+
     const postsList = posts.map((post) => {
         const user = post.Users;
         const university = post.Users.University;
@@ -80,10 +88,18 @@ function PostsList() {
                     <PostContent>
                         <Text>{post.content}</Text>
                         <PostButtons>
-                            {post.userId === currentUser.userId && (<ButtonIcon onClick={() => deletePostAction(post)}>
-                                {/* Delete */}
-                                <FaRegTimesCircle />
-                            </ButtonIcon>)}
+                            {post.userId === currentUser.userId && (
+                                <React.Fragment>
+                                    <ButtonIcon onClick={() => deletePostAction(post)}>
+                                        {/* Edit */}
+                                        <FaRegTimesCircle />
+                                    </ButtonIcon>
+                                    <ButtonIcon onClick={() => editPostAction(post)}>
+                                        {/* Delete */}
+                                        <FaRegEdit />
+                                    </ButtonIcon>
+                                </React.Fragment>)
+                            }
                         </PostButtons>
                     </PostContent>
                 </ContainerInside >
@@ -95,6 +111,7 @@ function PostsList() {
     return (
         <React.Fragment>
             <AddPost setLoading={setLoading} setPosts={setPosts} posts={posts} />
+            <EditPostPopup active={popupActive} setActive={setPopupActive} post={activePost} />
 
             {postsList}
             {hoverActive && <Hover active={hoverActive} user={hoverUser} style={hoverCords} />}

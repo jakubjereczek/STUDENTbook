@@ -23,19 +23,19 @@ const Profile: React.FC = () => {
 
   let { id }: any = useParams();
 
-  const postsList = user && user.Posts && user.Posts.map((post: Post) => {
+  const postsList = user && user.Posts && user.Posts.map((post: Post, index: number) => {
     return (
       <IonItem key={post.postId}>
-        <p>{post.content}</p>
+        <p>{index + 1}. {post.content}</p>
       </IonItem>
     )
   })
 
-  const postsAnswersList = postAnswersList && postAnswersList.map((post: PostAnswer) => {
+  const postsAnswersList = postAnswersList && postAnswersList.map((post: PostAnswer, index: number) => {
     return (
       <IonItem key={post.answerId}>
-        <span>(...)</span>
-        <p>{post.content}</p>
+
+        <p> <span>(...) </span> {index + 1}.{post.content}</p>
       </IonItem>
     )
   })
@@ -88,11 +88,15 @@ const Profile: React.FC = () => {
               </IonRow>
               <IonRow>
                 <h4>Posty</h4>
-                {postsList && postsList.length > 0 ? postsList : "Brak postów."}
+              </IonRow>
+              <IonRow>
+                {postsList && postsList.length > 0 ? postsList : <p>Brak postów.</p>}
               </IonRow>
               <IonRow>
                 <h4>Odpowiedzi na posty</h4>
-                {postAnswersList && postAnswersList.length > 0 ? postsAnswersList : "Brak odpowiedzi na posty."}
+              </IonRow>
+              <IonRow>
+                {postAnswersList && postAnswersList.length > 0 ? postsAnswersList : <p>Brak odpowiedzi na posty.</p>}
               </IonRow>
             </IonGrid>)}
         </MainContainer>

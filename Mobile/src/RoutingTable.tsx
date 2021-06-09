@@ -12,7 +12,7 @@ import { IonReactRouter } from '@ionic/react-router';
 import { chatboxEllipses, peopleCircle, person } from 'ionicons/icons';
 
 import Posts from './pages/Posts';
-import Tab2 from './pages/Tab2';
+import Users from './pages/Users';
 import Profil from './pages/Profile';
 
 import Login from './pages/Login'
@@ -32,8 +32,8 @@ const RoutingTable: React.FC = () => {
                         <Route exact path="/posts">
                             <Posts />
                         </Route>
-                        <Route exact path="/tab2">
-                            <Tab2 />
+                        <Route exact path="/users">
+                            <Users />
                         </Route>
                         <Route path="/profile/:id?">
                             <Profil />
@@ -48,7 +48,7 @@ const RoutingTable: React.FC = () => {
                             <IonIcon icon={chatboxEllipses} />
                             <IonLabel>Posty</IonLabel>
                         </IonTabButton>
-                        <IonTabButton tab="tab2" href="/tab2">
+                        <IonTabButton tab="users" href="/users">
                             <IonIcon icon={peopleCircle} />
                             <IonLabel>Użytkownicy</IonLabel>
                         </IonTabButton>

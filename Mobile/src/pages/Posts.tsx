@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, ChangeEvent } from 'react';
-import { IonIcon, IonHeader, IonPage, IonTitle, IonToolbar, IonItem, IonInput, IonToggle, IonRadio, IonCheckbox, IonItemSliding, IonItemOption, IonItemOptions, IonCardContent, IonButton, IonContent, IonLabel, IonList, IonListHeader, IonThumbnail, IonAvatar, IonRefresher, IonRefresherContent, IonRouterLink, IonTextarea, IonAlert } from '@ionic/react';
+import { IonIcon, IonHeader, IonPage, IonTitle, IonToolbar, IonItem, IonInput, IonToggle, IonRadio, IonCheckbox, IonItemSliding, IonItemOption, IonItemOptions, IonButton, IonContent, IonLabel, IonList, IonListHeader, IonThumbnail, IonAvatar, IonRefresher, IonRefresherContent, IonRouterLink, IonTextarea, IonAlert, IonCard, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCardContent } from '@ionic/react';
 import { RefresherEventDetail } from '@ionic/core';
 import { chevronDownCircleOutline } from 'ionicons/icons';
 
@@ -58,16 +58,17 @@ const Posts: React.FC = () => {
   const postsList = posts && posts.map<JSX.Element>((post: Post | any) => {
 
     return (
-      <IonItem key={post.postId}>
-        <IonAvatar slot="start">
-          <img src={profileImage}></img>
-        </IonAvatar>
-        <IonLabel>
-          <h2><Link to={`/profile/${post.userId}`}>{post.Users.firstName} {post.Users.lastName}</Link></h2>
-          <h3>{post.Users.University.name}</h3>
-          <p>{post.content.length > 100 ? `${post.content.slice(0, 100)}...` : post.content}</p>
-        </IonLabel>
-      </IonItem>
+      <IonCard key={post.postId}>
+        <IonCardHeader>
+          <IonCardSubtitle><Link to={`/profile/${post.userId}`}>{post.Users.firstName} {post.Users.lastName}</Link></IonCardSubtitle>
+          <IonCardTitle>{post.Users.University.name}</IonCardTitle>
+
+        </IonCardHeader>
+        <IonCardContent>
+          {post.content}
+          <span>{new Date(post.createdAt).toLocaleString()}</span>
+        </IonCardContent>
+      </IonCard>
     )
   })
 
@@ -124,25 +125,30 @@ const Posts: React.FC = () => {
             message={message}
             buttons={["OK"]}
           />
-          <div>
-            <form className="ion-padding">
-              <IonItem>
-                <IonLabel position="floating">Treść posta</IonLabel>
-                <IonTextarea
-                  value={content}
-                  onInput={(event) => setContent((event.target as HTMLInputElement).value)} />
-              </IonItem>
-              <IonItem>
-                <IonLabel position="floating">Tag</IonLabel>
-                <IonInput
-                  value={tag}
-                  onInput={(event) => setTag((event.target as HTMLInputElement).value)}
-                  type="text" />
-              </IonItem>
-              <IonButton expand="block" color="primary" onClick={handleAddPost}>Dodaj post</IonButton>
-            </form>
+          <IonCard>
+            <IonCardHeader>
+              <IonCardTitle>Dodaj nowy post</IonCardTitle>
+            </IonCardHeader>
+            <IonCardContent>
+              <form>
+                <IonItem>
+                  <IonLabel position="floating">Treść posta</IonLabel>
+                  <IonTextarea
+                    value={content}
+                    onInput={(event) => setContent((event.target as HTMLInputElement).value)} />
+                </IonItem>
+                <IonItem>
+                  <IonLabel position="floating">Tag</IonLabel>
+                  <IonInput
+                    value={tag}
+                    onInput={(event) => setTag((event.target as HTMLInputElement).value)}
+                    type="text" />
+                </IonItem>
+                <IonButton expand="block" color="primary" onClick={handleAddPost}>Dodaj post</IonButton>
+              </form>
 
-          </div>
+            </IonCardContent>
+          </IonCard>
           <IonList>
             <IonRefresher slot="fixed" onIonRefresh={doRefresh}>
               <IonRefresherContent
@@ -153,6 +159,7 @@ const Posts: React.FC = () => {
               </IonRefresherContent>
             </IonRefresher>
             {postsList}
+
           </IonList>
         </MainContainer>
       </IonContent>

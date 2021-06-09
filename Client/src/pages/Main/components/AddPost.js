@@ -19,7 +19,7 @@ function AddPost({ setLoading, setPosts, posts }) {
             return toast.error('Treść posta musi mieć powyżej 30 znaków!')
         setLoading(true);
         const post = new Post(user.userId, tagInput.current.value, contentTextArea.current.value, new Date(), null)
-        const postObj = post.getObject()
+        const postObj = post.getObject();
         postPost(user.userId, postObj).then((res => {
             const postsAll = [...posts, res.data]
             setPosts(postsAll);

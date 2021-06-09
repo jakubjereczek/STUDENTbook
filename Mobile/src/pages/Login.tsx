@@ -33,7 +33,7 @@ const Login: React.FC = () => {
                 console.log(response)
             }).catch((error: Error) => {
                 console.log(error);
-                setMessage("Użytkownik o takich danych nie istnieje!");
+                setMessage("Wystąpił problem podczas logowania!");
                 setIserror(true);
             })
     };
@@ -60,6 +60,12 @@ const Login: React.FC = () => {
                                 style={{ fontSize: "128px" }}
                                 icon={personCircle}
                             />
+                        </IonCol>
+                    </IonRow>
+                    <IonRow>
+                        <IonCol>
+                            <h2>      studentbook</h2>
+
                         </IonCol>
                     </IonRow>
                     <IonRow>

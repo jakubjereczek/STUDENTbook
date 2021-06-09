@@ -58,6 +58,7 @@ export const UserIconLarge = styled(UserIcon)`
 `
 
 export const Input = styled.input`
+    width: 100%;
     padding: 10px;
     margin: 5px 0;
     border: 1px solid ${props => props.theme.others};
@@ -72,6 +73,7 @@ export const Select = styled.select`
 `
 
 export const TextArea = styled.textarea`
+    width: 100%;
     padding: 10px;
     margin: 5px 0;
     border: 1px solid ${props => props.theme.others};
@@ -82,6 +84,7 @@ export const TextArea = styled.textarea`
 `
 
 export const Button = styled.button`
+    width: 100%;
     padding: 10px;
     color: ${props => props.theme.details};
     background-color: ${props => props.theme.secodary};

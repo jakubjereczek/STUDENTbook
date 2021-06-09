@@ -3,11 +3,9 @@ import { ContainerInside, UserIcon, Text } from '../../../components/SharedStyle
 import { UserAbout, MyContainer } from './ProfilView.css'
 import { useAuth } from '../../../services/AuthorizationService';
 
-function NotFound() {
+function NotFound({ currentUser }) {
 
-    const userStatus = useAuth();
-    const user = userStatus.user;
-    const { firstName, lastName, University } = user;
+    const { firstName, lastName, University } = currentUser;
 
     return (
         <ContainerInside>
