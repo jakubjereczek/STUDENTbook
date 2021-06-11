@@ -17,7 +17,6 @@ import EditPostPopup from './EditPostPopup';
 
 function PostsList({ currentUser }) {
     const [posts, setPosts] = useState([]);
-    const [visiblePosts, setVisiblePosts] = useState([]);
 
     const [hoverActive, setHoverActive] = useState(false);
     const [popupActive, setPopupActive] = useState(false);
@@ -35,18 +34,28 @@ function PostsList({ currentUser }) {
     // TODO: Pagination in Server side. 
     // I should to get posts (example ten for page) with every scroll, not everythings.
     const [hasMore, setHasMore] = useState(false);
-    const [currentSite, setCurrentSite] = useState(1);
-    const renderCount = 10;
+    const [pageNumber, setPageNumber] = useState(1);
+    const [pageSize, setPageSize] = useState(10);
 
-    useEffect(async () => {
-        if (!popupActive) {  // Startowo jest false - czyli wykona się na starcie + przy wyjściu z edycji, edytowaniu.
-            const posts = await getAllPosts();
-            setPosts(posts.data);
-            const visiblePosts = posts.data.slice(0, currentSite * renderCount);
-            setVisiblePosts(visiblePosts);
+    useEffect(() => {
+        async function fetchData() {
+            const postsFetch = await getAllPosts(pageNumber, pageSize);
+
+            const pagination = postsFetch.data.paginationMetadata;
+            if (pagination.hasNextPage === "Yes") {
+                setHasMore(true);
+            } else {
+                setHasMore(false);
+            }
+
+            setPosts([
+                ...posts,
+                ...postsFetch.data.postsListByPage
+            ]);
             setLoading(false);
         }
-    }, [popupActive]) // W przypadku gdy zmienimy wartość popupu. 
+        fetchData();
+    }, [pageNumber]) // W przypadku gdy zmienimy wartość popupu. 
 
 
     const onMouseEnter = (event, user) => {
@@ -86,26 +95,22 @@ function PostsList({ currentUser }) {
         if (observer.current) observer.current.disconnect();
         observer.current = new IntersectionObserver(entries => {
             if (entries[0].isIntersecting) {
-                console.log('visible');
-                setHasMore(visiblePosts < posts);
                 if (hasMore) {
-                    setCurrentSite(currentSite + 1);
-                    const visiblePosts = posts.slice(0, currentSite * renderCount);
-                    setVisiblePosts(visiblePosts);
+                    setPageNumber(state => state + 1);
                 }
             }
         });
         if (node) observer.current.observe(node);
 
-    })
+    }, [hasMore, loading])
 
-    const postsList = visiblePosts.map((post, index) => {
+    const postsList = posts.map((post, index) => {
         const user = post.Users;
         const university = post.Users.University;
 
         return (
             <React.Fragment>
-                <ContainerInside key={post.postId} ref={visiblePosts.length === index + 1 ? lastPostElementRef : null}>
+                <ContainerInside key={post.postId} ref={posts.length === index + 1 ? lastPostElementRef : null}>
                     <AboutUser>
                         <UserIcon />
                         <p>
@@ -137,8 +142,8 @@ function PostsList({ currentUser }) {
     return (
         <React.Fragment>
             <AddPost setLoading={setLoading} setPosts={setPosts} posts={posts} />
-            <EditPostPopup active={popupActive} setActive={setPopupActive} post={activePost} />
-            {postsList}
+            <EditPostPopup active={popupActive} setActive={setPopupActive} post={activePost} posts={posts} setPosts={setPosts} />
+            {loading ? "Ładowanie..." : postsList}
             {hoverActive && <Hover active={hoverActive} user={hoverUser} style={hoverCords} />}
         </React.Fragment>
     )

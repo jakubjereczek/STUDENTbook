@@ -6,7 +6,7 @@ import Post from '../../../models/Post';
 import { putPost } from '../../../services/PostService'
 import toast from 'react-hot-toast';
 
-function EditPostPopup({ active, setActive, post }) {
+function EditPostPopup({ active, setActive, post, posts, setPosts }) {
 
     const setActiveActive = () => setActive(false);
 
@@ -28,8 +28,10 @@ function EditPostPopup({ active, setActive, post }) {
             return toast.error('Treść posta musi mieć powyżej 30 znaków!')
 
         const modifiedPost = new Post(post.userId, tag, content, post.createdAt, new Date());
-        const postObj = { postId: post.postId, ...modifiedPost.getObject() }
-        console.log(postObj)
+        const postObj = {
+            postId: post.postId,
+            ...modifiedPost.getObject()
+        }
 
         putPost(post.postId, postObj)
             .then((res) => {
@@ -41,8 +43,9 @@ function EditPostPopup({ active, setActive, post }) {
                 setActive(false);
             })
 
+        // To do - przesyłać cała liste posob - oraz edytować element, a potem odswieżyć. 
+        // Na razie edycja nie działa po dodaniu pagingu.
 
-        // Aktualziacja tam
 
     }
 

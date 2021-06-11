@@ -1,4 +1,5 @@
-﻿using STUDENTbookServer.Helpers;
+﻿using Newtonsoft.Json;
+using STUDENTbookServer.Helpers;
 using STUDENTbookServer.Models;
 using System;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Cors;
 
@@ -18,12 +20,44 @@ namespace STUDENTbookServer.Controllers
 
         private STUDENTbookEntities _db = new STUDENTbookEntities();
 
-        // GET: api/Posts
+        // GET: api/Posts?&pageNumber=1&pageSize=5
         [HttpGet]
-        public HttpResponseMessage Get()
+        public HttpResponseMessage Get([FromUri] PagingParameterModel pagingParameterModel)
         {
-            List<Posts> postsList = _db.Posts.ToList();
-            return Request.CreateResponse(HttpStatusCode.OK, postsList);
+            List<Posts> postsList = _db.Posts.OrderByDescending(p => p.createdAt).ToList();
+
+            int postsListLength = postsList.Count;
+            int CurrentPage = pagingParameterModel.pageNumber;
+            int PageSize = pagingParameterModel.pageSize;
+
+            int TotalPages = (int)Math.Ceiling(postsListLength / (double)PageSize);
+            List<Posts> postsListByPage = postsList.Skip((CurrentPage - 1) * PageSize).Take(PageSize).ToList();
+
+            var hasPreviousPage = CurrentPage > 1 ? "Yes" : "No";
+            var hasNextPage = CurrentPage < TotalPages ? "Yes" : "No";
+
+            // Object which we are going to send in header   
+            var paginationMetadata = new
+            {
+                Length = postsListLength,
+                pageSize = PageSize,
+                currentPage = CurrentPage,
+                totalPages = TotalPages,
+                hasPreviousPage,
+                hasNextPage
+            };
+
+            var response = Request.CreateResponse(HttpStatusCode.OK, postsListByPage);
+/*            response.Headers.Add("Access-Control-Allow-Headers", "*");
+
+            response.Headers.Add("X-Paging", JsonConvert.SerializeObject(paginationMetadata));            // Setting Header  
+            response.Headers.Add("Access-Control-Expose-Headers", "X-Paging-Headers");
+*/
+            return Request.CreateResponse(HttpStatusCode.OK, new 
+                {
+                    postsListByPage,
+                    paginationMetadata
+                });
         }
 
         // GET: api/Posts/{id}

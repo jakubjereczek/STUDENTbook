@@ -6,8 +6,14 @@ const URL_POSTS = `${URL}/posts`;
 const getPostsByUserName = async (name) => await axios()
     .get(`${URL_POSTS}/GetBy/username/${name}`)
 
-const getAllPosts = async () => await axios()
-    .get(URL_POSTS)
+const getAllPosts = async (pageNumber, pageSize) => await axios()
+    .get(`${URL_POSTS}`,
+        {
+            params: {
+                pageNumber,
+                pageSize
+            }
+        });
 
 // Authoryzacja
 /// Post = Post class model

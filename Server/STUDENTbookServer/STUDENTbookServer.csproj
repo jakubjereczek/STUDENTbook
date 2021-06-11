@@ -272,6 +272,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\PagingParameterModel.cs" />
     <Compile Include="Models\PostAnswers.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
