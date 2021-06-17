@@ -14,12 +14,6 @@ namespace STUDENTbookServer.Models
     
     public partial class Users
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Users()
-        {
-            this.Posts = new HashSet<Posts>();
-        }
-    
         public int userId { get; set; }
         public Nullable<int> universityId { get; set; }
         public string nick { get; set; }
@@ -29,9 +23,5 @@ namespace STUDENTbookServer.Models
         public string password { get; set; }
         public System.DateTime createdAt { get; set; }
         public Nullable<System.DateTime> lastLogginIn { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Posts> Posts { get; set; }
-        public virtual University University { get; set; }
     }
 }

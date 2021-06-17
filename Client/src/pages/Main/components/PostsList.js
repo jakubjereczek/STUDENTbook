@@ -29,20 +29,22 @@ function PostsList({ currentUser }) {
     })
 
     const [loading, setLoading] = useState(true);
+    const [loadingNewPage, setLoadingNewPage] = useState(false);
 
     // pagination
     // TODO: Pagination in Server side. 
     // I should to get posts (example ten for page) with every scroll, not everythings.
     const [hasMore, setHasMore] = useState(false);
     const [pageNumber, setPageNumber] = useState(1);
-    const [pageSize, setPageSize] = useState(10);
+    const [pageSize, setPageSize] = useState(100);
 
     useEffect(() => {
         async function fetchData() {
+            // TODO: Don't render the same every time. 
             const postsFetch = await getAllPosts(pageNumber, pageSize);
 
-            const pagination = postsFetch.data.paginationMetadata;
-            if (pagination.hasNextPage === "Yes") {
+            console.log(postsFetch)
+            if (postsFetch.data.hasNextPage === "Yes") {
                 setHasMore(true);
             } else {
                 setHasMore(false);
@@ -50,7 +52,7 @@ function PostsList({ currentUser }) {
 
             setPosts([
                 ...posts,
-                ...postsFetch.data.postsListByPage
+                ...postsFetch.data.data
             ]);
             setLoading(false);
         }
@@ -66,7 +68,7 @@ function PostsList({ currentUser }) {
         setHoverUser(user)
         setHoverActive(true)
     }
-    const onMouseLeave = (event) => {
+    const onMouseLeave = () => {
         setHoverUser(null)
         setHoverActive(false)
     }
@@ -89,14 +91,17 @@ function PostsList({ currentUser }) {
 
     const observer = useRef();
     const lastPostElementRef = useCallback(node => {
-        console.log(!loading && node);
         if (loading)
             return false;
-        if (observer.current) observer.current.disconnect();
+        if (observer.current) {
+            observer.current.disconnect();
+            setLoadingNewPage(false);
+        }
         observer.current = new IntersectionObserver(entries => {
             if (entries[0].isIntersecting) {
                 if (hasMore) {
                     setPageNumber(state => state + 1);
+                    setLoadingNewPage(true);
                 }
             }
         });
@@ -104,9 +109,11 @@ function PostsList({ currentUser }) {
 
     }, [hasMore, loading])
 
-    const postsList = posts.map((post, index) => {
-        const user = post.Users;
-        const university = post.Users.University;
+    const [postsList, setPostList] = useState([]);
+
+    const getPostsList = useCallback(() => Promise.all(posts.map(async (post, index) => {
+        const userFetch = await getUserById(post.userId); // Problem polega na tym, że przy każym ruchu wykonujemy render dla wszystkich występujących uzytkownikow wyzej.
+        const user = userFetch.data;
 
         return (
             <React.Fragment>
@@ -137,13 +144,20 @@ function PostsList({ currentUser }) {
                 </ContainerInside >
             </React.Fragment>
         )
-    });
+    })), [lastPostElementRef, posts]);
+
+    useEffect(() => {
+        getPostsList().then((results) => {
+            setPostList(results);
+        })
+    }, [getPostsList])
 
     return (
         <React.Fragment>
             <AddPost setLoading={setLoading} setPosts={setPosts} posts={posts} />
             <EditPostPopup active={popupActive} setActive={setPopupActive} post={activePost} posts={posts} setPosts={setPosts} />
-            {loading ? "Ładowanie..." : postsList}
+            {loading ? "Ładowanie witryny..." : postsList}
+            {loadingNewPage && "Ładowanie nowej strony... "}
             {hoverActive && <Hover active={hoverActive} user={hoverUser} style={hoverCords} />}
         </React.Fragment>
     )

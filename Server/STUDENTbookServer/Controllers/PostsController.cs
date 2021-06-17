@@ -18,46 +18,46 @@ namespace STUDENTbookServer.Controllers
     {
         // TO DO: Rola admina umozliwiajaca to co uzytkownik zautoryzowany.
 
-        private STUDENTbookEntities _db = new STUDENTbookEntities();
+        private STUDENTbookEntities _db = new STUDENTbookEntities(); 
 
-        // GET: api/Posts?&pageNumber=1&pageSize=5
+
+        // GET: api/Posts?pageNumber=1&pageSize=5
         [HttpGet]
         public HttpResponseMessage Get([FromUri] PagingParameterModel pagingParameterModel)
         {
             List<Posts> postsList = _db.Posts.OrderByDescending(p => p.createdAt).ToList();
+            // TO DO: Pobranie od pewnej daty, aby nie psuć listy nowymi.
+            // Gdy przegladam pobieram tylko poprzednie. (A nie aktualizuje)
 
             int postsListLength = postsList.Count;
             int CurrentPage = pagingParameterModel.pageNumber;
             int PageSize = pagingParameterModel.pageSize;
 
             int TotalPages = (int)Math.Ceiling(postsListLength / (double)PageSize);
-            List<Posts> postsListByPage = postsList.Skip((CurrentPage - 1) * PageSize).Take(PageSize).ToList();
+            List<Posts> postsListByPage = postsList.Skip((CurrentPage - 1) * PageSize).Take(PageSize).ToList(); // Nie dziala
 
             var hasPreviousPage = CurrentPage > 1 ? "Yes" : "No";
             var hasNextPage = CurrentPage < TotalPages ? "Yes" : "No";
 
             // Object which we are going to send in header   
-            var paginationMetadata = new
+            var resultsMetadata = new
             {
                 Length = postsListLength,
                 pageSize = PageSize,
                 currentPage = CurrentPage,
                 totalPages = TotalPages,
                 hasPreviousPage,
-                hasNextPage
+                hasNextPage,
+                data = postsListByPage
             };
 
             var response = Request.CreateResponse(HttpStatusCode.OK, postsListByPage);
-/*            response.Headers.Add("Access-Control-Allow-Headers", "*");
+            /*            response.Headers.Add("Access-Control-Allow-Headers", "*");
 
-            response.Headers.Add("X-Paging", JsonConvert.SerializeObject(paginationMetadata));            // Setting Header  
-            response.Headers.Add("Access-Control-Expose-Headers", "X-Paging-Headers");
-*/
-            return Request.CreateResponse(HttpStatusCode.OK, new 
-                {
-                    postsListByPage,
-                    paginationMetadata
-                });
+                        response.Headers.Add("X-Paging", JsonConvert.SerializeObject(paginationMetadata));            // Setting Header  
+                        response.Headers.Add("Access-Control-Expose-Headers", "X-Paging-Headers");
+            */
+            return Request.CreateResponse(HttpStatusCode.OK, resultsMetadata);
         }
 
         // GET: api/Posts/{id}
@@ -83,8 +83,9 @@ namespace STUDENTbookServer.Controllers
             {
                 return Request.CreateErrorResponse(HttpStatusCode.NotFound, string.Format("User {0} not found", name));
             }
-            var UserPosts = User.Posts;
+            var UserPosts = _db.Posts.FirstOrDefault(p => p.userId == User.userId);
             return Request.CreateResponse(HttpStatusCode.OK, UserPosts);
+
         }
 
         // POST: api/Posts/{userId}
@@ -108,7 +109,7 @@ namespace STUDENTbookServer.Controllers
 
                 if (ModelState.IsValid)
                 {
-                    User.Posts.Add(post);
+                    _db.Posts.Add(post);
                     _db.SaveChanges();
                     return Request.CreateResponse(HttpStatusCode.OK, post);
 
