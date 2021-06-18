@@ -15,6 +15,8 @@ import Hover from './Hover';
 import toast from 'react-hot-toast';
 import EditPostPopup from './EditPostPopup';
 
+import useMap from '../../../hooks/useMap'
+
 function PostsList({ currentUser }) {
     const [posts, setPosts] = useState([]);
 
@@ -29,20 +31,21 @@ function PostsList({ currentUser }) {
     })
 
     const [loading, setLoading] = useState(true);
-    const [loadingNewPage, setLoadingNewPage] = useState(false);
+    const [loadingNewPage, setLoadingNewPage] = useState(true);
 
     // pagination
     // TODO: Pagination in Server side. 
     // I should to get posts (example ten for page) with every scroll, not everythings.
     const [hasMore, setHasMore] = useState(false);
     const [pageNumber, setPageNumber] = useState(1);
-    const [pageSize, setPageSize] = useState(100);
+    const [pageSize, setPageSize] = useState(10);
+
+    const [addItem, removeItem, getItem] = useMap();
 
     useEffect(() => {
         async function fetchData() {
             // TODO: Don't render the same every time. 
             const postsFetch = await getAllPosts(pageNumber, pageSize);
-
             console.log(postsFetch)
             if (postsFetch.data.hasNextPage === "Yes") {
                 setHasMore(true);
@@ -57,7 +60,7 @@ function PostsList({ currentUser }) {
             setLoading(false);
         }
         fetchData();
-    }, [pageNumber]) // W przypadku gdy zmienimy wartość popupu. 
+    }, [pageNumber])
 
 
     const onMouseEnter = (event, user) => {
@@ -111,12 +114,23 @@ function PostsList({ currentUser }) {
 
     const [postsList, setPostList] = useState([]);
 
-    const getPostsList = useCallback(() => Promise.all(posts.map(async (post, index) => {
-        const userFetch = await getUserById(post.userId); // Problem polega na tym, że przy każym ruchu wykonujemy render dla wszystkich występujących uzytkownikow wyzej.
-        const user = userFetch.data;
+    // TODO: Asychroniczność w podejściu do tego, ze występuje bląd - dodanie następuja na końcu wywołania i przez to wysylamy dodatkowe requesty. Przy następnym wywolaniu - do poprzednich wszystko dziala idealnie, ale znowu wysyla po kilka requestów w stosunku powtarajacych sie uzytkownikow.
 
-        return (
-            <React.Fragment>
+    const getPostsList = useCallback(() => Promise.all(
+        posts.map(async (post, index) => {
+            console.log("1.");
+
+            const savedUser = await getItem(post.userId);
+            let user = savedUser;
+
+            if (savedUser === undefined) { // W przypadku gdy nie mamy tego uzytkownika w Mapie to wykonujemy request.
+
+                const userFetch = await getUserById(post.userId);
+                user = userFetch.data;
+                await addItem(user.userId, user) // Dodanie do listy Set użytkowników, aby wyżej sprawdzić czy sie nie powiela i pobrać użytkownika z listy, a nie robic kolejnego requesta do bazy.
+            }
+
+            return (
                 <ContainerInside key={post.postId} ref={posts.length === index + 1 ? lastPostElementRef : null}>
                     <AboutUser>
                         <UserIcon />
@@ -142,9 +156,9 @@ function PostsList({ currentUser }) {
                         </PostButtons>
                     </PostContent>
                 </ContainerInside >
-            </React.Fragment>
-        )
-    })), [lastPostElementRef, posts]);
+            )
+
+        })), [lastPostElementRef, posts]);
 
     useEffect(() => {
         getPostsList().then((results) => {
