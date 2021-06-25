@@ -18,46 +18,79 @@ namespace STUDENTbookServer.Controllers
     {
         // TO DO: Rola admina umozliwiajaca to co uzytkownik zautoryzowany.
 
-        private STUDENTbookEntities _db = new STUDENTbookEntities(); 
+        private STUDENTbookEntities _db = new STUDENTbookEntities();
 
 
         // GET: api/Posts?pageNumber=1&pageSize=5
+        [BasicAuthorization]
         [HttpGet]
-        public HttpResponseMessage Get([FromUri] PagingParameterModel pagingParameterModel)
+        public HttpResponseMessage Get([FromUri] PagingParameterModel pagingParameterModel, [FromUri] String filter)
         {
-            List<Posts> postsList = _db.Posts.OrderByDescending(p => p.createdAt).ToList();
+            // filters
+            const String SEARCH_ALL = "SEARCH_ALL";
+            const String SEARCH_BY_UNIVERSITY = "SEARCH_BY_UNIVERSITY";
+            System.Diagnostics.Debug.WriteLine(filter);
+            List<Posts> postsList = new List<Posts>();
+
             // TO DO: Pobranie od pewnej daty, aby nie psuć listy nowymi.
             // Gdy przegladam pobieram tylko poprzednie. (A nie aktualizuje)
+            // !!
 
-            int postsListLength = postsList.Count;
-            int CurrentPage = pagingParameterModel.pageNumber;
-            int PageSize = pagingParameterModel.pageSize;
 
-            int TotalPages = (int)Math.Ceiling(postsListLength / (double)PageSize);
-            List<Posts> postsListByPage = postsList.Skip((CurrentPage - 1) * PageSize).Take(PageSize).ToList(); // Nie dziala
-
-            var hasPreviousPage = CurrentPage > 1 ? "Yes" : "No";
-            var hasNextPage = CurrentPage < TotalPages ? "Yes" : "No";
-
-            // Object which we are going to send in header   
-            var resultsMetadata = new
+            string username = Thread.CurrentPrincipal.Identity.Name;
+            try
             {
-                Length = postsListLength,
-                pageSize = PageSize,
-                currentPage = CurrentPage,
-                totalPages = TotalPages,
-                hasPreviousPage,
-                hasNextPage,
-                data = postsListByPage
-            };
+                var User = _db.Users.FirstOrDefault(u => u.nick == username);
 
-            var response = Request.CreateResponse(HttpStatusCode.OK, postsListByPage);
-            /*            response.Headers.Add("Access-Control-Allow-Headers", "*");
+                if (User == null)
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, string.Format("User with id = {0} not found", User.userId));
 
-                        response.Headers.Add("X-Paging", JsonConvert.SerializeObject(paginationMetadata));            // Setting Header  
-                        response.Headers.Add("Access-Control-Expose-Headers", "X-Paging-Headers");
-            */
-            return Request.CreateResponse(HttpStatusCode.OK, resultsMetadata);
+                switch (filter)
+                {
+                    case SEARCH_BY_UNIVERSITY:
+                        postsList = _db.Posts.OrderByDescending(p => p.createdAt)
+                            .Where(p => _db.Users.Where(u => u.userId == p.userId)
+                            .Select(u => u.universityId)
+                            .Contains(User.universityId)).ToList();
+                        break;
+                    case SEARCH_ALL:
+                    default:
+                        postsList = _db.Posts.OrderByDescending(p => p.createdAt).ToList();
+                        break;
+                }
+
+                int postsListLength = postsList.Count;
+                int CurrentPage = pagingParameterModel.pageNumber;
+                int PageSize = pagingParameterModel.pageSize;
+
+                int TotalPages = (int)Math.Ceiling(postsListLength / (double)PageSize);
+                List<Posts> postsListByPage = postsList.Skip((CurrentPage - 1) * PageSize).Take(PageSize).ToList(); // Nie dziala
+
+                var hasPreviousPage = CurrentPage > 1 ? "Yes" : "No";
+                var hasNextPage = CurrentPage < TotalPages ? "Yes" : "No";
+
+                // Object which we are going to send in header   
+                var resultsMetadata = new
+                {
+                    Length = postsListLength,
+                    pageSize = PageSize,
+                    currentPage = CurrentPage,
+                    totalPages = TotalPages,
+                    hasPreviousPage,
+                    hasNextPage,
+                    data = postsListByPage
+                };
+
+                var response = Request.CreateResponse(HttpStatusCode.OK, postsListByPage);
+
+                return Request.CreateResponse(HttpStatusCode.OK, resultsMetadata);
+
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, InnerExceptionFinder.getLastInnerException(ex).Message);
+            }
+
         }
 
         // GET: api/Posts/{id}

@@ -13,7 +13,7 @@ function NotFound({ currentUser }) {
                 {/* <UserIcon /> */}
                 <UserAbout>
                     <Text>Witaj, {firstName} {lastName} </Text>
-                    <Text>{University.name}, {University.city}</Text>
+                    {/* <Text>{University.name}, {University.city}</Text> */}
                 </UserAbout>
             </MyContainer>
 

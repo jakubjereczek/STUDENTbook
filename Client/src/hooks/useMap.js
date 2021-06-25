@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 function useSet() {
+
     const [state, setState] = useState(() => new Map());
 
     const addItem = async (key, value) => {
@@ -8,9 +9,7 @@ function useSet() {
             return;
 
         return new Promise((resolve => {
-            resolve
-                (setState(prev => prev.set(key, value))
-                )
+            resolve(setState(prev => prev.set(key, value)))
         }))
     }
 
@@ -24,7 +23,6 @@ function useSet() {
     }
 
     const getItem = async key => {
-
         return new Promise((resolve) => {
             const values = state.get(key);
             resolve(values)

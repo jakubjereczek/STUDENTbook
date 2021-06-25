@@ -1,0 +1,2 @@
+export const SEARCH_ALL = 'SEARCH_ALL';
+export const SEARCH_BY_UNIVERSITY = 'SEARCH_BY_UNIVERSITY';

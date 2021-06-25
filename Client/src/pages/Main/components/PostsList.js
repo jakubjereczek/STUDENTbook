@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { Link } from 'react-router-dom';
 import { ContainerInside, UserIcon, Author, ButtonIcon, Text } from '../../../components/SharedStyles.css'
-import { AboutUser, DateString, PostContent, PostButtons } from './PostsList.css'
+import { AboutUser, DateString, PostContent, PostButtons, ChoiceButtonsContainer, ChoiceButton } from './PostsList.css'
 
 import { FaRegTimesCircle, FaRegEdit } from "react-icons/fa";
 
@@ -16,6 +16,8 @@ import toast from 'react-hot-toast';
 import EditPostPopup from './EditPostPopup';
 
 import useMap from '../../../hooks/useMap'
+
+import { SEARCH_ALL, SEARCH_BY_UNIVERSITY } from '../../../constants/'
 
 function PostsList({ currentUser }) {
     const [posts, setPosts] = useState([]);
@@ -42,11 +44,32 @@ function PostsList({ currentUser }) {
 
     const [addItem, removeItem, getItem] = useMap();
 
+    const [filterMode, setFilterMode] = useState(SEARCH_ALL);
+
+    const handleFilterMode = (type) => {
+        setPosts([]);
+        setPageNumber(1);
+
+        switch (type) {
+            case SEARCH_ALL:
+                if (filterMode === SEARCH_ALL)
+                    return;
+                setFilterMode(SEARCH_ALL);
+                break;
+            case SEARCH_BY_UNIVERSITY:
+                if (filterMode === SEARCH_BY_UNIVERSITY)
+                    return;
+                setFilterMode(SEARCH_BY_UNIVERSITY);
+                break;
+            default:
+                setFilterMode(SEARCH_ALL);
+                break;
+        }
+    }
     useEffect(() => {
         async function fetchData() {
-            // TODO: Don't render the same every time. 
-            const postsFetch = await getAllPosts(pageNumber, pageSize);
-            console.log(postsFetch)
+            const postsFetch = await getAllPosts(pageNumber, pageSize, filterMode);
+            console.log("POBRANO NOWĄ LISTE WIADOMOSCI ", postsFetch)
             if (postsFetch.data.hasNextPage === "Yes") {
                 setHasMore(true);
             } else {
@@ -60,7 +83,7 @@ function PostsList({ currentUser }) {
             setLoading(false);
         }
         fetchData();
-    }, [pageNumber])
+    }, [pageNumber, filterMode])
 
 
     const onMouseEnter = (event, user) => {
@@ -118,16 +141,30 @@ function PostsList({ currentUser }) {
 
     const getPostsList = useCallback(() => Promise.all(
         posts.map(async (post, index) => {
-            console.log("1.");
+            // TODO: Del that checking inside.
 
-            const savedUser = await getItem(post.userId);
+            const currentlyMapListOfUsers = new Map(); // Naprawienie blędu z interacją dla pojawiających się wpisów użytkownika - jeśli występuję ponownie następuje sprawdzenie w zmiennej.
+            //console.log(currentlyMapListOfUsers)
+
+            const savedUser = await getItem(post.userId); // Lista grupująca po zakończeniu wszystkich iteracji!
             let user = savedUser;
 
-            if (savedUser === undefined) { // W przypadku gdy nie mamy tego uzytkownika w Mapie to wykonujemy request.
+            if (savedUser === undefined) {
+                // Jeśli nie istnieje w liście wszystkich.
+                // Sprawdzam jeszcze w liście aktualnych iteracji.
+                const userWasMentioned = currentlyMapListOfUsers.get(post.userId);
+                if (userWasMentioned === undefined) {
+                    const userFetch = await getUserById(post.userId);
+                    user = userFetch.data;
 
-                const userFetch = await getUserById(post.userId);
-                user = userFetch.data;
-                await addItem(user.userId, user) // Dodanie do listy Set użytkowników, aby wyżej sprawdzić czy sie nie powiela i pobrać użytkownika z listy, a nie robic kolejnego requesta do bazy.
+                    currentlyMapListOfUsers.set(post.userId, user);
+                    // console.log("DODANIE DO LOKALNEJ LISTY")
+                } else {
+                    user = userWasMentioned;
+                }
+                await addItem(user.userId, user);
+
+                // Dodanie do listy Set użytkowników, aby wyżej sprawdzić czy sie nie powiela i pobrać użytkownika z listy, a nie robic kolejnego requesta do bazy.
             }
 
             return (
@@ -170,9 +207,12 @@ function PostsList({ currentUser }) {
         <React.Fragment>
             <AddPost setLoading={setLoading} setPosts={setPosts} posts={posts} />
             <EditPostPopup active={popupActive} setActive={setPopupActive} post={activePost} posts={posts} setPosts={setPosts} />
-            {loading ? "Ładowanie witryny..." : postsList}
-            {loadingNewPage && "Ładowanie nowej strony... "}
-            {hoverActive && <Hover active={hoverActive} user={hoverUser} style={hoverCords} />}
+            <ChoiceButtonsContainer>
+                <ChoiceButton onClick={() => handleFilterMode(SEARCH_ALL)}>Wszystkie posty</ChoiceButton>
+                <ChoiceButton onClick={() => handleFilterMode(SEARCH_BY_UNIVERSITY)}>Posty z Twojego Uniwersytetu</ChoiceButton>
+            </ChoiceButtonsContainer>
+            {loading ? (loadingNewPage ? "Ładowanie nowej strony... " : "Ładowanie witryny") : postsList}
+            {/* {hoverActive && <Hover active={hoverActive} user={hoverUser} style={hoverCords} />} */}
         </React.Fragment>
     )
 }
