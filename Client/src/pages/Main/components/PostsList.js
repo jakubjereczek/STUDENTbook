@@ -35,19 +35,15 @@ function PostsList({ currentUser }) {
     const [loading, setLoading] = useState(true);
     const [loadingNewPage, setLoadingNewPage] = useState(true);
 
-    // pagination
-    // TODO: Pagination in Server side. 
-    // I should to get posts (example ten for page) with every scroll, not everythings.
     const [hasMore, setHasMore] = useState(false);
     const [pageNumber, setPageNumber] = useState(1);
     const [pageSize, setPageSize] = useState(10);
 
-    const [addItem, removeItem, getItem] = useMap();
+    const [addItem, getItem] = useMap();
 
     const [filterMode, setFilterMode] = useState(SEARCH_ALL);
 
     const handleFilterMode = (type) => {
-        setPosts([]);
         setPageNumber(1);
 
         switch (type) {
@@ -55,38 +51,39 @@ function PostsList({ currentUser }) {
                 if (filterMode === SEARCH_ALL)
                     return;
                 setFilterMode(SEARCH_ALL);
+                setPosts([]);
                 break;
             case SEARCH_BY_UNIVERSITY:
                 if (filterMode === SEARCH_BY_UNIVERSITY)
                     return;
                 setFilterMode(SEARCH_BY_UNIVERSITY);
+                setPosts([]);
                 break;
             default:
                 setFilterMode(SEARCH_ALL);
+                setPosts([]);
                 break;
         }
     }
-    useEffect(() => {
-        async function fetchData() {
-            const postsFetch = await getAllPosts(pageNumber, pageSize, filterMode);
-            console.log("POBRANO NOWĄ LISTE WIADOMOSCI ", postsFetch)
-            if (postsFetch.data.hasNextPage === "Yes") {
-                setHasMore(true);
-            } else {
-                setHasMore(false);
-            }
 
-            setPosts([
-                ...posts,
-                ...postsFetch.data.data
-            ]);
-            setLoading(false);
+    const asyncFetchData = async () => {
+        const postsFetch = await getAllPosts(pageNumber, pageSize, filterMode);
+        if (postsFetch.data.hasNextPage === "Yes") {
+            setHasMore(true);
+        } else {
+            setHasMore(false);
         }
-        fetchData();
-    }, [pageNumber, filterMode])
+        setPosts([
+            ...posts,
+            ...postsFetch.data.data
+        ]);
+        setLoading(false);
+    }
 
+    useEffect(() => asyncFetchData(),
+        [pageNumber, filterMode])
 
-    const onMouseEnter = (event, user) => {
+    const handleMouseEnter = (event, user) => {
         setHoverCords({
             top: event.clientY + 10,
             left: event.clientX
@@ -94,7 +91,7 @@ function PostsList({ currentUser }) {
         setHoverUser(user)
         setHoverActive(true)
     }
-    const onMouseLeave = () => {
+    const handleMouseLeave = () => {
         setHoverUser(null)
         setHoverActive(false)
     }
@@ -140,32 +137,17 @@ function PostsList({ currentUser }) {
     // TODO: Asychroniczność w podejściu do tego, ze występuje bląd - dodanie następuja na końcu wywołania i przez to wysylamy dodatkowe requesty. Przy następnym wywolaniu - do poprzednich wszystko dziala idealnie, ale znowu wysyla po kilka requestów w stosunku powtarajacych sie uzytkownikow.
 
     const getPostsList = useCallback(() => Promise.all(
+
         posts.map(async (post, index) => {
-            // TODO: Del that checking inside.
 
-            const currentlyMapListOfUsers = new Map(); // Naprawienie blędu z interacją dla pojawiających się wpisów użytkownika - jeśli występuję ponownie następuje sprawdzenie w zmiennej.
-            //console.log(currentlyMapListOfUsers)
-
-            const savedUser = await getItem(post.userId); // Lista grupująca po zakończeniu wszystkich iteracji!
+            const savedUser = await getItem(post.userId); // Sprawdzenie w liście. Jeśli nie istnieje, pobranie z bazy.
             let user = savedUser;
 
             if (savedUser === undefined) {
-                // Jeśli nie istnieje w liście wszystkich.
-                // Sprawdzam jeszcze w liście aktualnych iteracji.
-                const userWasMentioned = currentlyMapListOfUsers.get(post.userId);
-                if (userWasMentioned === undefined) {
-                    const userFetch = await getUserById(post.userId);
-                    user = userFetch.data;
-
-                    currentlyMapListOfUsers.set(post.userId, user);
-                    // console.log("DODANIE DO LOKALNEJ LISTY")
-                } else {
-                    user = userWasMentioned;
-                }
-                await addItem(user.userId, user);
-
-                // Dodanie do listy Set użytkowników, aby wyżej sprawdzić czy sie nie powiela i pobrać użytkownika z listy, a nie robic kolejnego requesta do bazy.
+                const userFetch = await getUserById(post.userId);
+                user = userFetch.data;
             }
+            await addItem(user.userId, user);
 
             return (
                 <ContainerInside key={post.postId} ref={posts.length === index + 1 ? lastPostElementRef : null}>
@@ -173,8 +155,15 @@ function PostsList({ currentUser }) {
                         <UserIcon />
                         <p>
                             <Link to={`/profile/${post.userId}`}>
-                                <Author onMouseEnter={(event) => onMouseEnter(event, user)} onMouseLeave={onMouseLeave}>{user.firstName} {user.lastName}</Author></Link>
-                            <DateString>{new Date(post.createdAt).toLocaleString()}</DateString>
+                                <Author
+                                    onMouseEnter={(event) => handleMouseEnter(event, user)}
+                                    onMouseLeave={handleMouseLeave}>
+                                    {user.firstName} {user.lastName}
+                                </Author>
+                            </Link>
+                            <DateString>
+                                {new Date(post.createdAt).toLocaleString()}
+                            </DateString>
                         </p>
                     </AboutUser>
                     <PostContent>
@@ -205,14 +194,28 @@ function PostsList({ currentUser }) {
 
     return (
         <React.Fragment>
-            <AddPost setLoading={setLoading} setPosts={setPosts} posts={posts} />
-            <EditPostPopup active={popupActive} setActive={setPopupActive} post={activePost} posts={posts} setPosts={setPosts} />
+            <AddPost
+                setLoading={setLoading}
+                setPosts={setPosts}
+                posts={posts} />
+            <EditPostPopup
+                active={popupActive}
+                setActive={setPopupActive}
+                post={activePost}
+                posts={posts}
+                setPosts={setPosts} />
             <ChoiceButtonsContainer>
-                <ChoiceButton onClick={() => handleFilterMode(SEARCH_ALL)}>Wszystkie posty</ChoiceButton>
-                <ChoiceButton onClick={() => handleFilterMode(SEARCH_BY_UNIVERSITY)}>Posty z Twojego Uniwersytetu</ChoiceButton>
+                <ChoiceButton
+                    onClick={() => handleFilterMode(SEARCH_ALL)}>
+                    Wszystkie posty
+                </ChoiceButton>
+                <ChoiceButton
+                    onClick={() => handleFilterMode(SEARCH_BY_UNIVERSITY)}>
+                    Posty z Twojego Uniwersytetu
+                </ChoiceButton>
             </ChoiceButtonsContainer>
             {loading ? (loadingNewPage ? "Ładowanie nowej strony... " : "Ładowanie witryny") : postsList}
-            {/* {hoverActive && <Hover active={hoverActive} user={hoverUser} style={hoverCords} />} */}
+            {hoverActive && <Hover active={hoverActive} user={hoverUser} style={hoverCords} />}
         </React.Fragment>
     )
 }

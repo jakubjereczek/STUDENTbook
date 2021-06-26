@@ -50,8 +50,9 @@ namespace STUDENTbookServer.Controllers
             }
             int id = User.userId;
 
-            List<PostAnswers> PostAnswersList = _db.PostAnswers.Where(p => p.userId == id).ToList();
-                
+            List<PostAnswers> PostAnswersList = _db.PostAnswers.Where(p => p.userId == id).OrderByDescending(p => p.createdAt).ToList();
+
+
             return Request.CreateResponse(HttpStatusCode.OK, PostAnswersList);
         }
 

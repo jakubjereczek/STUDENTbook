@@ -34,19 +34,27 @@ function EditPostPopup({ active, setActive, post, posts, setPosts }) {
         }
 
         putPost(post.postId, postObj)
-            .then((res) => {
+            .then(() => {
                 toast.success('Post został edytowany.')
+                // musze tu ustawić setPosts na nowy
+                post = { ...post, content, tag }
+                const newPosts = posts.map(p => {
+                    if (p.postId === post.postId) {
+                        return {
+                            ...p,
+                            content,
+                            tag
+                        }
+                    }
+                    return p;
+                })
+                setPosts(newPosts)
+                console.log(posts, newPosts)
             }).catch((err) => {
-                console.log(err);
                 toast.error('Wystąpił bląd podczas edycji postu.')
             }).finally(() => {
                 setActive(false);
             })
-
-        // To do - przesyłać cała liste posob - oraz edytować element, a potem odswieżyć. 
-        // Na razie edycja nie działa po dodaniu pagingu.
-
-
     }
 
     return active && (

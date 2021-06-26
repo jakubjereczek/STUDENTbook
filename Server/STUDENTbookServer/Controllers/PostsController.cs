@@ -116,7 +116,7 @@ namespace STUDENTbookServer.Controllers
             {
                 return Request.CreateErrorResponse(HttpStatusCode.NotFound, string.Format("User {0} not found", name));
             }
-            var UserPosts = _db.Posts.FirstOrDefault(p => p.userId == User.userId);
+            var UserPosts = _db.Posts.Where(p => p.userId == User.userId).OrderByDescending(p => p.createdAt).ToList();
             return Request.CreateResponse(HttpStatusCode.OK, UserPosts);
 
         }

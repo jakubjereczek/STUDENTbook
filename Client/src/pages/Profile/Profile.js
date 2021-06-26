@@ -6,13 +6,13 @@ import { useAuth } from '../../services/AuthorizationService';
 import { getUserById } from '../../services/UserService';
 import { deletePost } from '../../services/PostService'
 
-
 import { AboutUserContainer, AboutUserData, DetailsUserContainer, DetailsUserBar, ResultsList, PostContent, PostAuthor, PostDate, PostButtons,TextInline } from './Profile.css';
 import { UserIconLarge, Text, ButtonIcon } from '../../components/SharedStyles.css'
 
 import { FaRegTimesCircle } from "react-icons/fa";
 
 import { getPostAnswersByUserName, deletePostAnswer } from '../../services/PostAnswersService'
+import {getPostsByUserName} from '../../services/PostService';
 import toast from 'react-hot-toast';
 
 function Profile() {
@@ -20,7 +20,8 @@ function Profile() {
     const POSTS = 'posts';
     const POST_ANSWERS = 'postAnswers';
 
-    const [user, setUser] = useState(null); // user + univ and posts
+    const [user, setUser] = useState(null); 
+    const [posts, setPosts] = useState(null);
     const [postAnswers, setPostAnswers] = useState(null);
 
     const [loading, setLoading] = useState(true);
@@ -30,19 +31,21 @@ function Profile() {
     let { id } = useParams();
 
     useEffect(() => {
-            if (id == undefined) {
-                id = userStatus.user.userId;
-            }
-            getUserById(id).then((response) => {
+        if (id === undefined) {
+            id = userStatus.user.userId;
+        }
+        getUserById(id)
+            .then((response) => {
                 setUser(response.data);
                 fetchPostsAnswers(response.data.nick);
+                fetchPosts(response.data.nick);
             }).catch(() => {
                 setUser(null);
             }).finally(() => {
                 setLoading(false);
             })
-        
-    }, [id, userStatus.user]);
+            
+    }, []);
 
     const fetchPostsAnswers = async (nick) => {
         getPostAnswersByUserName(nick)
@@ -53,31 +56,38 @@ function Profile() {
             })
     }
 
-    const deletePostAction = (post) => {
-        const postsUpdated = user.Posts.filter(p => p != post);
-        setUser({...user, Posts: postsUpdated});
-        deletePost(post.postId)
-        .then(() => {
-            toast.success('Post został usunięty.')
-        }).catch(() => {
-            toast.error('Wystąpił błąd podczas usuwania posta.')
-        })
+    const fetchPosts = async (nick) => {
+        getPostsByUserName(nick)
+            .then((response) => {
+                setPosts(response.data);
+            }).catch((err) => {
+                console.log(err);
+            })
     }
 
+    const deletePostAction = (post) => {
+        const postsUpdated = posts.filter(p => p !== post);
+        setPosts(postsUpdated);
+        deletePost(post.postId)
+            .then(() => {
+                toast.success('Post został usunięty.')
+            }).catch(() => {
+                toast.error('Wystąpił błąd podczas usuwania posta.')
+            })
+    }
 
-    
     const deletePostAnswerAction = (postA) => {
-        const postsAnswers = postAnswers.filter(p => p != postA);
+        const postsAnswers = postAnswers.filter(p => p !== postA);
         setPostAnswers(postsAnswers);
         deletePostAnswer(postA.postAnswerId)
-        .then(() => {
-            toast.success('Odpowiedz na post została usunięta.')
-        }).catch(() => {
-            toast.error('Wystąpił błąd podczas usuwania odpowiedzi na posta.')
-        })
+            .then(() => {
+                toast.success('Odpowiedz na post została usunięta.')
+            }).catch(() => {
+                toast.error('Wystąpił błąd podczas usuwania odpowiedzi na posta.')
+            })
     } 
 
-    const posts = useMemo(() => user && user.Posts.map((post, index) => {
+    const postsComponent = posts && posts.map((post, index) => {
         return (
             <PostContent key={post.postId}>
                 <TextInline>
@@ -93,9 +103,9 @@ function Profile() {
                 </PostButtons>
             </PostContent>
         )
-    }), [deletePostAction, user, userStatus.user.userId]);
+    });
 
-    const postsAnswers = postAnswers && postAnswers.map((postA, index) => {
+    const postsAnswersComponent = postAnswers && postAnswers.map((postA, index) => {
         return (
             <PostContent key={postA.postAnswerId}>
                 (...)
@@ -124,8 +134,8 @@ function Profile() {
                     <UserIconLarge />
                     <AboutUserData>
                         <h1>{user.firstName} {user.lastName}</h1>
-                        <h3>{user.University.name}</h3>
-                        <p>Posty: {user.Posts.length}</p>
+                        {/* <h3>{user.University.name}</h3> */}
+                        {/* <p>Posty: {user.Posts.length}</p> */}
                     </AboutUserData>
                 </AboutUserContainer>
                 <DetailsUserContainer>
@@ -135,10 +145,10 @@ function Profile() {
                     </DetailsUserBar>
                     <ResultsList>
                         {menuActiveElement === POSTS 
-                        && posts && (posts.length > 0 ? posts : <Text>Brak postów</Text>)}
+                        && postsComponent && (postsComponent.length > 0 ? postsComponent : <Text>Brak postów</Text>)}
 
                         {menuActiveElement === POST_ANSWERS 
-                        && postsAnswers && (postsAnswers.length > 0 ? postsAnswers : <Text>Brak odpowiedzi na posty</Text>) }
+                        && postsAnswersComponent && (postsAnswersComponent.length > 0 ? postsAnswersComponent : <Text>Brak odpowiedzi na posty</Text>) }
                     </ResultsList>
                 </DetailsUserContainer>
             </React.Fragment>

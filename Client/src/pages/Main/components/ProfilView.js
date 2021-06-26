@@ -1,16 +1,19 @@
 import React from 'react'
 import { ContainerInside, UserIcon, Text } from '../../../components/SharedStyles.css'
 import { UserAbout, MyContainer } from './ProfilView.css'
-import { useAuth } from '../../../services/AuthorizationService';
 
-function NotFound({ currentUser }) {
+function ProfilView({ currentUser }) {
 
-    const { firstName, lastName, University } = currentUser;
+    const {
+        firstName,
+        lastName,
+        // University 
+    } = currentUser;
 
     return (
         <ContainerInside>
             <MyContainer>
-                {/* <UserIcon /> */}
+                <UserIcon />
                 <UserAbout>
                     <Text>Witaj, {firstName} {lastName} </Text>
                     {/* <Text>{University.name}, {University.city}</Text> */}
@@ -21,4 +24,4 @@ function NotFound({ currentUser }) {
     )
 }
 
-export default NotFound;
+export default ProfilView;
