@@ -15,7 +15,6 @@ export const DateString = styled.p`
 `
 export const PostContent = styled.p`
     margin-top: 10px;
-    word-wrap: break-word;
 `
 
 export const PostButtons = styled.div`

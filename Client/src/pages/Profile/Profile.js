@@ -6,8 +6,10 @@ import { useAuth } from '../../services/AuthorizationService';
 import { getUserById } from '../../services/UserService';
 import { deletePost } from '../../services/PostService'
 
+import Chart from './Chart';
+
 import { AboutUserContainer, AboutUserData, DetailsUserContainer, DetailsUserBar, ResultsList, PostContent, PostAuthor, PostDate, PostButtons,TextInline } from './Profile.css';
-import { UserIconLarge, Text, ButtonIcon } from '../../components/SharedStyles.css'
+import { UserIconLarge, Text, ButtonIcon, ContainerInside } from '../../components/SharedStyles.css'
 
 import { FaRegTimesCircle } from "react-icons/fa";
 
@@ -45,7 +47,7 @@ function Profile() {
                 setLoading(false);
             })
             
-    }, []);
+    }, [id]);
 
     const fetchPostsAnswers = async (nick) => {
         getPostAnswersByUserName(nick)
@@ -128,7 +130,7 @@ function Profile() {
 
 
     return loading ? "Ładowanie.." : (
-        user ? (
+        user && posts && postAnswers ? (
             <React.Fragment>
                 <AboutUserContainer>
                     <UserIconLarge />
@@ -137,18 +139,18 @@ function Profile() {
                         {/* <h3>{user.University.name}</h3> */}
                         {/* <p>Posty: {user.Posts.length}</p> */}
                     </AboutUserData>
-                </AboutUserContainer>
+                </AboutUserContainer>     
+                <ContainerInside>                
+                    <Chart posts={posts} postAnswers={postAnswers}/>
+                </ContainerInside>       
                 <DetailsUserContainer>
                     <DetailsUserBar>
                         <a className={`${menuActiveElement === POSTS ? "active" : ""}`} onClick={() => setMenuActiveElement(POSTS)}>POSTY</a>
                         <a className={`${menuActiveElement === POST_ANSWERS ? "active" : ""}`} onClick={() => setMenuActiveElement(POST_ANSWERS)}>ODPOWIEDZI NA POSTY</a>
                     </DetailsUserBar>
                     <ResultsList>
-                        {menuActiveElement === POSTS 
-                        && postsComponent && (postsComponent.length > 0 ? postsComponent : <Text>Brak postów</Text>)}
-
-                        {menuActiveElement === POST_ANSWERS 
-                        && postsAnswersComponent && (postsAnswersComponent.length > 0 ? postsAnswersComponent : <Text>Brak odpowiedzi na posty</Text>) }
+                        {menuActiveElement === POSTS && (postsComponent.length > 0 ? postsComponent : <Text>Brak postów</Text>)}
+                        {menuActiveElement === POST_ANSWERS && (postsAnswersComponent.length > 0 ? postsAnswersComponent : <Text>Brak odpowiedzi na posty</Text>) }
                     </ResultsList>
                 </DetailsUserContainer>
             </React.Fragment>
