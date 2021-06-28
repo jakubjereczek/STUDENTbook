@@ -35,3 +35,13 @@ export const ChoiceButton = styled(Button)`
         font-weight: 400;
     }
 `
+
+export const UniversityTag = styled.span`
+    display: inline-block;
+    border: 1px solid ${props => props.theme.main};
+    color:${props => props.theme.main};
+    padding: 0px 5px;
+    margin-top: 5px;
+    border-radius: 10px;
+
+`

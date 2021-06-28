@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { Link } from 'react-router-dom';
 import { ContainerInside, UserIcon, Author, ButtonIcon, Text } from '../../../components/SharedStyles.css'
-import { AboutUser, DateString, PostContent, PostButtons, ChoiceButtonsContainer, ChoiceButton } from './PostsList.css'
+import { AboutUser, DateString, PostContent, PostButtons, ChoiceButtonsContainer, ChoiceButton, UniversityTag } from './PostsList.css'
 
 import { FaRegTimesCircle, FaRegEdit } from "react-icons/fa";
 
@@ -18,6 +18,8 @@ import EditPostPopup from './EditPostPopup';
 import useMap from '../../../hooks/useMap'
 
 import { SEARCH_ALL, SEARCH_BY_UNIVERSITY } from '../../../constants/'
+
+import LoadingIndicator from '../../../components/LoadingIndicator'
 
 function PostsList({ currentUser }) {
     const [posts, setPosts] = useState([]);
@@ -52,12 +54,16 @@ function PostsList({ currentUser }) {
                     return;
                 setFilterMode(SEARCH_ALL);
                 setPosts([]);
+                setLoading(true)
+
                 break;
             case SEARCH_BY_UNIVERSITY:
                 if (filterMode === SEARCH_BY_UNIVERSITY)
                     return;
                 setFilterMode(SEARCH_BY_UNIVERSITY);
                 setPosts([]);
+                setLoading(true)
+
                 break;
             default:
                 setFilterMode(SEARCH_ALL);
@@ -118,7 +124,9 @@ function PostsList({ currentUser }) {
             return false;
         if (observer.current) {
             observer.current.disconnect();
-            setLoadingNewPage(false);
+            setTimeout(() => {
+                setLoadingNewPage(false)
+            }, 0);
         }
         observer.current = new IntersectionObserver(entries => {
             if (entries[0].isIntersecting) {
@@ -160,14 +168,20 @@ function PostsList({ currentUser }) {
                                     onMouseLeave={handleMouseLeave}>
                                     {user.firstName} {user.lastName}
                                 </Author>
+
                             </Link>
                             <DateString>
                                 {new Date(post.createdAt).toLocaleString()}
                             </DateString>
                         </p>
                     </AboutUser>
+
                     <PostContent>
-                        <Text>{post.content}</Text>
+                        <UniversityTag>{user.University.name}</UniversityTag>
+
+                        <Text>
+                            {post.content}
+                        </Text>
                         <PostButtons>
                             {post.userId === currentUser.userId && (
                                 <React.Fragment>
@@ -192,6 +206,14 @@ function PostsList({ currentUser }) {
         })
     }, [getPostsList])
 
+    const postsListComponent = loading ? <LoadingIndicator /> : (
+        <React.Fragment>
+            {postsList}
+            {loadingNewPage && <LoadingIndicator />}
+        </React.Fragment>
+    )
+
+
     return (
         <React.Fragment>
             <AddPost
@@ -214,7 +236,8 @@ function PostsList({ currentUser }) {
                     Posty z Twojego Uniwersytetu
                 </ChoiceButton>
             </ChoiceButtonsContainer>
-            {loading ? (loadingNewPage ? "Ładowanie nowej strony... " : "Ładowanie witryny") : postsList}
+            {postsListComponent}
+
             {hoverActive && <Hover active={hoverActive} user={hoverUser} style={hoverCords} />}
         </React.Fragment>
     )

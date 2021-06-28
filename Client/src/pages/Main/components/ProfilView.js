@@ -7,7 +7,7 @@ function ProfilView({ currentUser }) {
     const {
         firstName,
         lastName,
-        // University 
+        University
     } = currentUser;
 
     return (
@@ -16,7 +16,7 @@ function ProfilView({ currentUser }) {
                 <UserIcon />
                 <UserAbout>
                     <Text>Witaj, {firstName} {lastName} </Text>
-                    {/* <Text>{University.name}, {University.city}</Text> */}
+                    <Text>{University.name}, {University.city}</Text>
                 </UserAbout>
             </MyContainer>
 

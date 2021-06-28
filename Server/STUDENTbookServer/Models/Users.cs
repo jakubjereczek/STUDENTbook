@@ -23,5 +23,7 @@ namespace STUDENTbookServer.Models
         public string password { get; set; }
         public System.DateTime createdAt { get; set; }
         public Nullable<System.DateTime> lastLogginIn { get; set; }
+    
+        public virtual University University { get; set; }
     }
 }

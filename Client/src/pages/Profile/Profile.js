@@ -7,6 +7,7 @@ import { getUserById } from '../../services/UserService';
 import { deletePost } from '../../services/PostService'
 
 import Chart from './Chart';
+import LoadingIndicator from '../../components/LoadingIndicator'
 
 import { AboutUserContainer, AboutUserData, DetailsUserContainer, DetailsUserBar, ResultsList, PostContent, PostAuthor, PostDate, PostButtons,TextInline } from './Profile.css';
 import { UserIconLarge, Text, ButtonIcon, ContainerInside } from '../../components/SharedStyles.css'
@@ -16,6 +17,7 @@ import { FaRegTimesCircle } from "react-icons/fa";
 import { getPostAnswersByUserName, deletePostAnswer } from '../../services/PostAnswersService'
 import {getPostsByUserName} from '../../services/PostService';
 import toast from 'react-hot-toast';
+
 
 function Profile() {
 
@@ -36,21 +38,26 @@ function Profile() {
         if (id === undefined) {
             id = userStatus.user.userId;
         }
+        
         getUserById(id)
             .then((response) => {
-                setUser(response.data);
-                fetchPostsAnswers(response.data.nick);
-                fetchPosts(response.data.nick);
+                const promises = []
+                promises.push(fetchPostsAnswers(response.data.nick));
+                promises.push(fetchPosts(response.data.nick));
+                Promise.all(promises)
+                .finally(() => {
+                    setUser(response.data);
+
+                    setLoading(false);
+                    console.log("LOADING => FALSE")
+                }) 
             }).catch(() => {
                 setUser(null);
-            }).finally(() => {
-                setLoading(false);
-            })
-            
+            });
     }, [id]);
 
     const fetchPostsAnswers = async (nick) => {
-        getPostAnswersByUserName(nick)
+        return getPostAnswersByUserName(nick)
             .then((response) => {
                 setPostAnswers(response.data);
             }).catch((err) => {
@@ -59,7 +66,7 @@ function Profile() {
     }
 
     const fetchPosts = async (nick) => {
-        getPostsByUserName(nick)
+        return getPostsByUserName(nick)
             .then((response) => {
                 setPosts(response.data);
             }).catch((err) => {
@@ -89,7 +96,7 @@ function Profile() {
             })
     } 
 
-    const postsComponent = posts && posts.map((post, index) => {
+    const postsComponent = !loading && posts.map((post, index) => {
         return (
             <PostContent key={post.postId}>
                 <TextInline>
@@ -107,7 +114,7 @@ function Profile() {
         )
     });
 
-    const postsAnswersComponent = postAnswers && postAnswers.map((postA, index) => {
+    const postsAnswersComponent = !loading && postAnswers.map((postA, index) => {
         return (
             <PostContent key={postA.postAnswerId}>
                 (...)
@@ -129,15 +136,16 @@ function Profile() {
     });
 
 
-    return loading ? "Ładowanie.." : (
-        user && posts && postAnswers ? (
+    return loading ? <LoadingIndicator/> : (
+        user ? (
             <React.Fragment>
                 <AboutUserContainer>
                     <UserIconLarge />
                     <AboutUserData>
                         <h1>{user.firstName} {user.lastName}</h1>
-                        {/* <h3>{user.University.name}</h3> */}
-                        {/* <p>Posty: {user.Posts.length}</p> */}
+                        <h3>{user.University.name}</h3>
+                        <p>Posty: {posts.length}</p>
+                        <p>Odpowiedzi na posty: {postAnswers.length}</p>
                     </AboutUserData>
                 </AboutUserContainer>     
                 <ContainerInside>                

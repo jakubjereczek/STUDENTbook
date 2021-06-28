@@ -167,6 +167,7 @@
           <Property Name="password" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="createdAt" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="lastLogginIn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="University" Relationship="STUDENTbookModel.FK__Users__lastLoggi__34C8D9D1" FromRole="Users" ToRole="University" />
         </EntityType>
         <Association Name="FK__PostAnswe__postI__3B75D760">
           <End Role="Posts" Type="Self.Posts" Multiplicity="1" />
