@@ -81,7 +81,19 @@ create table University (
 ## About client
 ...
 
-## ??? Technologies
+## Technologies
 #### Server
 - ASP NET Web API (LogN, Basic Authorization, ADO.NET Entity Data Model)
 - SQL Server
+
+#### Client
+- React,
+- React Router,
+- React Icons,
+- Styled Components,
+- Axios
+- Chart.js (react-chartjs-2)
+
+## Visualization of progress in developing project 
+#### (state: 28.06)
+![Main profile view and list of posts](utils/screenshots/currentWorks_26062021.png)
