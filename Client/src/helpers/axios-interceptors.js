@@ -16,13 +16,18 @@ export default () => {
             return response;
         },
         err => {
-            console.log(err)
-            if (err.response.status === 401) {
+            if (err.response && err.response.status === 401) {
                 console.log("UNAUTHORIZED")
                 localStorage.removeItem('token')
                 localStorage.removeItem('user');
                 // TODO: odswiezanie w inny spsoob.
-                //window.location.reload();
+                // window.location.reload();
+
+            } else if (err) {
+                console.log("Inny bląd")
+
+                // window.location.reload();
+
             }
             return Promise.reject(err);
         });

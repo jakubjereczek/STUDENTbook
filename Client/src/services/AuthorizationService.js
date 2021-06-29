@@ -40,6 +40,8 @@ export const AuthProvider = ({ children }) => {
                 }).finally(() => {
                     setLoading(false);
                 })
+
+
         })
 
     }
@@ -53,7 +55,7 @@ export const AuthProvider = ({ children }) => {
     const isUserAuthorizated = () => {
         console.log(user)
 
-        if (user === null || user === "") {
+        if (user == null || user == "") {
             return false;
         }
         return true;
@@ -64,6 +66,7 @@ export const AuthProvider = ({ children }) => {
         const userObject = JSON.parse(userLocalStorageString);
         if (userObject != null)
             setUser(userObject);
+        console.log(user)
         setLoading(false);
     }, [])
 
@@ -76,6 +79,7 @@ export const AuthProvider = ({ children }) => {
 
     return (
         <AuthContext.Provider value={values}>
+            {/* {loading ? "Ładowanie..." : children} */}
             {children}
         </AuthContext.Provider>
     )

@@ -7,28 +7,30 @@ import { getUserById } from '../../services/UserService';
 import { deletePost } from '../../services/PostService'
 
 import Chart from './Chart';
-import LoadingIndicator from '../../components/LoadingIndicator'
+import { LoadingIndicator, ErrorContainer } from '../../components/'
 
-import { AboutUserContainer, AboutUserData, DetailsUserContainer, DetailsUserBar, ResultsList, PostContent, PostAuthor, PostDate, PostButtons,TextInline } from './Profile.css';
+import { AboutUserContainer, AboutUserData, DetailsUserContainer, DetailsUserBar, ResultsList, PostContent, PostAuthor, PostDate, PostButtons, TextInline } from './Profile.css';
 import { UserIconLarge, Text, ButtonIcon, ContainerInside } from '../../components/SharedStyles.css'
 
 import { FaRegTimesCircle } from "react-icons/fa";
 
 import { getPostAnswersByUserName, deletePostAnswer } from '../../services/PostAnswersService'
-import {getPostsByUserName} from '../../services/PostService';
+import { getPostsByUserName } from '../../services/PostService';
 import toast from 'react-hot-toast';
 
+const POSTS = 'Posty';
+const POST_ANSWERS = 'Odpowiedzi na posty';
 
 function Profile() {
 
-    const POSTS = 'posts';
-    const POST_ANSWERS = 'postAnswers';
+    const availableButtons = [POSTS, POST_ANSWERS];
 
-    const [user, setUser] = useState(null); 
+    const [user, setUser] = useState(null);
     const [posts, setPosts] = useState(null);
     const [postAnswers, setPostAnswers] = useState(null);
 
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
     const [menuActiveElement, setMenuActiveElement] = useState(POSTS);
     const userStatus = useAuth();
 
@@ -38,30 +40,37 @@ function Profile() {
         if (id === undefined) {
             id = userStatus.user.userId;
         }
-        
-        getUserById(id)
-            .then((response) => {
-                const promises = []
-                promises.push(fetchPostsAnswers(response.data.nick));
-                promises.push(fetchPosts(response.data.nick));
-                Promise.all(promises)
-                .finally(() => {
-                    setUser(response.data);
+        loadUserAsync();
+    }, [id]);
 
-                    setLoading(false);
-                    console.log("LOADING => FALSE")
-                }) 
+    const loadUserAsync = async () => {
+        setLoading(true);
+        setError("")
+
+        return getUserById(id)
+            .then((response) => {
+                const promises = [
+                    fetchPostsAnswers(response.data.nick),
+                    fetchPosts(response.data.nick)
+                ]
+                Promise.all(promises)
+                    .finally(() => {
+                        setUser(response.data);
+                        setLoading(false);
+                    })
             }).catch(() => {
+                setError("Wystąpił problem podczas pobierania użytkownika")
+                setLoading(false);
                 setUser(null);
             });
-    }, [id]);
+    }
 
     const fetchPostsAnswers = async (nick) => {
         return getPostAnswersByUserName(nick)
             .then((response) => {
                 setPostAnswers(response.data);
-            }).catch((err) => {
-                console.log(err);
+            }).catch(() => {
+                setError("Wystąpił problem podczas pobierania odpowiedzi na posty użytkownika")
             })
     }
 
@@ -69,9 +78,9 @@ function Profile() {
         return getPostsByUserName(nick)
             .then((response) => {
                 setPosts(response.data);
-            }).catch((err) => {
-                console.log(err);
-            })
+            }).catch(() => {
+                setError("Wystąpił problem podczas pobierania postów użytkownika")
+            });
     }
 
     const deletePostAction = (post) => {
@@ -94,16 +103,16 @@ function Profile() {
             }).catch(() => {
                 toast.error('Wystąpił błąd podczas usuwania odpowiedzi na posta.')
             })
-    } 
+    }
 
-    const postsComponent = !loading && posts.map((post, index) => {
+    const postsComponent = !loading && !error && posts.map((post, index) => {
         return (
             <PostContent key={post.postId}>
                 <TextInline>
-                    <PostAuthor>{user.firstName} {user.lastName}</PostAuthor>   
+                    <PostAuthor>{user.firstName} {user.lastName}</PostAuthor>
                     <PostDate> {new Date(post.createdAt).toLocaleString()}</PostDate>
                 </TextInline>
-                {post.content}   
+                {post.content}
 
                 <PostButtons>
                     {post.userId === userStatus.user.userId && (<ButtonIcon onClick={() => deletePostAction(post)}>
@@ -114,16 +123,16 @@ function Profile() {
         )
     });
 
-    const postsAnswersComponent = !loading && postAnswers.map((postA, index) => {
+    const postsAnswersComponent = !loading && !error && postAnswers.map((postA, index) => {
         return (
             <PostContent key={postA.postAnswerId}>
                 (...)
-                
+
                 <TextInline>
-                    <PostAuthor>{user.firstName} {user.lastName}</PostAuthor>   
+                    <PostAuthor>{user.firstName} {user.lastName}</PostAuthor>
                     <PostDate> {new Date(postA.createdAt).toLocaleString()}</PostDate>
                 </TextInline>
-                {postA.content}   
+                {postA.content}
 
                 <PostButtons>
                     {postA.userId === userStatus.user.userId && (<ButtonIcon onClick={() => deletePostAnswerAction(postA)}>
@@ -135,8 +144,41 @@ function Profile() {
         )
     });
 
+    const postsAndPostsAnswersSharedComponent = () => {
+        switch (menuActiveElement) {
+            case POSTS:
+                if (postsComponent.length) {
+                    return postsComponent;
+                } else {
+                    return <Text>Brak postów</Text>
+                }
+            case POST_ANSWERS:
+                if (postsAnswersComponent.length) {
+                    return postsAnswersComponent;
+                } else {
+                    return <Text>Brak odpowiedzi na posty</Text>
+                }
+            default:
+                return [];
+        }
+    }
 
-    return loading ? <LoadingIndicator/> : (
+    const menuButtons = availableButtons.map((button) => {
+        let className = "";
+        if (menuActiveElement === button) {
+            className = "active";
+        }
+        const handleOnClick = () => setMenuActiveElement(button);
+        return (
+            <a className={className}
+                onClick={handleOnClick}>{button}</a>
+        )
+
+    })
+
+    return loading ? <LoadingIndicator /> : error ? (
+        <ErrorContainer error={error} callback={loadUserAsync} />
+    ) : (
         user ? (
             <React.Fragment>
                 <AboutUserContainer>
@@ -147,18 +189,16 @@ function Profile() {
                         <p>Posty: {posts.length}</p>
                         <p>Odpowiedzi na posty: {postAnswers.length}</p>
                     </AboutUserData>
-                </AboutUserContainer>     
-                <ContainerInside>                
-                    <Chart posts={posts} postAnswers={postAnswers}/>
-                </ContainerInside>       
+                </AboutUserContainer>
+                <ContainerInside>
+                    <Chart posts={posts} postAnswers={postAnswers} />
+                </ContainerInside>
                 <DetailsUserContainer>
                     <DetailsUserBar>
-                        <a className={`${menuActiveElement === POSTS ? "active" : ""}`} onClick={() => setMenuActiveElement(POSTS)}>POSTY</a>
-                        <a className={`${menuActiveElement === POST_ANSWERS ? "active" : ""}`} onClick={() => setMenuActiveElement(POST_ANSWERS)}>ODPOWIEDZI NA POSTY</a>
+                        {menuButtons}
                     </DetailsUserBar>
                     <ResultsList>
-                        {menuActiveElement === POSTS && (postsComponent.length > 0 ? postsComponent : <Text>Brak postów</Text>)}
-                        {menuActiveElement === POST_ANSWERS && (postsAnswersComponent.length > 0 ? postsAnswersComponent : <Text>Brak odpowiedzi na posty</Text>) }
+                        {postsAndPostsAnswersSharedComponent()}
                     </ResultsList>
                 </DetailsUserContainer>
             </React.Fragment>

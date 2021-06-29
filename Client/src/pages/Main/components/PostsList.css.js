@@ -9,7 +9,8 @@ export const AboutUser = styled.div`
 `
 
 export const DateString = styled.p`
-    padding: 0 5px;
+    padding: 5px 0;
+    text-align: right;
     color: ${props => props.theme.color};
 
 `
@@ -31,17 +32,24 @@ export const ChoiceButton = styled(Button)`
     background-color: ${props => props.theme.main};
     color: ${props => props.theme.color};
 
-    &:hover {
+    &:hover, &.active {
         font-weight: 400;
     }
+
 `
 
 export const UniversityTag = styled.span`
     display: inline-block;
     border: 1px solid ${props => props.theme.main};
     color:${props => props.theme.main};
-    padding: 0px 5px;
-    margin-top: 5px;
+    padding: 0 5px;
+    margin-bottom: 5px;
     border-radius: 10px;
-
+`
+export const AboutUserHeader = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
 `

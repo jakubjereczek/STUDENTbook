@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { Link } from 'react-router-dom';
-import { ContainerInside, UserIcon, Author, ButtonIcon, Text } from '../../../components/SharedStyles.css'
-import { AboutUser, DateString, PostContent, PostButtons, ChoiceButtonsContainer, ChoiceButton, UniversityTag } from './PostsList.css'
+import { ContainerInside, UserIcon, Author, ButtonIcon, Text, ErrorMessageContainer, Button } from '../../../components/SharedStyles.css'
+import { AboutUser, DateString, PostContent, PostButtons, ChoiceButtonsContainer, ChoiceButton, UniversityTag, AboutUserHeader } from './PostsList.css'
 
-import { FaRegTimesCircle, FaRegEdit } from "react-icons/fa";
+import { FaRegTimesCircle, FaRegEdit, FaPlug } from "react-icons/fa";
 
 import { deletePost, getAllPosts } from '../../../services/PostService'
 import { getUserById } from '../../../services/UserService'
@@ -19,7 +19,7 @@ import useMap from '../../../hooks/useMap'
 
 import { SEARCH_ALL, SEARCH_BY_UNIVERSITY } from '../../../constants/'
 
-import LoadingIndicator from '../../../components/LoadingIndicator'
+import { LoadingIndicator, ErrorContainer } from '../../../components'
 
 function PostsList({ currentUser }) {
     const [posts, setPosts] = useState([]);
@@ -35,6 +35,7 @@ function PostsList({ currentUser }) {
     })
 
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
     const [loadingNewPage, setLoadingNewPage] = useState(true);
 
     const [hasMore, setHasMore] = useState(false);
@@ -45,6 +46,7 @@ function PostsList({ currentUser }) {
 
     const [filterMode, setFilterMode] = useState(SEARCH_ALL);
 
+    const filters = [{ type: SEARCH_ALL, name: "Wszystkie" }, { type: SEARCH_BY_UNIVERSITY, name: "Z twojego uniwersytetu" }]
     const handleFilterMode = (type) => {
         setPageNumber(1);
 
@@ -73,17 +75,25 @@ function PostsList({ currentUser }) {
     }
 
     const asyncFetchData = async () => {
-        const postsFetch = await getAllPosts(pageNumber, pageSize, filterMode);
-        if (postsFetch.data.hasNextPage === "Yes") {
-            setHasMore(true);
-        } else {
-            setHasMore(false);
+        try {
+            setLoading(true);
+            setError("");
+            const postsFetch = await getAllPosts(pageNumber, pageSize, filterMode);
+            if (postsFetch.data.hasNextPage === "Yes") {
+                setHasMore(true);
+            } else {
+                setHasMore(false);
+            }
+            setPosts([
+                ...posts,
+                ...postsFetch.data.data
+            ]);
+            setLoading(false);
+        } catch {
+            setError("Wystąpił bład podczas ładowania listy postów");
+            setLoading(false);
         }
-        setPosts([
-            ...posts,
-            ...postsFetch.data.data
-        ]);
-        setLoading(false);
+
     }
 
     useEffect(() => asyncFetchData(),
@@ -124,9 +134,7 @@ function PostsList({ currentUser }) {
             return false;
         if (observer.current) {
             observer.current.disconnect();
-            setTimeout(() => {
-                setLoadingNewPage(false)
-            }, 0);
+            setLoadingNewPage(false)
         }
         observer.current = new IntersectionObserver(entries => {
             if (entries[0].isIntersecting) {
@@ -147,7 +155,6 @@ function PostsList({ currentUser }) {
     const getPostsList = useCallback(() => Promise.all(
 
         posts.map(async (post, index) => {
-
             const savedUser = await getItem(post.userId); // Sprawdzenie w liście. Jeśli nie istnieje, pobranie z bazy.
             let user = savedUser;
 
@@ -161,26 +168,24 @@ function PostsList({ currentUser }) {
                 <ContainerInside key={post.postId} ref={posts.length === index + 1 ? lastPostElementRef : null}>
                     <AboutUser>
                         <UserIcon />
-                        <p>
+                        <AboutUserHeader>
                             <Link to={`/profile/${post.userId}`}>
                                 <Author
                                     onMouseEnter={(event) => handleMouseEnter(event, user)}
                                     onMouseLeave={handleMouseLeave}>
                                     {user.firstName} {user.lastName}
                                 </Author>
-
                             </Link>
-                            <DateString>
-                                {new Date(post.createdAt).toLocaleString()}
-                            </DateString>
-                        </p>
+                            <UniversityTag>{user.University.name}</UniversityTag>
+                        </AboutUserHeader>
                     </AboutUser>
 
                     <PostContent>
-                        <UniversityTag>{user.University.name}</UniversityTag>
-
                         <Text>
                             {post.content}
+                            <DateString>
+                                {new Date(post.createdAt).toLocaleString()}
+                            </DateString>
                         </Text>
                         <PostButtons>
                             {post.userId === currentUser.userId && (
@@ -207,34 +212,38 @@ function PostsList({ currentUser }) {
     }, [getPostsList])
 
     const postsListComponent = loading ? <LoadingIndicator /> : (
-        <React.Fragment>
-            {postsList}
-            {loadingNewPage && <LoadingIndicator />}
-        </React.Fragment>
+        !error ? (
+            <React.Fragment>
+                {postsList}
+                {loadingNewPage && <LoadingIndicator />}
+            </React.Fragment>) :
+            (
+                <ErrorContainer error={error} callback={asyncFetchData} />
+            )
     )
 
+    const choiceButtons = filters.map((filter) => {
+
+        let className = "";
+        if (filterMode === filter.type) {
+            className = "active";
+        }
+
+        const handleOnClick = () => handleFilterMode(filter.type)
+
+        return (
+            <ChoiceButton className={className} onClick={handleOnClick}>
+                {filter.name}
+            </ChoiceButton>
+        )
+    })
 
     return (
         <React.Fragment>
-            <AddPost
-                setLoading={setLoading}
-                setPosts={setPosts}
-                posts={posts} />
-            <EditPostPopup
-                active={popupActive}
-                setActive={setPopupActive}
-                post={activePost}
-                posts={posts}
-                setPosts={setPosts} />
+            <AddPost setPosts={setPosts} posts={posts} />
+            <EditPostPopup active={popupActive} setActive={setPopupActive} post={activePost} posts={posts} setPosts={setPosts} />
             <ChoiceButtonsContainer>
-                <ChoiceButton
-                    onClick={() => handleFilterMode(SEARCH_ALL)}>
-                    Wszystkie posty
-                </ChoiceButton>
-                <ChoiceButton
-                    onClick={() => handleFilterMode(SEARCH_BY_UNIVERSITY)}>
-                    Posty z Twojego Uniwersytetu
-                </ChoiceButton>
+                {choiceButtons}
             </ChoiceButtonsContainer>
             {postsListComponent}
 

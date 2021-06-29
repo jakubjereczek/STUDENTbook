@@ -104,6 +104,7 @@ export const Author = styled.p`
     font-weight: 400;
     line-height: 16px;
     cursor: pointer;
+    display: inline;
 `
 export const ButtonIcon = styled.span`
     transition: 0.3s;
@@ -118,5 +119,20 @@ export const ButtonIcon = styled.span`
 
 export const Label = styled.label`
     color: ${props => props.theme.color};
+`
+
+export const ErrorMessageContainer = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 10px 0;
+
+    & > div {
+        min-width: 300px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 `
 
